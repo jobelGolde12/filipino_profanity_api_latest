@@ -1,0 +1,802 @@
+[
+  {
+    "id" : 1,
+    "word" : "agbaliw"
+  },
+  {
+    "id" : 2,
+    "word" : "atay"
+  },
+  {
+    "id" : 3,
+    "word" : "baliw-baliw-ka"
+  },
+  {
+    "id" : 4,
+    "word" : "bangag"
+  },
+  {
+    "id" : 5,
+    "word" : "bangag-na-bangag"
+  },
+  {
+    "id" : 6,
+    "word" : "barag"
+  },
+  {
+    "id" : 7,
+    "word" : "barag-barag"
+  },
+  {
+    "id" : 8,
+    "word" : "bakakon"
+  },
+  {
+    "id" : 9,
+    "word" : "bayot"
+  },
+  {
+    "id" : 10,
+    "word" : "binuang"
+  },
+  {
+    "id" : 11,
+    "word" : "buntis"
+  },
+  {
+    "id" : 12,
+    "word" : "buang"
+  },
+  {
+    "id" : 13,
+    "word" : "buang-na-buang"
+  },
+  {
+    "id" : 14,
+    "word" : "buangi"
+  },
+  {
+    "id" : 15,
+    "word" : "bugok"
+  },
+  {
+    "id" : 16,
+    "word" : "bugal-bugal"
+  },
+  {
+    "id" : 17,
+    "word" : "bull-shit"
+  },
+  {
+    "id" : 18,
+    "word" : "bulang-buli"
+  },
+  {
+    "id" : 19,
+    "word" : "bulang-buli-ka"
+  },
+  {
+    "id" : 20,
+    "word" : "bulok-na-bulok"
+  },
+  {
+    "id" : 21,
+    "word" : "burat"
+  },
+  {
+    "id" : 22,
+    "word" : "burat-na-burat"
+  },
+  {
+    "id" : 23,
+    "word" : "buridek"
+  },
+  {
+    "id" : 24,
+    "word" : "buraw"
+  },
+  {
+    "id" : 25,
+    "word" : "burit"
+  },
+  {
+    "id" : 26,
+    "word" : "burit-burit"
+  },
+  {
+    "id" : 27,
+    "word" : "buray"
+  },
+  {
+    "id" : 28,
+    "word" : "butit"
+  },
+  {
+    "id" : 29,
+    "word" : "bwang"
+  },
+  {
+    "id" : 30,
+    "word" : "buyangyang"
+  },
+  {
+    "id" : 31,
+    "word" : "buyaw"
+  },
+  {
+    "id" : 32,
+    "word" : "buyaw-ka"
+  },
+  {
+    "id" : 33,
+    "word" : "buyboy"
+  },
+  {
+    "id" : 34,
+    "word" : "buyok"
+  },
+  {
+    "id" : 35,
+    "word" : "buyok-ka"
+  },
+  {
+    "id" : 36,
+    "word" : "gahi"
+  },
+  {
+    "id" : 37,
+    "word" : "gahi'g ulo"
+  },
+  {
+    "id" : 38,
+    "word" : "gaga"
+  },
+  {
+    "id" : 39,
+    "word" : "halapot"
+  },
+  {
+    "id" : 40,
+    "word" : "hambog-hambog"
+  },
+  {
+    "id" : 41,
+    "word" : "hambog-na-hambog"
+  },
+  {
+    "id" : 42,
+    "word" : "im-im"
+  },
+  {
+    "id" : 43,
+    "word" : "im-im-ka"
+  },
+  {
+    "id" : 44,
+    "word" : "itoy"
+  },
+  {
+    "id" : 45,
+    "word" : "kabo"
+  },
+  {
+    "id" : 46,
+    "word" : "kabaong"
+  },
+  {
+    "id" : 47,
+    "word" : "kadyut"
+  },
+  {
+    "id" : 48,
+    "word" : "kadyot"
+  },
+  {
+    "id" : 49,
+    "word" : "kakam-o"
+  },
+  {
+    "id" : 50,
+    "word" : "ka-libog"
+  },
+  {
+    "id" : 51,
+    "word" : "ka-ulaw"
+  },
+  {
+    "id" : 52,
+    "word" : "ka-ugok"
+  },
+  {
+    "id" : 53,
+    "word" : "ka-iyak"
+  },
+  {
+    "id" : 54,
+    "word" : "katarantadohan"
+  },
+  {
+    "id" : 55,
+    "word" : "katarantaduhan"
+  },
+  {
+    "id" : 56,
+    "word" : "kalbo"
+  },
+  {
+    "id" : 57,
+    "word" : "kalibug"
+  },
+  {
+    "id" : 58,
+    "word" : "kalibug-na-kalibug"
+  },
+  {
+    "id" : 59,
+    "word" : "kalibutan"
+  },
+  {
+    "id" : 60,
+    "word" : "kalibang"
+  },
+  {
+    "id" : 61,
+    "word" : "kalintik"
+  },
+  {
+    "id" : 62,
+    "word" : "kamam"
+  },
+  {
+    "id" : 63,
+    "word" : "kamatayan"
+  },
+  {
+    "id" : 64,
+    "word" : "kamatayan-mo"
+  },
+  {
+    "id" : 65,
+    "word" : "karambutan"
+  },
+  {
+    "id" : 66,
+    "word" : "kurimaw"
+  },
+  {
+    "id" : 67,
+    "word" : "kurimaw-na-kurimaw"
+  },
+  {
+    "id" : 68,
+    "word" : "kurupot"
+  },
+  {
+    "id" : 69,
+    "word" : "kuan"
+  },
+  {
+    "id" : 70,
+    "word" : "kuan-kuan"
+  },
+  {
+    "id" : 71,
+    "word" : "kinam"
+  },
+  {
+    "id" : 72,
+    "word" : "kinamut"
+  },
+  {
+    "id" : 73,
+    "word" : "lapnos"
+  },
+  {
+    "id" : 74,
+    "word" : "lapnos-na-lapnos"
+  },
+  {
+    "id" : 75,
+    "word" : "lando"
+  },
+  {
+    "id" : 76,
+    "word" : "libang"
+  },
+  {
+    "id" : 77,
+    "word" : "libat"
+  },
+  {
+    "id" : 78,
+    "word" : "libog"
+  },
+  {
+    "id" : 79,
+    "word" : "libog-ka"
+  },
+  {
+    "id" : 80,
+    "word" : "lintian"
+  },
+  {
+    "id" : 81,
+    "word" : "lintian-ka"
+  },
+  {
+    "id" : 82,
+    "word" : "lintian-na-lintian"
+  },
+  {
+    "id" : 83,
+    "word" : "linte"
+  },
+  {
+    "id" : 84,
+    "word" : "linte-linte"
+  },
+  {
+    "id" : 85,
+    "word" : "linte-na-linte"
+  },
+  {
+    "id" : 86,
+    "word" : "lube"
+  },
+  {
+    "id" : 87,
+    "word" : "lube-lube"
+  },
+  {
+    "id" : 88,
+    "word" : "maating"
+  },
+  {
+    "id" : 89,
+    "word" : "maating-na-maating"
+  },
+  {
+    "id" : 90,
+    "word" : "mahalay"
+  },
+  {
+    "id" : 91,
+    "word" : "malandi-ka"
+  },
+  {
+    "id" : 92,
+    "word" : "malaw-ay"
+  },
+  {
+    "id" : 93,
+    "word" : "malaway"
+  },
+  {
+    "id" : 94,
+    "word" : "maot"
+  },
+  {
+    "id" : 95,
+    "word" : "maot-na-maot"
+  },
+  {
+    "id" : 96,
+    "word" : "mamang"
+  },
+  {
+    "id" : 97,
+    "word" : "puyit"
+  },
+  {
+    "id" : 98,
+    "word" : "mamurayit"
+  },
+  {
+    "id" : 99,
+    "word" : "mangamut"
+  },
+  {
+    "id" : 100,
+    "word" : "mangamut-ka"
+  },
+  {
+    "id" : 101,
+    "word" : "manlimbong"
+  },
+  {
+    "id" : 102,
+    "word" : "manlimbong-ka"
+  },
+  {
+    "id" : 103,
+    "word" : "marangut"
+  },
+  {
+    "id" : 104,
+    "word" : "masiba"
+  },
+  {
+    "id" : 105,
+    "word" : "masiba-ka"
+  },
+  {
+    "id" : 106,
+    "word" : "mura'g iro"
+  },
+  {
+    "id" : 107,
+    "word" : "nabayot"
+  },
+  {
+    "id" : 108,
+    "word" : "nakin-an"
+  },
+  {
+    "id" : 109,
+    "word" : "nakakaskas"
+  },
+  {
+    "id" : 110,
+    "word" : "nakapimping"
+  },
+  {
+    "id" : 111,
+    "word" : "nakupal"
+  },
+  {
+    "id" : 112,
+    "word" : "naim-ot"
+  },
+  {
+    "id" : 113,
+    "word" : "nalumay"
+  },
+  {
+    "id" : 114,
+    "word" : "nalumay-ka"
+  },
+  {
+    "id" : 115,
+    "word" : "natay"
+  },
+  {
+    "id" : 116,
+    "word" : "natay-natay"
+  },
+  {
+    "id" : 117,
+    "word" : "pakialamera"
+  },
+  {
+    "id" : 118,
+    "word" : "pakinggan"
+  },
+  {
+    "id" : 119,
+    "word" : "pakinggan-mo"
+  },
+  {
+    "id" : 120,
+    "word" : "paboang-buang"
+  },
+  {
+    "id" : 121,
+    "word" : "pabuang"
+  },
+  {
+    "id" : 122,
+    "word" : "palahubog"
+  },
+  {
+    "id" : 123,
+    "word" : "palahubog-ka"
+  },
+  {
+    "id" : 124,
+    "word" : "palas-ing"
+  },
+  {
+    "id" : 125,
+    "word" : "palasut"
+  },
+  {
+    "id" : 126,
+    "word" : "patay"
+  },
+  {
+    "id" : 127,
+    "word" : "peste-peste"
+  },
+  {
+    "id" : 128,
+    "word" : "pisot"
+  },
+  {
+    "id" : 129,
+    "word" : "pisot-pisot"
+  },
+  {
+    "id" : 130,
+    "word" : "pisti"
+  },
+  {
+    "id" : 131,
+    "word" : "pisti-ka"
+  },
+  {
+    "id" : 132,
+    "word" : "pisting yawa"
+  },
+  {
+    "id" : 133,
+    "word" : "pisting-yawa-ka"
+  },
+  {
+    "id" : 134,
+    "word" : "puking"
+  },
+  {
+    "id" : 135,
+    "word" : "pukis"
+  },
+  {
+    "id" : 136,
+    "word" : "puday"
+  },
+  {
+    "id" : 137,
+    "word" : "pudot"
+  },
+  {
+    "id" : 138,
+    "word" : "putak"
+  },
+  {
+    "id" : 139,
+    "word" : "puto-puto"
+  },
+  {
+    "id" : 140,
+    "word" : "puro ka-yawa"
+  },
+  {
+    "id" : 141,
+    "word" : "salsal"
+  },
+  {
+    "id" : 142,
+    "word" : "salsal-na-salsal"
+  },
+  {
+    "id" : 143,
+    "word" : "salbahis"
+  },
+  {
+    "id" : 144,
+    "word" : "salbahe"
+  },
+  {
+    "id" : 145,
+    "word" : "saltek"
+  },
+  {
+    "id" : 146,
+    "word" : "salukuy"
+  },
+  {
+    "id" : 147,
+    "word" : "salukuy-salukuy"
+  },
+  {
+    "id" : 148,
+    "word" : "sanaim"
+  },
+  {
+    "id" : 149,
+    "word" : "silingan"
+  },
+  {
+    "id" : 150,
+    "word" : "sira"
+  },
+  {
+    "id" : 151,
+    "word" : "surot"
+  },
+  {
+    "id" : 152,
+    "word" : "surot-ka"
+  },
+  {
+    "id" : 153,
+    "word" : "surot-na-surot"
+  },
+  {
+    "id" : 154,
+    "word" : "surot-surot"
+  },
+  {
+    "id" : 155,
+    "word" : "tahong"
+  },
+  {
+    "id" : 156,
+    "word" : "talipandas"
+  },
+  {
+    "id" : 157,
+    "word" : "talipandas-ka"
+  },
+  {
+    "id" : 158,
+    "word" : "tanga-sa-tanga"
+  },
+  {
+    "id" : 159,
+    "word" : "timang"
+  },
+  {
+    "id" : 160,
+    "word" : "tite"
+  },
+  {
+    "id" : 161,
+    "word" : "titek"
+  },
+  {
+    "id" : 162,
+    "word" : "titek-titek"
+  },
+  {
+    "id" : 163,
+    "word" : "tumbong"
+  },
+  {
+    "id" : 164,
+    "word" : "tumbong-ka"
+  },
+  {
+    "id" : 165,
+    "word" : "ugma"
+  },
+  {
+    "id" : 166,
+    "word" : "ugok"
+  },
+  {
+    "id" : 167,
+    "word" : "ugok-ugok"
+  },
+  {
+    "id" : 168,
+    "word" : "ukay-ukay"
+  },
+  {
+    "id" : 169,
+    "word" : "ukinam-sanaim"
+  },
+  {
+    "id" : 170,
+    "word" : "ukinnam"
+  },
+  {
+    "id" : 171,
+    "word" : "ukit"
+  },
+  {
+    "id" : 172,
+    "word" : "uk-uk"
+  },
+  {
+    "id" : 173,
+    "word" : "uk-ukinnam"
+  },
+  {
+    "id" : 174,
+    "word" : "uk-ukinnam-sanaim"
+  },
+  {
+    "id" : 175,
+    "word" : "ulol-ka-ba"
+  },
+  {
+    "id" : 176,
+    "word" : "urag"
+  },
+  {
+    "id" : 177,
+    "word" : "urag-na-urag"
+  },
+  {
+    "id" : 178,
+    "word" : "usik"
+  },
+  {
+    "id" : 179,
+    "word" : "usik-usik"
+  },
+  {
+    "id" : 180,
+    "word" : "ut-ut"
+  },
+  {
+    "id" : 181,
+    "word" : "utok-itlog"
+  },
+  {
+    "id" : 182,
+    "word" : "utok-manok"
+  },
+  {
+    "id" : 183,
+    "word" : "utek"
+  },
+  {
+    "id" : 184,
+    "word" : "uyagon"
+  },
+  {
+    "id" : 185,
+    "word" : "uyut"
+  },
+  {
+    "id" : 186,
+    "word" : "walay batasan"
+  },
+  {
+    "id" : 187,
+    "word" : "walay-nada"
+  },
+  {
+    "id" : 188,
+    "word" : "walang-aram"
+  },
+  {
+    "id" : 189,
+    "word" : "wara-aram"
+  },
+  {
+    "id" : 190,
+    "word" : "way-ay"
+  },
+  {
+    "id" : 191,
+    "word" : "way-nada-nada"
+  },
+  {
+    "id" : 192,
+    "word" : "way-utok"
+  },
+  {
+    "id" : 193,
+    "word" : "yabag"
+  },
+  {
+    "id" : 194,
+    "word" : "yawa"
+  },
+  {
+    "id" : 195,
+    "word" : "yawa-ka"
+  },
+  {
+    "id" : 196,
+    "word" : "yawa-langga"
+  },
+  {
+    "id" : 197,
+    "word" : "yawa-sa-kamatuoran"
+  },
+  {
+    "id" : 198,
+    "word" : "yawa-yawa"
+  },
+  {
+    "id" : 199,
+    "word" : "yawa-yawa-ka"
+  },
+  {
+    "id" : 200,
+    "word" : "yawat"
+  }
+]

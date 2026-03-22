@@ -1,0 +1,442 @@
+[
+  {
+    "id" : 1,
+    "word" : "abnormal"
+  },
+  {
+    "id" : 2,
+    "word" : "adik"
+  },
+  {
+    "id" : 3,
+    "word" : "ahas"
+  },
+  {
+    "id" : 4,
+    "word" : "abusado"
+  },
+  {
+    "id" : 5,
+    "word" : "amputa"
+  },
+  {
+    "id" : 6,
+    "word" : "baboy"
+  },
+  {
+    "id" : 7,
+    "word" : "bading"
+  },
+  {
+    "id" : 8,
+    "word" : "baliw"
+  },
+  {
+    "id" : 9,
+    "word" : "balasubas"
+  },
+  {
+    "id" : 10,
+    "word" : "bastos"
+  },
+  {
+    "id" : 11,
+    "word" : "bastos-na-bastos"
+  },
+  {
+    "id" : 12,
+    "word" : "bastos-na-walanghiya"
+  },
+  {
+    "id" : 13,
+    "word" : "bastardo"
+  },
+  {
+    "id" : 14,
+    "word" : "basura"
+  },
+  {
+    "id" : 15,
+    "word" : "basura-ka"
+  },
+  {
+    "id" : 16,
+    "word" : "bayag"
+  },
+  {
+    "id" : 17,
+    "word" : "bobong-bobo"
+  },
+  {
+    "id" : 18,
+    "word" : "bobo"
+  },
+  {
+    "id" : 19,
+    "word" : "bogo"
+  },
+  {
+    "id" : 20,
+    "word" : "burat"
+  },
+  {
+    "id" : 21,
+    "word" : "buhay-hayop"
+  },
+  {
+    "id" : 22,
+    "word" : "buhay-na-demonyo"
+  },
+  {
+    "id" : 23,
+    "word" : "buwisit"
+  },
+  {
+    "id" : 24,
+    "word" : "bilat"
+  },
+  {
+    "id" : 25,
+    "word" : "bwisit"
+  },
+  {
+    "id" : 26,
+    "word" : "bwisit-na-gago"
+  },
+  {
+    "id" : 27,
+    "word" : "bunganga"
+  },
+  {
+    "id" : 28,
+    "word" : "burat"
+  },
+  {
+    "id" : 29,
+    "word" : "demonyita"
+  },
+  {
+    "id" : 30,
+    "word" : "demonyo"
+  },
+  {
+    "id" : 31,
+    "word" : "demonyo-ka-talaga"
+  },
+  {
+    "id" : 32,
+    "word" : "dugyot"
+  },
+  {
+    "id" : 33,
+    "word" : "duwag"
+  },
+  {
+    "id" : 34,
+    "word" : "duwag-na-duwag"
+  },
+  {
+    "id" : 35,
+    "word" : "gago"
+  },
+  {
+    "id" : 36,
+    "word" : "gaga"
+  },
+  {
+    "id" : 37,
+    "word" : "gagi"
+  },
+  {
+    "id" : 38,
+    "word" : "gago-ka-talaga"
+  },
+  {
+    "id" : 39,
+    "word" : "gago-amputa"
+  },
+  {
+    "id" : 40,
+    "word" : "gago-ulol"
+  },
+  {
+    "id" : 41,
+    "word" : "gunggong"
+  },
+  {
+    "id" : 42,
+    "word" : "hambog"
+  },
+  {
+    "id" : 43,
+    "word" : "hampaslupa"
+  },
+  {
+    "id" : 44,
+    "word" : "hayop"
+  },
+  {
+    "id" : 45,
+    "word" : "hayop-ka"
+  },
+  {
+    "id" : 46,
+    "word" : "hayop-ka-talaga"
+  },
+  {
+    "id" : 47,
+    "word" : "hayup"
+  },
+  {
+    "id" : 48,
+    "word" : "hindot"
+  },
+  {
+    "id" : 49,
+    "word" : "hinayupak"
+  },
+  {
+    "id" : 50,
+    "word" : "hinayupak-ka"
+  },
+  {
+    "id" : 51,
+    "word" : "hinayupak-ka-talaga"
+  },
+  {
+    "id" : 52,
+    "word" : "hudas"
+  },
+  {
+    "id" : 53,
+    "word" : "hudas-barabas"
+  },
+  {
+    "id" : 54,
+    "word" : "impyerno"
+  },
+  {
+    "id" : 55,
+    "word" : "inutil"
+  },
+  {
+    "id" : 56,
+    "word" : "itits"
+  },
+  {
+    "id" : 57,
+    "word" : "insulto"
+  },
+  {
+    "id" : 58,
+    "word" : "ipokrito"
+  },
+  {
+    "id" : 59,
+    "word" : "iyot"
+  },
+  {
+    "id" : 60,
+    "word" : "iyot-ka"
+  },
+  {
+    "id" : 61,
+    "word" : "judas"
+  },
+  {
+    "id" : 62,
+    "word" : "kupaloid"
+  },
+  {
+    "id" : 63,
+    "word" : "kupal"
+  },
+  {
+    "id" : 64,
+    "word" : "kantot"
+  },
+  {
+    "id" : 65,
+    "word" : "kantutan"
+  },
+  {
+    "id" : 66,
+    "word" : "lapastangan"
+  },
+  {
+    "id" : 67,
+    "word" : "leche"
+  },
+  {
+    "id" : 68,
+    "word" : "leche-ka"
+  },
+  {
+    "id" : 69,
+    "word" : "leche-ka-talaga"
+  },
+  {
+    "id" : 70,
+    "word" : "lecheng-buhay"
+  },
+  {
+    "id" : 71,
+    "word" : "letse-flan"
+  },
+  {
+    "id" : 72,
+    "word" : "lintik"
+  },
+  {
+    "id" : 73,
+    "word" : "lintik-ka"
+  },
+  {
+    "id" : 74,
+    "word" : "lintik-na-buhay"
+  },
+  {
+    "id" : 75,
+    "word" : "loko"
+  },
+  {
+    "id" : 76,
+    "word" : "loko-loko"
+  },
+  {
+    "id" : 77,
+    "word" : "lupang-ina"
+  },
+  {
+    "id" : 78,
+    "word" : "makapal-na-mukha"
+  },
+  {
+    "id" : 79,
+    "word" : "makasarili"
+  },
+  {
+    "id" : 80,
+    "word" : "malandi"
+  },
+  {
+    "id" : 81,
+    "word" : "malaswa"
+  },
+  {
+    "id" : 82,
+    "word" : "malibog"
+  },
+  {
+    "id" : 83,
+    "word" : "mangmang"
+  },
+  {
+    "id" : 84,
+    "word" : "mangmang-na-mangmang"
+  },
+  {
+    "id" : 85,
+    "word" : "manloloko"
+  },
+  {
+    "id" : 86,
+    "word" : "manyak"
+  },
+  {
+    "id" : 87,
+    "word" : "manyakis"
+  },
+  {
+    "id" : 88,
+    "word" : "nimal"
+  },
+  {
+    "id" : 89,
+    "word" : "ogag"
+  },
+  {
+    "id" : 90,
+    "word" : "ogag-ka"
+  },
+  {
+    "id" : 91,
+    "word" : "ogag-na-ogag"
+  },
+  {
+    "id" : 92,
+    "word" : "pakyo"
+  },
+  {
+    "id" : 93,
+    "word" : "pakyu-pakyu"
+  },
+  {
+    "id" : 94,
+    "word" : "pakyut"
+  },
+  {
+    "id" : 95,
+    "word" : "palahula"
+  },
+  {
+    "id" : 96,
+    "word" : "pangit"
+  },
+  {
+    "id" : 97,
+    "word" : "patay-gutom"
+  },
+  {
+    "id" : 98,
+    "word" : "peste"
+  },
+  {
+    "id" : 99,
+    "word" : "poke"
+  },
+  {
+    "id" : 100,
+    "word" : "poki"
+  },
+  {
+    "id" : 101,
+    "word" : "pakshet"
+  },
+  {
+    "id" : 102,
+    "word" : "pambihira"
+  },
+  {
+    "id" : 103,
+    "word" : "putragis"
+  },
+  {
+    "id" : 104,
+    "word" : "saksakan"
+  },
+  {
+    "id" : 105,
+    "word" : "shet"
+  },
+  {
+    "id" : 106,
+    "word" : "shit"
+  },
+  {
+    "id" : 107,
+    "word" : "tangina-gago"
+  },
+  {
+    "id" : 108,
+    "word" : "tangina-mo"
+  },
+  {
+    "id" : 109,
+    "word" : "tangnamo"
+  },
+  {
+    "id" : 110,
+    "word" : "ulupong"
+  }
+]
