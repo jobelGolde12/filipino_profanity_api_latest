@@ -210,7 +210,7 @@ export default function Home() {
         </section>
 
         <GithubRepoCard
-          repoUrl="https://github.com"
+          repoUrl="https://github.com/jobelGolde12/filipino_profanity_api_latest"
           repoName="filipino-profanity-api"
           description="Free API for Filipino and regional profanity words with real-time detection"
           stars={0}
