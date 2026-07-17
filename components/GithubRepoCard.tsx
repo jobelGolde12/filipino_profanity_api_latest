@@ -14,16 +14,16 @@ export function GithubRepoCard({ repoUrl, repoName, description, stars, forks }:
       href={repoUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="block p-5 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-lg)] transition-colors duration-150 hover:border-[var(--border-default)]"
+      className="block p-6 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] transition-colors duration-200 hover:border-[var(--border-default)]"
     >
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 flex items-center justify-center bg-[var(--bg-elevated)] rounded-[var(--radius-md)]">
-            <Github className="w-4.5 h-4.5 text-[var(--text-secondary)]" />
+          <div className="w-8 h-8 flex items-center justify-center bg-[var(--bg-alt)] rounded-[var(--radius-md)]">
+            <Github className="w-4 h-4 text-[var(--text-secondary)]" strokeWidth={1.5} />
           </div>
           <div>
             <h3 className="text-sm font-medium text-[var(--text-primary)]">{repoName}</h3>
-            <p className="text-xs text-[var(--text-muted)]">View Source Code</p>
+            <p className="text-xs text-[var(--text-muted)]">Open source</p>
           </div>
         </div>
         <ExternalLink className="w-4 h-4 text-[var(--text-muted)]" />

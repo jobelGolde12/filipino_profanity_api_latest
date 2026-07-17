@@ -15,23 +15,23 @@ export function ApiDocs() {
   const origin = baseUrl || "http://localhost:3000";
 
   return (
-    <section id="docs" className="py-16">
+    <section id="docs" className="py-20 sm:py-28">
       <SectionHeader
-        title="API Documentation"
+        title="Quick start"
         description="Integrate profanity detection into your application."
       />
 
       <div className="space-y-6">
-        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-lg)] p-6">
+        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-8">
           <div className="flex items-center gap-3 mb-4">
-            <Badge variant="info">GET</Badge>
+            <Badge variant="accent">GET</Badge>
             <code className="text-sm font-mono text-[var(--text-primary)]">/api/profanity</code>
           </div>
-          <p className="text-sm text-[var(--text-secondary)] mb-4">
+          <p className="text-sm text-[var(--text-secondary)] mb-5">
             Fetch profanity words with optional filtering by language and search.
           </p>
 
-          <div className="mb-4">
+          <div className="mb-5">
             <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-2">
               Parameters
             </h4>
@@ -39,7 +39,7 @@ export function ApiDocs() {
               <div className="flex gap-4">
                 <code className="font-mono text-[var(--accent)] shrink-0">type</code>
                 <span className="text-[var(--text-tertiary)]">
-                  Filter by language — <code>filipino</code>, <code>regional</code>, or <code>all</code> (default)
+                  Filter by language: <code>filipino</code>, <code>regional</code>, or <code>all</code>
                 </span>
               </div>
               <div className="flex gap-4">
@@ -53,16 +53,16 @@ export function ApiDocs() {
 const data = await response.json();`}</CodeBlock>
         </div>
 
-        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-lg)] p-6">
+        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-8">
           <div className="flex items-center gap-3 mb-4">
-            <Badge variant="warning">POST</Badge>
+            <Badge variant="info">POST</Badge>
             <code className="text-sm font-mono text-[var(--text-primary)]">/api/check</code>
           </div>
-          <p className="text-sm text-[var(--text-secondary)] mb-4">
+          <p className="text-sm text-[var(--text-secondary)] mb-5">
             Check any text for profanity and receive matched words with details.
           </p>
 
-          <div className="mb-4">
+          <div className="mb-5">
             <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-2">
               Request Body
             </h4>
@@ -79,8 +79,8 @@ const data = await response.json();`}</CodeBlock>
 const data = await response.json();`}</CodeBlock>
         </div>
 
-        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-lg)] p-6">
-          <h3 className="text-sm font-medium text-[var(--text-primary)] mb-4">Python Example</h3>
+        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-8">
+          <h3 className="text-sm font-medium text-[var(--text-primary)] mb-4">Python</h3>
           <CodeBlock language="Python">{`import requests
 
 response = requests.get('${origin}/api/profanity?type=all')

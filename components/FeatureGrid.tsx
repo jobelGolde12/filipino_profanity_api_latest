@@ -4,12 +4,12 @@ const features = [
   {
     icon: Database,
     title: "Turso Database",
-    description: "Powered by libSQL for fast, distributed SQLite at the edge.",
+    description: "Distributed SQLite at the edge via libSQL.",
   },
   {
     icon: Code,
     title: "REST API",
-    description: "Clean REST endpoints with type filtering and word search.",
+    description: "Clean endpoints with type filtering and word search.",
   },
   {
     icon: Zap,
@@ -19,37 +19,39 @@ const features = [
   {
     icon: Shield,
     title: "JSON Fallback",
-    description: "Works even without a database connection via bundled data.",
+    description: "Works without a database connection via bundled data.",
   },
   {
     icon: Globe,
     title: "Regional Support",
-    description: "Filipino and Visayan regional dialect profanity coverage.",
+    description: "Filipino and Visayan dialect coverage.",
   },
 ];
 
 export function FeatureGrid() {
   return (
-    <section id="features" className="py-16">
-      <div className="mb-8">
-        <h2 className="text-2xl font-semibold text-[var(--text-primary)] tracking-tight">Features</h2>
-        <p className="mt-2 text-[var(--text-secondary)]">
-          Everything you need for Filipino profanity detection.
-        </p>
+    <section id="features" className="py-20 sm:py-28">
+      <div className="mb-12">
+        <h2
+          className="text-3xl sm:text-4xl font-semibold text-[var(--text-primary)] tracking-tight"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          What you get
+        </h2>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[var(--border-subtle)] rounded-[var(--radius-xl)] overflow-hidden">
         {features.map((feature) => {
           const Icon = feature.icon;
           return (
             <div
               key={feature.title}
-              className="p-5 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-lg)] transition-colors duration-150 hover:border-[var(--border-default)]"
+              className="p-8 bg-[var(--bg-surface)]"
             >
-              <div className="w-9 h-9 flex items-center justify-center bg-[var(--accent-muted)] rounded-[var(--radius-md)] mb-3">
-                <Icon className="w-4.5 h-4.5 text-[var(--accent)]" />
+              <div className="w-8 h-8 flex items-center justify-center bg-[var(--accent-muted)] rounded-[var(--radius-md)] mb-4">
+                <Icon className="w-4 h-4 text-[var(--accent)]" strokeWidth={1.5} />
               </div>
-              <h3 className="font-medium text-[var(--text-primary)] mb-1 text-sm">{feature.title}</h3>
+              <h3 className="font-medium text-[var(--text-primary)] mb-1.5 text-[15px]">{feature.title}</h3>
               <p className="text-sm text-[var(--text-tertiary)] leading-relaxed">{feature.description}</p>
             </div>
           );

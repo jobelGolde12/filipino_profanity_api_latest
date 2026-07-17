@@ -45,9 +45,9 @@ export default function Home() {
           filipino: filipinoWords.length,
           regional: regionalWords.length,
           severityDistribution: [
-            { name: "Low", count: Math.floor(data.count * 0.2), color: "#22c55e" },
-            { name: "Medium", count: Math.floor(data.count * 0.5), color: "#eab308" },
-            { name: "High", count: Math.floor(data.count * 0.3), color: "#ef4444" },
+            { name: "Low", count: Math.floor(data.count * 0.2), color: "#4A7C3F" },
+            { name: "Medium", count: Math.floor(data.count * 0.5), color: "#B8860B" },
+            { name: "High", count: Math.floor(data.count * 0.3), color: "#C23B22" },
           ],
         });
       }
@@ -57,17 +57,17 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[var(--bg-base)]">
       <Header />
 
-      <main className="mx-auto max-w-5xl px-4 sm:px-6">
+      <main className="mx-auto max-w-[1200px] px-6 sm:px-8">
         <Hero />
         <FeatureGrid />
         <DashboardStats stats={stats} />
         <ApiTester baseUrl={baseUrl} />
         <ApiDocs />
 
-        <section className="py-16">
+        <section className="py-20 sm:py-28">
           <GithubRepoCard
             repoUrl="https://github.com/jobelGolde12/filipino_profanity_api_latest"
             repoName="filipino-profanity-api"

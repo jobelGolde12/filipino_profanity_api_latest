@@ -80,13 +80,13 @@ export function JsonViewer({ data, title }: JsonViewerProps) {
           <h3 className="text-xs font-medium text-[var(--text-muted)]">{title}</h3>
           <button
             onClick={copyToClipboard}
-            className="px-2.5 py-1 text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)] bg-[var(--bg-elevated)] rounded-[var(--radius-sm)] transition-colors"
+            className="px-2.5 py-1 text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)] bg-[var(--bg-alt)] border border-[var(--border-subtle)] rounded-[var(--radius-pill)] transition-colors duration-200"
           >
             {copied ? "Copied!" : "Copy"}
           </button>
         </div>
       )}
-      <pre className="p-4 bg-[var(--bg-base)] border border-[var(--border-subtle)] rounded-[var(--radius-md)] overflow-auto text-sm font-mono max-h-80">
+      <pre className="p-4 bg-[var(--bg-alt)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] overflow-auto text-sm font-mono max-h-80">
         <code className="text-[var(--text-secondary)] leading-relaxed">{renderValue(data)}</code>
       </pre>
     </div>

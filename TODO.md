@@ -1,450 +1,644 @@
-# AI Agent Prompt: Complete Next.js Redesign (Senior-Level Implementation)
+---
+name: premium-editorial-landing
+description: Design and implement premium editorial-style landing pages and marketing websites using modern 2026 UI principles. Prioritize typography, whitespace, composition, accessibility, and performance over decorative effects.
+---
 
-## Objective
+# Premium Editorial Landing Design Skill
 
-Your task is to completely redesign the existing Next.js project into a modern, premium-quality web application while **preserving all existing functionality**.
+## Purpose
 
-This is **NOT** a simple UI refresh. The goal is to rebuild the user experience using current (2026) frontend standards and implementation practices that a senior frontend engineer or product designer would follow.
+This skill transforms ordinary landing pages into premium editorial experiences similar to high-end SaaS products.
+
+This is NOT a template.
+
+Every page should feel intentional, elegant, spacious, and professionally designed.
 
 ---
 
-# CRITICAL FIRST STEP (MANDATORY)
+# Design DNA
 
-Before making ANY code changes:
+The visual direction follows these principles:
 
-1. Inspect the entire existing project.
-2. Understand the current architecture.
-3. Understand every feature and workflow.
-4. Identify reusable components.
-5. Read ALL documentation inside this project.
-6. **Locate and read the design rules from the external `ai-superpowers` directory (outside the current project directory).**
+- Editorial Design
+- Swiss Layout System
+- Apple Human Interface
+- Vercel Simplicity
+- Linear Minimalism
+- Modern SaaS Marketing (2026)
 
-The external design rules are the highest priority.
+The UI should communicate confidence through restraint.
 
-Examples include (but are not limited to):
-
-- premium-editorial-ui.md
-- design principles
-- motion guidelines
-- spacing rules
-- typography rules
-- accessibility standards
-- component rules
-- animation rules
-- color guidelines
-- dashboard guidelines
-- interaction guidelines
-
-Do NOT begin implementation until every applicable design document has been reviewed.
-
-If the external directory cannot be located, STOP and ask for its location.
+Avoid unnecessary decoration.
 
 ---
 
-# Ask Questions Before Implementation
+# Overall Theme
 
-Do NOT immediately start coding.
+Style:
 
-First analyze the application and ask any necessary clarification questions regarding:
+- Premium
+- Minimal
+- Editorial
+- Elegant
+- Sophisticated
+- Spacious
+- Calm
+- Professional
 
-- target users
-- business goals
-- branding
-- desired visual direction
-- pages that should remain unchanged
-- pages that require complete redesign
-- performance constraints
-- accessibility requirements
-- mobile priorities
-- expected animations
-- dashboard expectations
+Avoid:
 
-Only begin implementation after clarification.
-
----
-
-# Preserve Existing Functionality
-
-This is extremely important.
-
-You are redesigning the application.
-
-You are NOT rebuilding its logic.
-
-Do NOT remove:
-
-- authentication
-- routing
-- business logic
-- API integrations
-- server actions
-- database connections
-- forms
-- validations
-- permissions
-- existing features
-
-Only improve:
-
-- design
-- layout
-- spacing
-- interactions
-- responsiveness
-- visual hierarchy
-- usability
-- accessibility
-
-If existing code can be reused, reuse it.
+- Glassmorphism overload
+- Neon colors
+- Cartoon illustrations
+- Overly rounded components
+- Loud gradients
+- Visual clutter
 
 ---
 
-# Design Philosophy
+# Typography
 
-The final result should look like a premium SaaS application released in 2026.
+Typography is the hero.
 
-Avoid template-looking interfaces.
+Content should drive the design.
 
-Avoid outdated dashboards.
+## Heading Style
 
-Avoid generic Tailwind examples.
+Characteristics:
 
-Aim for:
+- Very large
+- High contrast
+- Elegant
+- Thin-to-regular weight
+- Tight hierarchy
+- Luxurious appearance
 
-- Apple quality
-- Linear quality
-- Vercel quality
-- Notion quality
-- Stripe quality
-- Framer quality
+Recommended fonts:
 
-without directly copying any of them.
+Primary Serif:
 
----
+- Instrument Serif
+- Canela
+- Cormorant Garamond
+- EB Garamond
+- Libre Bodoni
 
-# Senior Frontend Standards
+Fallback:
 
-Implement as if reviewing code for a FAANG-level frontend team.
+- Georgia
 
-Every decision should have reasoning.
+Example sizing:
 
-Every component should have a clear responsibility.
+Hero
 
-Avoid unnecessary complexity.
+- 80–120px Desktop
+- 56–72px Tablet
+- 40–52px Mobile
 
-Avoid duplicated code.
+Weight
 
-Prefer composition.
+300–500
 
-Prefer reusable UI primitives.
+Letter spacing
 
-Maintain clean architecture.
+Very slightly negative.
 
----
+Line height
 
-# Visual Design Requirements
-
-The redesign should include:
-
-## Modern Layout
-
-- better content hierarchy
-- generous whitespace
-- premium spacing
-- balanced composition
-- responsive grids
-- modern containers
-- adaptive sections
+0.9–1.05
 
 ---
 
-## Typography
+## Body Font
 
-Use strong typography hierarchy.
+Use a clean modern sans-serif.
 
-Clear distinction between:
+Recommended:
 
-- page titles
-- section titles
-- descriptions
-- captions
-- labels
-- helper text
+- Inter
+- Geist
+- Satoshi
+- General Sans
+- Manrope
 
-Readable line lengths.
+Weight:
 
-Proper font sizing.
+400–500
 
-Consistent weights.
+Body size:
 
-Excellent contrast.
+16–18px
 
----
+Small text:
 
-## Color System
-
-Build a complete design system.
-
-Include:
-
-- background colors
-- surface colors
-- elevated surfaces
-- cards
-- borders
-- accents
-- muted colors
-- success
-- warning
-- danger
-- information
-
-Use semantic color tokens.
-
-Avoid random Tailwind color usage.
+13–14px
 
 ---
 
-## Components
+# Color Palette
 
-Redesign every reusable component.
+Overall appearance:
 
-Examples:
+Warm minimalism.
 
-- buttons
-- cards
-- forms
-- inputs
-- selects
-- dialogs
-- sheets
-- drawers
-- tooltips
-- popovers
-- tables
-- pagination
-- navigation
-- sidebar
-- breadcrumbs
-- badges
-- avatars
-- alerts
-- empty states
-- loading states
-- skeletons
+### Background
 
-Everything should feel cohesive.
+Primary
+
+#FAFAF8
+
+Alternative
+
+#F8F8F5
+
+### Text
+
+Primary
+
+#0F0F0F
+
+Secondary
+
+#4B4B4B
+
+Muted
+
+#8A8A8A
+
+### Accent
+
+Olive Green
+
+#6B7A3D
+
+Alternative
+
+#5E6B36
+
+Hover
+
+#4F5A2F
+
+### Border
+
+#E7E7E3
+
+### Card
+
+White
+
+#FFFFFF
 
 ---
 
-## Dashboard (if applicable)
+# Layout Philosophy
 
-If the project contains dashboards:
+Everything breathes.
 
-Redesign them completely.
+Whitespace is a design element.
 
 Use:
 
-- editorial layouts
-- balanced cards
-- meaningful visual hierarchy
-- better spacing
-- premium widgets
-- responsive metrics
-- charts with breathing room
-- modern data presentation
+Large margins
 
-Avoid dashboard clutter.
+Large section spacing
 
----
+Generous padding
 
-## Motion
+Wide content containers
 
-Follow the animation rules inside ai-superpowers.
+Example:
 
-Animations should be:
+Container
 
-- subtle
-- meaningful
-- performant
-- interruptible
+max-width:
+1280–1440px
 
-Avoid flashy animations.
+Horizontal padding
 
-Use animation only when it improves UX.
+32–64px
 
-Examples:
+Section spacing
 
-- page transitions
-- hover states
-- micro interactions
-- button feedback
-- modal transitions
-- navigation transitions
-- loading animations
-- reveal animations
+120–200px
 
-Respect reduced-motion preferences.
+Card spacing
+
+32–48px
+
+Never cram components together.
 
 ---
 
-## Responsive Design
+# Navigation
 
-Desktop is NOT enough.
+Navigation should feel light.
 
-Perfect support for:
+Characteristics:
 
-- mobile
-- tablet
-- laptop
-- desktop
-- ultrawide
+Small logo
 
-No horizontal scrolling.
+Minimal links
 
-No broken layouts.
+Lots of empty space
 
-Touch-friendly interactions.
+Right-aligned CTA
 
----
+Sticky only if necessary.
 
-## Accessibility
+Navigation height:
 
-Meet modern accessibility expectations.
-
-Ensure:
-
-- keyboard navigation
-- focus states
-- ARIA attributes where appropriate
-- sufficient color contrast
-- semantic HTML
-- screen reader compatibility
-- reduced motion support
+72–88px
 
 ---
 
-## Performance
+# Hero Section
 
-Do not sacrifice performance.
+The hero should immediately communicate confidence.
 
-Optimize:
+Structure:
 
-- bundle size
-- rendering
-- lazy loading
-- dynamic imports
-- image optimization
-- font loading
-- animations
-- hydration
+Large heading
 
-Avoid unnecessary re-renders.
+↓
+
+Short supporting paragraph
+
+↓
+
+Primary CTA
+
+↓
+
+Product showcase
+
+↓
+
+Background composition
+
+Avoid multiple buttons unless needed.
 
 ---
 
-## Code Quality
+# Images
 
-Use clean architecture.
+Images should look premium.
 
 Requirements:
 
-- reusable components
-- feature organization
-- consistent naming
-- strong typing
-- no dead code
-- no duplicated logic
-- readable code
-- maintainable structure
+Large
+
+High quality
+
+Rounded corners
+
+Minimal shadows
+
+Natural colors
+
+Avoid stock-photo appearance.
+
+Use oversized product mockups.
 
 ---
 
-## Next.js Best Practices
+# Cards
 
-Follow current Next.js best practices.
+Cards should feel elevated through spacing, not shadows.
+
+Radius:
+
+20–28px
+
+Border:
+
+1px solid neutral
+
+Shadow:
+
+Very subtle
+
+Never heavy.
+
+---
+
+# Buttons
+
+Primary
+
+Background
+
+Olive Green
+
+Text
+
+White
+
+Radius
+
+999px
+
+Padding
+
+16px × 28px
+
+Hover
+
+Slight darkening
+
+Tiny lift
+
+Transition
+
+200ms
+
+Secondary buttons should remain understated.
+
+---
+
+# Grid System
+
+Use CSS Grid.
+
+Preferred layouts:
+
+12-column desktop
+
+6-column tablet
+
+1–2 column mobile
+
+Never force symmetry.
+
+Allow asymmetrical layouts.
+
+---
+
+# Spacing Scale
+
+Use an 8px system.
+
+Examples:
+
+4
+
+8
+
+12
+
+16
+
+24
+
+32
+
+40
+
+48
+
+64
+
+80
+
+96
+
+120
+
+160
+
+Never use arbitrary spacing.
+
+---
+
+# Border Radius
+
+Buttons
+
+999px
+
+Cards
+
+24px
+
+Images
+
+20–28px
+
+Inputs
+
+16px
+
+Maintain consistency.
+
+---
+
+# Shadows
+
+Minimal.
+
+Example:
+
+0 8px 24px rgba(0,0,0,.05)
+
+Avoid deep floating shadows.
+
+---
+
+# Motion
+
+Motion should support usability.
 
 Use:
 
-- App Router conventions
-- Server Components where appropriate
-- Client Components only when necessary
-- Suspense
-- Error boundaries
-- Loading UI
-- Route groups when beneficial
-- Metadata API
-- optimized image handling
+Fade
+
+Slide
+
+Scale
+
+Opacity
+
+Small transforms
+
+Duration
+
+150–350ms
+
+Avoid:
+
+Bounce
+
+Elastic
+
+Spin
+
+Large parallax
+
+Over-animation
 
 ---
 
-## UI Consistency
+# Components
 
-Everything should feel like one design system.
+Every component should have:
 
-Maintain consistency in:
+Clear hierarchy
 
-- spacing
-- radius
-- shadows
-- borders
-- typography
-- icon sizing
-- padding
-- motion
-- colors
-- interactions
+Comfortable spacing
 
-No component should feel out of place.
+Consistent typography
+
+Minimal visual noise
+
+Reusable API
+
+Strong accessibility
 
 ---
 
-# What NOT To Do
+# Responsive Rules
 
-Do NOT:
+Design mobile first.
 
-- change business logic
-- break existing features
-- introduce unnecessary dependencies
-- overuse gradients
-- overuse glassmorphism
-- overuse animations
-- create inconsistent spacing
-- mix multiple design styles
-- hardcode values repeatedly
-- create duplicate components
-- ignore accessibility
-- ignore responsiveness
+Desktop should scale naturally.
 
----
+Avoid:
 
-# Deliverables
+Horizontal scrolling
 
-During implementation provide:
+Tiny tap targets
 
-1. Architecture improvements
-2. Component improvements
-3. Design decisions
-4. Accessibility improvements
-5. Performance improvements
-6. Responsive improvements
-7. UX improvements
-8. Refactoring summary
+Oversized typography
+
+Broken spacing
 
 ---
 
-# Final Goal
+# Accessibility
 
-The finished application should:
+Always ensure:
 
-- look professionally designed
-- feel premium
-- have excellent usability
-- follow the external `ai-superpowers` design rules
-- preserve all existing functionality
-- be responsive across devices
-- be accessible
-- be maintainable
-- reflect the quality expected from a senior frontend engineer delivering a production-ready Next.js application.
+Semantic HTML
 
-Strictly! do not implement a look like AI generated design, you must follow the senior developer design and code implementation.
+Keyboard navigation
+
+Visible focus
+
+WCAG AA contrast
+
+ARIA labels where needed
+
+Reduced motion support
+
+---
+
+# Performance
+
+Prefer:
+
+Server Components
+
+Image optimization
+
+Lazy loading
+
+Dynamic imports
+
+Minimal dependencies
+
+Avoid unnecessary client rendering.
+
+---
+
+# Code Standards
+
+Components should be:
+
+Reusable
+
+Composable
+
+Typed
+
+Small
+
+Readable
+
+Maintainable
+
+Avoid duplicate UI.
+
+---
+
+# Visual Hierarchy
+
+Every page should naturally guide the eye.
+
+Priority:
+
+1. Hero headline
+2. Supporting description
+3. CTA
+4. Product visual
+5. Supporting content
+6. Features
+7. Testimonials
+8. Footer
+
+---
+
+# AI Implementation Rules
+
+Before changing any page:
+
+1. Analyze the existing layout.
+2. Preserve business logic.
+3. Improve only presentation unless instructed otherwise.
+4. Reuse existing components where appropriate.
+5. Refactor duplicated UI.
+6. Follow this skill consistently across the project.
+
+Never mix multiple design languages.
+
+Every page should feel like it belongs to the same premium design system.
+
+---
+
+# Inspiration Keywords
+
+- Editorial UI
+- Luxury Minimalism
+- Swiss Design
+- Apple Aesthetic
+- Linear UI
+- Vercel Design
+- High-end SaaS
+- Premium Marketing Website
+- Typography-first Design
+- Spacious Composition
+
+---
+
+# Success Criteria
+
+The finished interface should feel:
+
+✓ Premium
+
+✓ Calm
+
+✓ Elegant
+
+✓ Modern
+
+✓ Sophisticated
+
+✓ Fast
+
+✓ Accessible
+
+✓ Timeless
+
+✓ Production Ready
+
+✓ Comparable to a professionally designed SaaS landing page released in 2026.

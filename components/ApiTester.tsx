@@ -68,19 +68,19 @@ export function ApiTester({ baseUrl }: ApiTesterProps) {
   };
 
   return (
-    <section id="api-tester" className="py-16">
+    <section id="api-tester" className="py-20 sm:py-28">
       <SectionHeader
         title="API Tester"
-        description="Test the API endpoints directly from your browser."
+        description="Test the endpoints directly from your browser."
       />
 
-      <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-lg)] p-6">
-        <div className="flex gap-1 mb-6 p-1 bg-[var(--bg-elevated)] rounded-[var(--radius-md)] w-fit">
+      <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-8">
+        <div className="flex gap-1 mb-8 p-1 bg-[var(--bg-alt)] rounded-[var(--radius-pill)] w-fit border border-[var(--border-subtle)]">
           <button
             onClick={() => setActiveTab("fetch")}
-            className={`px-4 py-1.5 text-sm font-medium rounded-[var(--radius-sm)] transition-colors ${
+            className={`px-5 py-2 text-sm font-medium rounded-[var(--radius-pill)] transition-all duration-200 ${
               activeTab === "fetch"
-                ? "bg-[var(--bg-surface)] text-[var(--text-primary)] shadow-sm"
+                ? "bg-[var(--bg-surface)] text-[var(--text-primary)] shadow-[var(--shadow-sm)]"
                 : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
             }`}
           >
@@ -88,9 +88,9 @@ export function ApiTester({ baseUrl }: ApiTesterProps) {
           </button>
           <button
             onClick={() => setActiveTab("check")}
-            className={`px-4 py-1.5 text-sm font-medium rounded-[var(--radius-sm)] transition-colors ${
+            className={`px-5 py-2 text-sm font-medium rounded-[var(--radius-pill)] transition-all duration-200 ${
               activeTab === "check"
-                ? "bg-[var(--bg-surface)] text-[var(--text-primary)] shadow-sm"
+                ? "bg-[var(--bg-surface)] text-[var(--text-primary)] shadow-[var(--shadow-sm)]"
                 : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
             }`}
           >
@@ -99,7 +99,7 @@ export function ApiTester({ baseUrl }: ApiTesterProps) {
         </div>
 
         {activeTab === "fetch" && (
-          <div className="space-y-4">
+          <div className="space-y-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Select
                 label="Type"
@@ -117,14 +117,14 @@ export function ApiTester({ baseUrl }: ApiTesterProps) {
                 onChange={(e) => setSearchWord(e.target.value)}
               />
             </div>
-            <Button onClick={runApiTest} disabled={loading} className="w-full">
+            <Button onClick={runApiTest} disabled={loading} className="w-full sm:w-auto">
               {loading ? "Loading..." : "Run API Test"}
             </Button>
           </div>
         )}
 
         {activeTab === "check" && (
-          <div className="space-y-4">
+          <div className="space-y-5">
             <div className="space-y-1.5">
               <label className="block text-sm font-medium text-[var(--text-secondary)]">
                 Text to Check
@@ -134,29 +134,29 @@ export function ApiTester({ baseUrl }: ApiTesterProps) {
                 onChange={(e) => setCheckText(e.target.value)}
                 placeholder="Enter text to check for profanity..."
                 rows={4}
-                className="w-full px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-md)] text-[var(--text-primary)] placeholder-[var(--text-muted)] text-sm resize-none transition-colors duration-150 focus:border-[var(--accent)] focus:outline-none"
+                className="w-full px-3 py-2.5 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-lg)] text-[var(--text-primary)] placeholder-[var(--text-muted)] text-sm resize-none transition-colors duration-200 focus:border-[var(--accent)] focus:outline-none"
               />
             </div>
-            <Button onClick={runCheckTest} disabled={loading} className="w-full">
-              {loading ? "Checking..." : "Check Text for Profanity"}
+            <Button onClick={runCheckTest} disabled={loading} className="w-full sm:w-auto">
+              {loading ? "Checking..." : "Check Text"}
             </Button>
           </div>
         )}
 
         {error && (
-          <div className="mt-4 p-3 bg-[var(--danger-muted)] border border-[var(--danger)]/15 rounded-[var(--radius-md)]">
-            <p className="text-sm text-[var(--danger)]">{error}</p>
+          <div className="mt-6 p-4 bg-[var(--error-muted)] border border-[var(--error)]/10 rounded-[var(--radius-lg)]">
+            <p className="text-sm text-[var(--error)]">{error}</p>
           </div>
         )}
 
         {loading && (
-          <div className="mt-4 flex justify-center">
+          <div className="mt-6 flex justify-center">
             <div className="w-5 h-5 border-2 border-[var(--border-default)] border-t-[var(--accent)] rounded-full animate-spin" />
           </div>
         )}
 
         {result && !loading && (
-          <div className="mt-4">
+          <div className="mt-6">
             <JsonViewer data={result} title="Response" />
           </div>
         )}

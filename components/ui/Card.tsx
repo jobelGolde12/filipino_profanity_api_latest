@@ -9,9 +9,9 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
     return (
       <div
         ref={ref}
-        className={`bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-lg)] p-6 ${
+        className={`bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-6 ${
           interactive
-            ? "transition-colors duration-150 hover:border-[var(--border-default)] cursor-pointer"
+            ? "transition-colors duration-200 hover:border-[var(--border-default)] cursor-pointer"
             : ""
         } ${className}`}
         {...props}
