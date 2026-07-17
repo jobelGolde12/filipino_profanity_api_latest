@@ -3,13 +3,10 @@
 import dynamic from "next/dynamic";
 import { SectionHeader } from "./ui/SectionHeader";
 
-const BarChart = dynamic(() => import("recharts").then((m) => m.BarChart), { ssr: false });
-const Bar = dynamic(() => import("recharts").then((m) => m.Bar), { ssr: false });
-const XAxis = dynamic(() => import("recharts").then((m) => m.XAxis), { ssr: false });
-const YAxis = dynamic(() => import("recharts").then((m) => m.YAxis), { ssr: false });
-const Tooltip = dynamic(() => import("recharts").then((m) => m.Tooltip), { ssr: false });
-const ResponsiveContainer = dynamic(() => import("recharts").then((m) => m.ResponsiveContainer), { ssr: false });
-const Cell = dynamic(() => import("recharts").then((m) => m.Cell), { ssr: false });
+const SeverityChart = dynamic(
+  () => import("./SeverityChart").then((m) => m.SeverityChart),
+  { ssr: false }
+);
 
 interface Stats {
   total: number;
@@ -40,7 +37,7 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
         {statConfig.map((stat) => (
           <div
             key={stat.key}
-            className="p-8 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)]"
+            className="p-8 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] transition-colors duration-200 hover:border-[var(--border-default)]"
           >
             <p className="text-sm text-[var(--text-muted)] mb-2">{stat.label}</p>
             <p
@@ -54,41 +51,21 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
       </div>
 
       <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-8">
-        <h3 className="text-sm font-medium text-[var(--text-muted)] mb-6">Severity Distribution</h3>
-        <div className="h-56">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={stats.severityDistribution} barSize={40}>
-              <XAxis
-                dataKey="name"
-                stroke="var(--border-default)"
-                fontSize={12}
-                tickLine={false}
-                axisLine={false}
-              />
-              <YAxis
-                stroke="var(--border-default)"
-                fontSize={12}
-                tickLine={false}
-                axisLine={false}
-              />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "var(--bg-surface)",
-                  border: "1px solid var(--border-subtle)",
-                  borderRadius: "var(--radius-lg)",
-                  color: "var(--text-primary)",
-                  fontSize: 13,
-                }}
-                cursor={{ fill: "var(--accent-muted)" }}
-              />
-              <Bar dataKey="count" radius={[4, 4, 0, 0]}>
-                {stats.severityDistribution.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-sm font-medium text-[var(--text-muted)]">Severity Distribution</h3>
+          <div className="flex items-center gap-4 text-xs text-[var(--text-muted)]">
+            {stats.severityDistribution.map((entry) => (
+              <div key={entry.name} className="flex items-center gap-1.5">
+                <span
+                  className="w-2 h-2 rounded-full"
+                  style={{ backgroundColor: entry.color }}
+                />
+                {entry.name}
+              </div>
+            ))}
+          </div>
         </div>
+        <SeverityChart data={stats.severityDistribution} />
       </div>
     </section>
   );

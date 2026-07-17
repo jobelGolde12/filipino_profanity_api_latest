@@ -2,7 +2,7 @@ import { Badge } from "./ui/Badge";
 
 export function Hero() {
   return (
-    <section className="pt-24 pb-20 sm:pt-32 sm:pb-28">
+    <section className="pt-14 pb-20 sm:pt-16 sm:pb-28">
       <div className="text-center">
         <Badge variant="accent" dot className="mb-8">
           API Live
