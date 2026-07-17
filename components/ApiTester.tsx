@@ -1,7 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { JsonViewer } from "./JsonViewer";
+import { SectionHeader } from "./ui/SectionHeader";
+import { Button } from "./ui/Button";
+import { Input } from "./ui/Input";
+import { Select } from "./ui/Select";
 import { useState } from "react";
 
 interface ApiTesterProps {
@@ -65,112 +68,99 @@ export function ApiTester({ baseUrl }: ApiTesterProps) {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.2 }}
-      className="w-full max-w-4xl mx-auto p-6 bg-zinc-900/50 backdrop-blur-xl rounded-2xl border border-zinc-800"
-    >
-      <h2 className="text-2xl font-bold text-white mb-6">API Tester</h2>
+    <section id="api-tester" className="py-16">
+      <SectionHeader
+        title="API Tester"
+        description="Test the API endpoints directly from your browser."
+      />
 
-      <div className="flex gap-2 mb-6">
-        <button
-          onClick={() => setActiveTab("fetch")}
-          className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-            activeTab === "fetch"
-              ? "bg-blue-600 text-white"
-              : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
-          }`}
-        >
-          Fetch Words
-        </button>
-        <button
-          onClick={() => setActiveTab("check")}
-          className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-            activeTab === "check"
-              ? "bg-blue-600 text-white"
-              : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
-          }`}
-        >
-          Check Text
-        </button>
-      </div>
+      <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-lg)] p-6">
+        <div className="flex gap-1 mb-6 p-1 bg-[var(--bg-elevated)] rounded-[var(--radius-md)] w-fit">
+          <button
+            onClick={() => setActiveTab("fetch")}
+            className={`px-4 py-1.5 text-sm font-medium rounded-[var(--radius-sm)] transition-colors ${
+              activeTab === "fetch"
+                ? "bg-[var(--bg-surface)] text-[var(--text-primary)] shadow-sm"
+                : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
+            }`}
+          >
+            Fetch Words
+          </button>
+          <button
+            onClick={() => setActiveTab("check")}
+            className={`px-4 py-1.5 text-sm font-medium rounded-[var(--radius-sm)] transition-colors ${
+              activeTab === "check"
+                ? "bg-[var(--bg-surface)] text-[var(--text-primary)] shadow-sm"
+                : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
+            }`}
+          >
+            Check Text
+          </button>
+        </div>
 
-      {activeTab === "fetch" && (
-        <div className="space-y-4">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1">
-              <label className="block text-sm font-medium text-zinc-400 mb-2">Type</label>
-              <select
+        {activeTab === "fetch" && (
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Select
+                label="Type"
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value as TestType)}
-                className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="all">All</option>
                 <option value="filipino">Filipino</option>
                 <option value="regional">Regional</option>
-              </select>
-            </div>
-            <div className="flex-1">
-              <label className="block text-sm font-medium text-zinc-400 mb-2">Search Word (optional)</label>
-              <input
-                type="text"
+              </Select>
+              <Input
+                label="Search Word"
+                placeholder="e.g., gago"
                 value={searchWord}
                 onChange={(e) => setSearchWord(e.target.value)}
-                placeholder="e.g., gago"
-                className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
+            <Button onClick={runApiTest} disabled={loading} className="w-full">
+              {loading ? "Loading..." : "Run API Test"}
+            </Button>
           </div>
-          <button
-            onClick={runApiTest}
-            disabled={loading}
-            className="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
-          >
-            {loading ? "Loading..." : "Run API Test"}
-          </button>
-        </div>
-      )}
+        )}
 
-      {activeTab === "check" && (
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-zinc-400 mb-2">Text to Check</label>
-            <textarea
-              value={checkText}
-              onChange={(e) => setCheckText(e.target.value)}
-              placeholder="Enter text to check for profanity..."
-              rows={4}
-              className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-            />
+        {activeTab === "check" && (
+          <div className="space-y-4">
+            <div className="space-y-1.5">
+              <label className="block text-sm font-medium text-[var(--text-secondary)]">
+                Text to Check
+              </label>
+              <textarea
+                value={checkText}
+                onChange={(e) => setCheckText(e.target.value)}
+                placeholder="Enter text to check for profanity..."
+                rows={4}
+                className="w-full px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-[var(--radius-md)] text-[var(--text-primary)] placeholder-[var(--text-muted)] text-sm resize-none transition-colors duration-150 focus:border-[var(--accent)] focus:outline-none"
+              />
+            </div>
+            <Button onClick={runCheckTest} disabled={loading} className="w-full">
+              {loading ? "Checking..." : "Check Text for Profanity"}
+            </Button>
           </div>
-          <button
-            onClick={runCheckTest}
-            disabled={loading}
-            className="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
-          >
-            {loading ? "Checking..." : "Check Text for Profanity"}
-          </button>
-        </div>
-      )}
+        )}
 
-      {error && (
-        <div className="mt-6 p-4 bg-red-900/30 border border-red-800 rounded-lg">
-          <p className="text-red-400">{error}</p>
-        </div>
-      )}
+        {error && (
+          <div className="mt-4 p-3 bg-[var(--danger-muted)] border border-[var(--danger)]/15 rounded-[var(--radius-md)]">
+            <p className="text-sm text-[var(--danger)]">{error}</p>
+          </div>
+        )}
 
-      {result && (
-        <div className="mt-6">
-          <JsonViewer data={result} title="Response" />
-        </div>
-      )}
+        {loading && (
+          <div className="mt-4 flex justify-center">
+            <div className="w-5 h-5 border-2 border-[var(--border-default)] border-t-[var(--accent)] rounded-full animate-spin" />
+          </div>
+        )}
 
-      {loading && (
-        <div className="mt-6 flex justify-center">
-          <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
-        </div>
-      )}
-    </motion.div>
+        {result && !loading && (
+          <div className="mt-4">
+            <JsonViewer data={result} title="Response" />
+          </div>
+        )}
+      </div>
+    </section>
   );
 }

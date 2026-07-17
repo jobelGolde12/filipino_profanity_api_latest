@@ -1,241 +1,450 @@
-Project Title
+# AI Agent Prompt: Complete Next.js Redesign (Senior-Level Implementation)
 
-Free Filipino Profanity API
+## Objective
 
-🧠 Objective
+Your task is to completely redesign the existing Next.js project into a modern, premium-quality web application while **preserving all existing functionality**.
 
-Build a fully functional web app using my existing Next.js + TailwindCSS project.
+This is **NOT** a simple UI refresh. The goal is to rebuild the user experience using current (2026) frontend standards and implementation practices that a senior frontend engineer or product designer would follow.
 
-⚠️ IMPORTANT:
+---
 
-I already have a JSON API for Filipino and Regional profanity inside /app/api
-You MUST reuse and enhance it, NOT recreate from scratch
-⚙️ CORE REQUIREMENTS
-1. 🔁 USE EXISTING API (CRITICAL)
-Locate existing API inside:
-/app/api/
-Extend it to support:
-?type=filipino
-?type=regional
-?type=all
-?word=<search>
-Ensure:
-Clean filtering logic
-Fast response
-No duplication of logic
-🗄️ DATABASE INTEGRATION (TURSO)
-🎯 Requirement:
+# CRITICAL FIRST STEP (MANDATORY)
 
-Integrate Turso (libSQL) as the database.
+Before making ANY code changes:
 
-📦 Install Dependencies
-npm install @libsql/client drizzle-orm dotenv
-📁 Create ENV file
-.env
-🔐 Default Placeholder Credentials:
-TURSO_DATABASE_URL=libsql://your-database-name.turso.io
-TURSO_AUTH_TOKEN=your-auth-token-here
+1. Inspect the entire existing project.
+2. Understand the current architecture.
+3. Understand every feature and workflow.
+4. Identify reusable components.
+5. Read ALL documentation inside this project.
+6. **Locate and read the design rules from the external `ai-superpowers` directory (outside the current project directory).**
 
-⚠️ IMPORTANT:
+The external design rules are the highest priority.
 
-These are placeholders only
-Do NOT hardcode real credentials
-Use process.env everywhere
-🔌 Database Connection Setup
+Examples include (but are not limited to):
 
-Create:
+- premium-editorial-ui.md
+- design principles
+- motion guidelines
+- spacing rules
+- typography rules
+- accessibility standards
+- component rules
+- animation rules
+- color guidelines
+- dashboard guidelines
+- interaction guidelines
 
-/lib/turso.ts
+Do NOT begin implementation until every applicable design document has been reviewed.
 
-Example:
+If the external directory cannot be located, STOP and ask for its location.
 
-import { createClient } from "@libsql/client";
+---
 
-export const db = createClient({
-  url: process.env.TURSO_DATABASE_URL!,
-  authToken: process.env.TURSO_AUTH_TOKEN!,
-});
-🧱 DATABASE TABLE DESIGN
+# Ask Questions Before Implementation
 
-Create table:
+Do NOT immediately start coding.
 
-CREATE TABLE profanity (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  word TEXT NOT NULL,
-  language TEXT NOT NULL,
-  region TEXT,
-  severity TEXT,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-🌱 SEED DATA (IMPORTANT)
-Migrate your existing JSON data into Turso
-Create:
-/scripts/seed.ts
-Insert:
-Filipino words
-Regional words
-🔥 API ENHANCEMENT
+First analyze the application and ask any necessary clarification questions regarding:
 
-Modify existing API to:
+- target users
+- business goals
+- branding
+- desired visual direction
+- pages that should remain unchanged
+- pages that require complete redesign
+- performance constraints
+- accessibility requirements
+- mobile priorities
+- expected animations
+- dashboard expectations
 
-Fetch from Turso instead of static JSON
-Still allow fallback to JSON if DB fails
-✅ FINAL RESPONSE FORMAT
-{
-  "success": true,
-  "type": "all",
-  "count": 10,
-  "data": [
-    {
-      "word": "example",
-      "language": "filipino",
-      "region": null,
-      "severity": "high"
-    }
-  ]
-}
-⚡ REAL-TIME TESTING UI
+Only begin implementation after clarification.
 
-Create a Testing Panel:
+---
 
-Features:
-Dropdown:
-Filipino
-Regional
-All
-Button: Run API Test
-Display JSON output
-🎨 JSON VIEWER (VS CODE STYLE)
+# Preserve Existing Functionality
 
-Use:
+This is extremely important.
 
-Prism.js or Shiki
-Color Rules:
-Keys → blue
-Strings → green
-Numbers → orange
-🧩 UI COMPONENTS
-Required Components:
-ApiTester.tsx
-JsonViewer.tsx
-DashboardStats.tsx
-GithubRepoCard.tsx
-🔗 GITHUB INTEGRATION
+You are redesigning the application.
 
-Create section:
+You are NOT rebuilding its logic.
 
-“View Source Code”
-Show:
-Repo name
-Description
-Button → opens GitHub repo
-📊 DASHBOARD
+Do NOT remove:
 
-Display:
+- authentication
+- routing
+- business logic
+- API integrations
+- server actions
+- database connections
+- forms
+- validations
+- permissions
+- existing features
 
-Total profanity words
-Filipino count
-Regional count
-Severity distribution
+Only improve:
 
-Use:
+- design
+- layout
+- spacing
+- interactions
+- responsiveness
+- visual hierarchy
+- usability
+- accessibility
 
-npm install recharts
-🎨 DESIGN SYSTEM
-Dark mode default
-Glassmorphism UI
-Smooth animations (Framer Motion)
-Fully responsive
-Clean modern SaaS look
-🧠 EXTRA FEATURES
+If existing code can be reused, reuse it.
 
-Add:
+---
 
-🔍 Search input
-🎚️ Severity filter
-📋 Copy JSON button
-⚡ Loading animation
-❌ Error UI
-🌐 Language toggle
-📘 DOCUMENTATION (MANDATORY)
+# Design Philosophy
 
-Create /docs folder:
+The final result should look like a premium SaaS application released in 2026.
 
-/docs/SETUP.md
+Avoid template-looking interfaces.
+
+Avoid outdated dashboards.
+
+Avoid generic Tailwind examples.
+
+Aim for:
+
+- Apple quality
+- Linear quality
+- Vercel quality
+- Notion quality
+- Stripe quality
+- Framer quality
+
+without directly copying any of them.
+
+---
+
+# Senior Frontend Standards
+
+Implement as if reviewing code for a FAANG-level frontend team.
+
+Every decision should have reasoning.
+
+Every component should have a clear responsibility.
+
+Avoid unnecessary complexity.
+
+Avoid duplicated code.
+
+Prefer composition.
+
+Prefer reusable UI primitives.
+
+Maintain clean architecture.
+
+---
+
+# Visual Design Requirements
+
+The redesign should include:
+
+## Modern Layout
+
+- better content hierarchy
+- generous whitespace
+- premium spacing
+- balanced composition
+- responsive grids
+- modern containers
+- adaptive sections
+
+---
+
+## Typography
+
+Use strong typography hierarchy.
+
+Clear distinction between:
+
+- page titles
+- section titles
+- descriptions
+- captions
+- labels
+- helper text
+
+Readable line lengths.
+
+Proper font sizing.
+
+Consistent weights.
+
+Excellent contrast.
+
+---
+
+## Color System
+
+Build a complete design system.
 
 Include:
 
-Install dependencies
-Setup Turso
-Configure .env
-/docs/API.md
-Endpoint usage
-Query params
-Example responses
-/docs/DATABASE.md
-Schema
-Seeding process
-Migration guide
-/docs/FEATURES.md
-All features explained
-UI breakdown
-🚀 FETCH EXAMPLES (FINAL OUTPUT)
-✅ JavaScript (Fetch)
-async function getData() {
-  try {
-    const response = await fetch("http://localhost:3000/api/profanity?type=all");
-    if (!response.ok) {
-      throw new Error("HTTP error! Status: " + response.status);
-    }
-    const data = await response.json();
-    console.log(data);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-}
-getData();
-✅ Axios
-import axios from "axios";
+- background colors
+- surface colors
+- elevated surfaces
+- cards
+- borders
+- accents
+- muted colors
+- success
+- warning
+- danger
+- information
 
-async function getData() {
-  try {
-    const response = await axios.get("http://localhost:3000/api/profanity?type=all");
-    console.log(response.data);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-}
+Use semantic color tokens.
 
-getData();
-✅ Python
-import requests
+Avoid random Tailwind color usage.
 
-try:
-    response = requests.get("http://localhost:3000/api/profanity?type=all")
-    response.raise_for_status()
-    data = response.json()
-    print(data)
-except requests.exceptions.RequestException as e:
-    print("Error fetching data:", e)
-🧪 TESTING REQUIREMENTS
-API must return valid JSON
-No crashes if DB is empty
-Works even if Turso is not connected (fallback to JSON)
-UI updates instantly
-Handles invalid query params
-🧾 FINAL INSTRUCTIONS
-DO NOT recreate the API — extend existing one
-Use Turso properly with env variables
-Keep code clean and modular
-Document EVERYTHING
-Ensure production-ready output
-Optimize performance
-💡 OPTIONAL (ADVANCED)
+---
 
-If capable, add:
+## Components
 
-API rate limiting
-API key authentication
-Profanity detection from user input text
-Export JSON file
-Caching layer
+Redesign every reusable component.
+
+Examples:
+
+- buttons
+- cards
+- forms
+- inputs
+- selects
+- dialogs
+- sheets
+- drawers
+- tooltips
+- popovers
+- tables
+- pagination
+- navigation
+- sidebar
+- breadcrumbs
+- badges
+- avatars
+- alerts
+- empty states
+- loading states
+- skeletons
+
+Everything should feel cohesive.
+
+---
+
+## Dashboard (if applicable)
+
+If the project contains dashboards:
+
+Redesign them completely.
+
+Use:
+
+- editorial layouts
+- balanced cards
+- meaningful visual hierarchy
+- better spacing
+- premium widgets
+- responsive metrics
+- charts with breathing room
+- modern data presentation
+
+Avoid dashboard clutter.
+
+---
+
+## Motion
+
+Follow the animation rules inside ai-superpowers.
+
+Animations should be:
+
+- subtle
+- meaningful
+- performant
+- interruptible
+
+Avoid flashy animations.
+
+Use animation only when it improves UX.
+
+Examples:
+
+- page transitions
+- hover states
+- micro interactions
+- button feedback
+- modal transitions
+- navigation transitions
+- loading animations
+- reveal animations
+
+Respect reduced-motion preferences.
+
+---
+
+## Responsive Design
+
+Desktop is NOT enough.
+
+Perfect support for:
+
+- mobile
+- tablet
+- laptop
+- desktop
+- ultrawide
+
+No horizontal scrolling.
+
+No broken layouts.
+
+Touch-friendly interactions.
+
+---
+
+## Accessibility
+
+Meet modern accessibility expectations.
+
+Ensure:
+
+- keyboard navigation
+- focus states
+- ARIA attributes where appropriate
+- sufficient color contrast
+- semantic HTML
+- screen reader compatibility
+- reduced motion support
+
+---
+
+## Performance
+
+Do not sacrifice performance.
+
+Optimize:
+
+- bundle size
+- rendering
+- lazy loading
+- dynamic imports
+- image optimization
+- font loading
+- animations
+- hydration
+
+Avoid unnecessary re-renders.
+
+---
+
+## Code Quality
+
+Use clean architecture.
+
+Requirements:
+
+- reusable components
+- feature organization
+- consistent naming
+- strong typing
+- no dead code
+- no duplicated logic
+- readable code
+- maintainable structure
+
+---
+
+## Next.js Best Practices
+
+Follow current Next.js best practices.
+
+Use:
+
+- App Router conventions
+- Server Components where appropriate
+- Client Components only when necessary
+- Suspense
+- Error boundaries
+- Loading UI
+- Route groups when beneficial
+- Metadata API
+- optimized image handling
+
+---
+
+## UI Consistency
+
+Everything should feel like one design system.
+
+Maintain consistency in:
+
+- spacing
+- radius
+- shadows
+- borders
+- typography
+- icon sizing
+- padding
+- motion
+- colors
+- interactions
+
+No component should feel out of place.
+
+---
+
+# What NOT To Do
+
+Do NOT:
+
+- change business logic
+- break existing features
+- introduce unnecessary dependencies
+- overuse gradients
+- overuse glassmorphism
+- overuse animations
+- create inconsistent spacing
+- mix multiple design styles
+- hardcode values repeatedly
+- create duplicate components
+- ignore accessibility
+- ignore responsiveness
+
+---
+
+# Deliverables
+
+During implementation provide:
+
+1. Architecture improvements
+2. Component improvements
+3. Design decisions
+4. Accessibility improvements
+5. Performance improvements
+6. Responsive improvements
+7. UX improvements
+8. Refactoring summary
+
+---
+
+# Final Goal
+
+The finished application should:
+
+- look professionally designed
+- feel premium
+- have excellent usability
+- follow the external `ai-superpowers` design rules
+- preserve all existing functionality
+- be responsive across devices
+- be accessible
+- be maintainable
+- reflect the quality expected from a senior frontend engineer delivering a production-ready Next.js application.
+
+Strictly! do not implement a look like AI generated design, you must follow the senior developer design and code implementation.

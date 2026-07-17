@@ -18,76 +18,76 @@ export function JsonViewer({ data, title }: JsonViewerProps) {
 
   const renderValue = (value: unknown): React.ReactNode => {
     if (value === null) {
-      return <span className="text-orange-400">null</span>;
+      return <span className="text-[var(--warning)]">null</span>;
     }
     if (typeof value === "boolean") {
-      return <span className="text-orange-400">{String(value)}</span>;
+      return <span className="text-[var(--warning)]">{String(value)}</span>;
     }
     if (typeof value === "number") {
-      return <span className="text-orange-400">{String(value)}</span>;
+      return <span className="text-[var(--info)]">{String(value)}</span>;
     }
     if (typeof value === "string") {
-      return <span className="text-green-400">&quot;{value}&quot;</span>;
+      return <span className="text-[var(--success)]">&quot;{value}&quot;</span>;
     }
     if (Array.isArray(value)) {
       if (value.length === 0) {
-        return <span className="text-zinc-400">[]</span>;
+        return <span className="text-[var(--text-muted)]">[]</span>;
       }
       return (
         <>
-          <span className="text-zinc-400">[</span>
+          <span className="text-[var(--text-muted)]">[</span>
           <div className="ml-4">
             {value.map((item, index) => (
               <div key={index}>
                 {renderValue(item)}
-                {index < value.length - 1 && <span className="text-zinc-400">,</span>}
+                {index < value.length - 1 && <span className="text-[var(--text-muted)]">,</span>}
               </div>
             ))}
           </div>
-          <span className="text-zinc-400">]</span>
+          <span className="text-[var(--text-muted)]">]</span>
         </>
       );
     }
     if (typeof value === "object") {
       const entries = Object.entries(value);
       if (entries.length === 0) {
-        return <span className="text-zinc-400">{"{}"}</span>;
+        return <span className="text-[var(--text-muted)]">{"{}"}</span>;
       }
       return (
         <>
-          <span className="text-zinc-400">{"{"}</span>
+          <span className="text-[var(--text-muted)]">{"{"}</span>
           <div className="ml-4">
             {entries.map(([key, val], index) => (
               <div key={key}>
-                <span className="text-blue-400">&quot;{key}&quot;</span>
-                <span className="text-zinc-400">: </span>
+                <span className="text-[var(--accent)]">&quot;{key}&quot;</span>
+                <span className="text-[var(--text-muted)]">: </span>
                 {renderValue(val)}
-                {index < entries.length - 1 && <span className="text-zinc-400">,</span>}
+                {index < entries.length - 1 && <span className="text-[var(--text-muted)]">,</span>}
               </div>
             ))}
           </div>
-          <span className="text-zinc-400">{"}"}</span>
+          <span className="text-[var(--text-muted)]">{"}"}</span>
         </>
       );
     }
-    return <span className="text-yellow-400">{String(value)}</span>;
+    return <span className="text-[var(--text-secondary)]">{String(value)}</span>;
   };
 
   return (
     <div className="relative">
       {title && (
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-medium text-zinc-400">{title}</h3>
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="text-xs font-medium text-[var(--text-muted)]">{title}</h3>
           <button
             onClick={copyToClipboard}
-            className="px-3 py-1 text-xs font-medium text-zinc-400 bg-zinc-800 rounded-lg hover:bg-zinc-700 transition-colors"
+            className="px-2.5 py-1 text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)] bg-[var(--bg-elevated)] rounded-[var(--radius-sm)] transition-colors"
           >
-            {copied ? "Copied!" : "Copy JSON"}
+            {copied ? "Copied!" : "Copy"}
           </button>
         </div>
       )}
-      <pre className="p-4 bg-[#1e1e1e] rounded-lg overflow-auto text-sm font-mono max-h-96 whitespace-pre-wrap">
-        <code className="text-zinc-300">{renderValue(data)}</code>
+      <pre className="p-4 bg-[var(--bg-base)] border border-[var(--border-subtle)] rounded-[var(--radius-md)] overflow-auto text-sm font-mono max-h-80">
+        <code className="text-[var(--text-secondary)] leading-relaxed">{renderValue(data)}</code>
       </pre>
     </div>
   );
