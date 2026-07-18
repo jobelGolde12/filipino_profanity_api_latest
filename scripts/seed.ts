@@ -28,6 +28,19 @@ async function seed() {
     )
   `);
 
+  console.log("Creating reports table...");
+  await db.execute(`
+    CREATE TABLE IF NOT EXISTS reports (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      description TEXT NOT NULL,
+      email TEXT,
+      browser TEXT,
+      status TEXT DEFAULT 'pending',
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+
   console.log("Checking if data exists...");
   const existing = await db.execute("SELECT COUNT(*) as count FROM profanity");
   if ((existing.rows[0]?.count as number) > 0) {

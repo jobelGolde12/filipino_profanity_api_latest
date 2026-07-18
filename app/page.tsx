@@ -7,6 +7,7 @@ import { FeatureGrid } from "@/components/FeatureGrid";
 import { DashboardStats } from "@/components/DashboardStats";
 import { ApiTester } from "@/components/ApiTester";
 import { GithubRepoCard } from "@/components/GithubRepoCard";
+import { BugReportForm } from "@/components/BugReportForm";
 import { Footer } from "@/components/Footer";
 
 interface ChartDataPoint {
@@ -83,6 +84,8 @@ export default function Home() {
             description="Free API for Filipino and regional profanity words with real-time detection"
           />
         </section>
+
+        <BugReportForm />
       </main>
 
       <Footer />
