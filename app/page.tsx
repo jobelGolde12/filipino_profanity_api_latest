@@ -6,7 +6,6 @@ import { Hero } from "@/components/Hero";
 import { FeatureGrid } from "@/components/FeatureGrid";
 import { DashboardStats } from "@/components/DashboardStats";
 import { ApiTester } from "@/components/ApiTester";
-import { ApiDocs } from "@/components/ApiDocs";
 import { GithubRepoCard } from "@/components/GithubRepoCard";
 import { Footer } from "@/components/Footer";
 
@@ -65,7 +64,6 @@ export default function Home() {
         <FeatureGrid />
         <DashboardStats stats={stats} />
         <ApiTester baseUrl={baseUrl} />
-        <ApiDocs />
 
         <section className="py-20 sm:py-28">
           <GithubRepoCard

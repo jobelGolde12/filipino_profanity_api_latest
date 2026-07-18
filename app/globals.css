@@ -113,8 +113,18 @@ code {
 pre code {
   font-family: var(--font-mono);
   font-size: 0.875rem;
-  line-height: 1.7;
+  line-height: 1.75;
 }
+
+/* Dark code block syntax highlighting */
+pre code .kw { color: #ff7b72; }
+pre code .str { color: #a5d6ff; }
+pre code .num { color: #79c0ff; }
+pre code .fn { color: #d2a8ff; }
+pre code .cm { color: #8b949e; font-style: italic; }
+pre code .var { color: #ffa657; }
+pre code .key { color: #7ee787; }
+pre code .op { color: #c9d1d9; }
 
 /* Selection */
 ::selection {
