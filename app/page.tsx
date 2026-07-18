@@ -9,11 +9,16 @@ import { ApiTester } from "@/components/ApiTester";
 import { GithubRepoCard } from "@/components/GithubRepoCard";
 import { Footer } from "@/components/Footer";
 
+interface ChartDataPoint {
+  label: string;
+  values: number[];
+}
+
 interface Stats {
   total: number;
   filipino: number;
   regional: number;
-  severityDistribution: { name: string; count: number; color: string }[];
+  chartData: ChartDataPoint[];
 }
 
 export default function Home() {
@@ -21,7 +26,7 @@ export default function Home() {
     total: 0,
     filipino: 0,
     regional: 0,
-    severityDistribution: [],
+    chartData: [],
   });
   const [baseUrl, setBaseUrl] = useState("");
 
@@ -36,18 +41,24 @@ export default function Home() {
       const data = await response.json();
 
       if (data.success) {
-        const filipinoWords = data.data.filter((w: { language: string }) => w.language === "filipino");
-        const regionalWords = data.data.filter((w: { language: string }) => w.language === "regional");
+        const words: { language: string; severity: string }[] = data.data;
+        const filipinoWords = words.filter((w) => w.language === "filipino");
+        const regionalWords = words.filter((w) => w.language === "regional");
+
+        const severities = ["low", "medium", "high"];
+        const chartData = severities.map((sev) => ({
+          label: sev.charAt(0).toUpperCase() + sev.slice(1),
+          values: [
+            filipinoWords.filter((w) => w.severity === sev).length,
+            regionalWords.filter((w) => w.severity === sev).length,
+          ],
+        }));
 
         setStats({
           total: data.count,
           filipino: filipinoWords.length,
           regional: regionalWords.length,
-          severityDistribution: [
-            { name: "Low", count: Math.floor(data.count * 0.2), color: "#4A7C3F" },
-            { name: "Medium", count: Math.floor(data.count * 0.5), color: "#B8860B" },
-            { name: "High", count: Math.floor(data.count * 0.3), color: "#C23B22" },
-          ],
+          chartData,
         });
       }
     } catch (error) {

@@ -3,16 +3,21 @@
 import dynamic from "next/dynamic";
 import { SectionHeader } from "./ui/SectionHeader";
 
-const SeverityChart = dynamic(
-  () => import("./SeverityChart").then((m) => m.SeverityChart),
+const LineChart = dynamic(
+  () => import("./LineChart").then((m) => m.LineChart),
   { ssr: false }
 );
+
+interface ChartDataPoint {
+  label: string;
+  values: number[];
+}
 
 interface Stats {
   total: number;
   filipino: number;
   regional: number;
-  severityDistribution: { name: string; count: number; color: string }[];
+  chartData: ChartDataPoint[];
 }
 
 interface DashboardStatsProps {
@@ -24,6 +29,9 @@ const statConfig = [
   { key: "filipino" as const, label: "Filipino" },
   { key: "regional" as const, label: "Regional" },
 ];
+
+const lineColors = ["#6B7A3D", "#3B7A8A"];
+const lineLabels = ["Filipino", "Regional"];
 
 export function DashboardStats({ stats }: DashboardStatsProps) {
   return (
@@ -52,20 +60,27 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
 
       <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-8">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-sm font-medium text-[var(--text-muted)]">Severity Distribution</h3>
+          <h3 className="text-sm font-medium text-[var(--text-muted)]">
+            Word Count by Severity
+          </h3>
           <div className="flex items-center gap-4 text-xs text-[var(--text-muted)]">
-            {stats.severityDistribution.map((entry) => (
-              <div key={entry.name} className="flex items-center gap-1.5">
+            {lineLabels.map((label, i) => (
+              <div key={label} className="flex items-center gap-1.5">
                 <span
                   className="w-2 h-2 rounded-full"
-                  style={{ backgroundColor: entry.color }}
+                  style={{ backgroundColor: lineColors[i] }}
                 />
-                {entry.name}
+                {label}
               </div>
             ))}
           </div>
         </div>
-        <SeverityChart data={stats.severityDistribution} />
+        <LineChart
+          data={stats.chartData}
+          lineColors={lineColors}
+          lineLabels={lineLabels}
+          height={320}
+        />
       </div>
     </section>
   );
