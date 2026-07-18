@@ -4,11 +4,9 @@ interface GithubRepoCardProps {
   repoUrl: string;
   repoName: string;
   description: string;
-  stars: number;
-  forks: number;
 }
 
-export function GithubRepoCard({ repoUrl, repoName, description, stars, forks }: GithubRepoCardProps) {
+export function GithubRepoCard({ repoUrl, repoName, description }: GithubRepoCardProps) {
   return (
     <a
       href={repoUrl}
@@ -29,18 +27,7 @@ export function GithubRepoCard({ repoUrl, repoName, description, stars, forks }:
         <ExternalLink className="w-4 h-4 text-[var(--text-muted)]" />
       </div>
 
-      <p className="text-sm text-[var(--text-tertiary)] mb-3">{description}</p>
-
-      <div className="flex items-center gap-4 text-xs text-[var(--text-muted)]">
-        <span className="flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 bg-[var(--warning)] rounded-full" />
-          {stars.toLocaleString()} stars
-        </span>
-        <span className="flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 bg-[var(--info)] rounded-full" />
-          {forks.toLocaleString()} forks
-        </span>
-      </div>
+      <p className="text-sm text-[var(--text-tertiary)]">{description}</p>
     </a>
   );
 }

@@ -25,6 +25,65 @@ async function getAllWords(): Promise<string[]> {
   }
 }
 
+async function checkText(inputText: string) {
+  const words = await getAllWords();
+  const normalizedText = inputText.toLowerCase();
+  const foundProfanity: ProfanityWord[] = [];
+
+  for (const word of words) {
+    if (normalizedText.includes(word)) {
+      const result = await db.execute({
+        sql: "SELECT word, language, region, severity FROM profanity WHERE LOWER(word) = ? LIMIT 1",
+        args: [word],
+      }).catch(() => ({ rows: [] }));
+
+      if (result.rows.length > 0) {
+        foundProfanity.push(result.rows[0] as unknown as ProfanityWord);
+      } else {
+        const isFilipino = fs
+          .readFileSync(path.join(process.cwd(), "api", "pure_filipino.json"), "utf-8")
+          .toLowerCase()
+          .includes(word);
+
+        foundProfanity.push({
+          word,
+          language: isFilipino ? "filipino" : "regional",
+          region: isFilipino ? null : "visayan",
+          severity: "medium",
+        });
+      }
+    }
+  }
+
+  return {
+    success: true,
+    hasProfanity: foundProfanity.length > 0,
+    count: foundProfanity.length,
+    data: foundProfanity,
+  };
+}
+
+export async function GET(request: NextRequest) {
+  const text = request.nextUrl.searchParams.get("text");
+
+  if (!text) {
+    return NextResponse.json(
+      { success: false, error: "Text query parameter is required" },
+      { status: 400 }
+    );
+  }
+
+  try {
+    const result = await checkText(text);
+    return NextResponse.json(result);
+  } catch {
+    return NextResponse.json(
+      { success: false, error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -37,41 +96,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const words = await getAllWords();
-    const normalizedText = inputText.toLowerCase();
-    const foundProfanity: ProfanityWord[] = [];
-
-    for (const word of words) {
-      if (normalizedText.includes(word)) {
-        const result = await db.execute({
-          sql: "SELECT word, language, region, severity FROM profanity WHERE LOWER(word) = ? LIMIT 1",
-          args: [word],
-        }).catch(() => ({ rows: [] }));
-
-        if (result.rows.length > 0) {
-          foundProfanity.push(result.rows[0] as unknown as ProfanityWord);
-        } else {
-          const isFilipino = fs
-            .readFileSync(path.join(process.cwd(), "api", "pure_filipino.json"), "utf-8")
-            .toLowerCase()
-            .includes(word);
-
-          foundProfanity.push({
-            word,
-            language: isFilipino ? "filipino" : "regional",
-            region: isFilipino ? null : "visayan",
-            severity: "medium",
-          });
-        }
-      }
-    }
-
-    return NextResponse.json({
-      success: true,
-      hasProfanity: foundProfanity.length > 0,
-      count: foundProfanity.length,
-      data: foundProfanity,
-    });
+    const result = await checkText(inputText);
+    return NextResponse.json(result);
   } catch {
     return NextResponse.json(
       { success: false, error: "Internal server error" },

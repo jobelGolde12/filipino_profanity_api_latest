@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 
 const navLinks = [
   { label: "Features", href: "/#features" },
@@ -16,12 +17,16 @@ export function Header() {
   return (
     <header className="border-b border-[var(--border-subtle)]">
       <div className="mx-auto max-w-[1200px] px-6 sm:px-8">
-        <div className="flex items-center justify-between h-20">
-          <a href="/" className="flex items-center gap-2.5 text-[var(--text-primary)]">
-            <span className="w-2 h-2 rounded-full bg-[var(--accent)]" />
-            <span className="font-medium text-sm tracking-tight" style={{ fontFamily: "var(--font-sans)" }}>
-              Filipino Profanity API
-            </span>
+        <div className="flex items-center justify-between h-24">
+          <a href="/" className="flex items-center text-[var(--text-primary)]">
+            <Image
+              src="/profanity_api_logo.png"
+              alt="Filipino Profanity API"
+              width={72}
+              height={72}
+              className="rounded-[var(--radius-md)]"
+              priority
+            />
           </a>
 
           <nav className="hidden md:flex items-center gap-1">
