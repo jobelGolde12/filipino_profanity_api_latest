@@ -24,7 +24,7 @@ export function Hero() {
 
         <div className="flex flex-wrap items-center justify-center gap-3">
           <a
-            href="#docs"
+            href="/docs"
             className="inline-flex items-center justify-center h-12 px-7 text-sm font-medium text-white bg-[var(--accent)] hover:bg-[var(--accent-hover)] rounded-[var(--radius-pill)] transition-all duration-200 active:scale-[0.98]"
           >
             View Documentation
