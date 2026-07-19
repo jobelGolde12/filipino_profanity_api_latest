@@ -8,9 +8,16 @@ The Filipino Profanity API provides a comprehensive platform for managing and de
 
 ### 1. API Endpoints
 
+#### Health Check (`GET /api/health`)
+- Monitor API health status
+- Database connectivity check
+- Uptime tracking
+- Word count verification
+
 #### Profanity Fetching (`GET /api/profanity`)
 - Filter by language type (Filipino, Regional, All)
 - Search for specific words
+- **Paginated responses** with page/limit parameters
 - Returns structured JSON response
 
 #### Profanity Detection (`POST /api/check`)
@@ -18,12 +25,49 @@ The Filipino Profanity API provides a comprehensive platform for managing and de
 - Identifies profanity matches
 - Returns found words with metadata
 
-### 2. User Interface Components
+#### Batch Text Checking (`POST /api/check/batch`)
+- Check multiple texts in a single request
+- Up to 10 texts per request
+- Individual results for each text
+- Summary of texts with profanity
+
+#### Text Masking (`POST /api/mask`)
+- Mask profanity words with custom characters
+- Partial masking (keep first letter visible)
+- Full masking options
+- Detailed match information
+
+#### Statistics (`GET /api/stats`)
+- Word count by language
+- Word count by severity
+- Word count by region
+- Percentage breakdowns
+
+### 2. Rate Limiting
+
+Built-in rate limiting per IP address:
+
+| Endpoint | Limit | Window |
+|----------|-------|--------|
+| GET /api/profanity | 60 requests | 1 minute |
+| GET /api/stats | 60 requests | 1 minute |
+| GET /api/health | No limit | N/A |
+| POST /api/check | 30 requests | 1 minute |
+| POST /api/mask | 30 requests | 1 minute |
+| POST /api/check/batch | 20 requests | 1 minute |
+
+Rate limit headers:
+- `X-RateLimit-Limit`
+- `X-RateLimit-Remaining`
+- `X-RateLimit-Reset`
+- `Retry-After` (on 429 responses)
+
+### 3. User Interface Components
 
 #### Dashboard Stats
 - Total word count display
 - Language distribution breakdown
-- Visual severity distribution chart (using Recharts)
+- Visual severity distribution chart
 
 #### API Tester
 - Interactive API testing panel
@@ -31,6 +75,13 @@ The Filipino Profanity API provides a comprehensive platform for managing and de
 - Word search functionality
 - Real-time response viewer
 - JSON syntax highlighting
+- Request history
+
+#### Documentation Page
+- Complete API reference
+- Code examples in JavaScript, Python, cURL
+- Interactive navigation
+- Rate limiting documentation
 
 #### JSON Viewer
 - VS Code-style syntax highlighting
@@ -47,68 +98,49 @@ The Filipino Profanity API provides a comprehensive platform for managing and de
 - Star and fork counts
 - Quick access to source code
 
-### 3. Design System
+### 4. Design System
 
-#### Dark Mode Default
-- Full dark theme for reduced eye strain
-- Consistent color palette across all components
-
-#### Glassmorphism UI
-- Frosted glass effect on cards
-- Subtle backdrop blur
-- Layered depth with borders
-
-#### Animations (Framer Motion)
-- Smooth page transitions
-- Staggered element reveals
-- Loading states with spinners
-- Hover effects on interactive elements
+#### Editorial Design
+- Premium, minimal aesthetic
+- Typography-first approach
+- Spacious layout
+- Warm color palette
 
 #### Responsive Design
 - Mobile-first approach
 - Breakpoints for tablet and desktop
 - Touch-friendly interactions
 
-### 4. Extra Features
+### 5. Data Features
 
-#### Search Input
-- Filter profanity words in real-time
-- Case-insensitive matching
+#### JSON Fallback
+- Works without database connection
+- Automatic fallback on database errors
+- Bundled profanity word data
 
-#### Severity Filter
-- Categorize words by severity level
-- Low, Medium, High classifications
-
-#### Copy JSON Button
-- One-click clipboard copy
-- Visual feedback on copy success
-
-#### Loading Animation
-- Spinner during API calls
-- Disabled states on buttons during loading
-
-#### Error Handling
-- User-friendly error messages
-- Graceful degradation
+#### Database Support
+- Turso (libSQL) integration
+- Distributed SQLite at the edge
+- Automatic table creation
 
 ## Technology Stack
 
-| Component        | Technology                        |
-|------------------|-----------------------------------|
-| Framework        | Next.js 16+                       |
-| Styling          | Tailwind CSS                      |
-| Animations       | Framer Motion                     |
-| Charts           | Recharts                          |
-| Icons            | Lucide React                      |
-| Database         | Turso (libSQL)                    |
-| API              | Next.js Route Handlers            |
+| Component | Technology |
+|-----------|------------|
+| Framework | Next.js 16+ |
+| Styling | Tailwind CSS v4 |
+| Icons | Lucide React |
+| Database | Turso (libSQL) |
+| API | Next.js Route Handlers |
+| Language | TypeScript |
 
 ## Performance Optimizations
 
 - Server-side rendering where applicable
 - Client-side state management with React hooks
-- Debounced search inputs
 - Optimized bundle size
+- Rate limiting to prevent abuse
+- Paginated responses for large datasets
 
 ## Browser Support
 

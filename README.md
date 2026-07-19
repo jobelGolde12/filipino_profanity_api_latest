@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Filipino Profanity API
 
-## Getting Started
+A free REST API for detecting Filipino and regional profanity words, with 310 words across two language categories.
 
-First, run the development server:
+## Features
+
+- **310 profanity words** (110 Filipino + 200 Regional)
+- **Real-time text detection** with profanity matching
+- **Text masking** with partial/full masking options
+- **Batch checking** for multiple texts at once
+- **Rate limiting** to prevent abuse
+- **Health monitoring** endpoint
+- **Statistics API** for word counts by language/region
+- **JSON fallback** when database is unavailable
+
+## Quick Start
 
 ```bash
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## API Endpoints
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Health Check
+```bash
+curl http://localhost:3000/api/health
+```
 
-## Learn More
+### Fetch Profanity Words
+```bash
+# All words
+curl http://localhost:3000/api/profanity
 
-To learn more about Next.js, take a look at the following resources:
+# With pagination
+curl "http://localhost:3000/api/profanity?page=1&limit=25"
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Filter by language
+curl http://localhost:3000/api/profanity?type=filipino
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Check Text for Profanity
+```bash
+curl -X POST http://localhost:3000/api/check \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Your text here"}'
+```
 
-## Deploy on Vercel
+### Batch Check Multiple Texts
+```bash
+curl -X POST http://localhost:3000/api/check/batch \
+  -H "Content-Type: application/json" \
+  -d '{"texts": ["text1", "text2", "text3"]}'
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Mask Profanity Words
+```bash
+curl -X POST http://localhost:3000/api/mask \
+  -H "Content-Type: application/json" \
+  -d '{"text": "You are a gago", "partial": true}'
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Get Statistics
+```bash
+curl http://localhost:3000/api/stats
+```
+
+## Documentation
+
+Visit [http://localhost:3000/docs](http://localhost:3000/docs) for complete API documentation.
+
+## Rate Limiting
+
+All endpoints (except `/api/health`) are rate-limited per IP:
+
+| Endpoint | Limit | Window |
+|----------|-------|--------|
+| GET /api/profanity | 60 | 1 min |
+| GET /api/stats | 60 | 1 min |
+| POST /api/check | 30 | 1 min |
+| POST /api/mask | 30 | 1 min |
+| POST /api/check/batch | 20 | 1 min |
+
+## Database Setup (Optional)
+
+For production use with Turso database:
+
+1. Create a Turso account at [turso.tech](https://turso.tech)
+2. Create a database and get credentials
+3. Update `.env` file:
+   ```
+   TURSO_DATABASE_URL=libsql://your-db.turso.io
+   TURSO_AUTH_TOKEN=your-token
+   ```
+4. Seed the database:
+   ```bash
+   npx tsx scripts/seed.ts
+   ```
+
+Without database configuration, the API automatically uses JSON fallback.
+
+## Tech Stack
+
+- **Framework**: Next.js 16+
+- **Styling**: Tailwind CSS v4
+- **Database**: Turso (libSQL)
+- **Language**: TypeScript
+- **Icons**: Lucide React
+
+## License
+
+MIT

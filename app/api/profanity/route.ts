@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/turso";
 import * as fs from "fs";
 import * as path from "path";
+import { checkRateLimit, getRateLimitHeaders, getClientIdentifier } from "@/lib/rate-limit";
 
 interface ProfanityWord {
   word: string;
@@ -18,6 +19,33 @@ interface PureFilipinoItem {
 interface RegionalItem {
   id: number;
   word: string;
+}
+
+interface PaginationParams {
+  page: number;
+  limit: number;
+}
+
+interface PaginatedResponse {
+  success: boolean;
+  type: string;
+  count: number;
+  source: "database" | "json";
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+  };
+  data: ProfanityWord[];
+}
+
+function parsePagination(searchParams: URLSearchParams): PaginationParams {
+  const page = Math.max(1, parseInt(searchParams.get("page") ?? "1", 10));
+  const limit = Math.min(200, Math.max(1, parseInt(searchParams.get("limit") ?? "50", 10)));
+  return { page, limit };
 }
 
 async function fetchFromDatabase(type: string, word?: string): Promise<ProfanityWord[] | null> {
@@ -95,10 +123,41 @@ function fetchFromJson(type: string, searchWord?: string): ProfanityWord[] {
   return results;
 }
 
+function paginateData(
+  data: ProfanityWord[],
+  params: PaginationParams
+): { paginated: ProfanityWord[]; total: number; totalPages: number } {
+  const total = data.length;
+  const totalPages = Math.ceil(total / params.limit);
+  const start = (params.page - 1) * params.limit;
+  const end = start + params.limit;
+  const paginated = data.slice(start, end);
+
+  return { paginated, total, totalPages };
+}
+
 export async function GET(request: NextRequest) {
+  const clientIp = getClientIdentifier(request);
+  const rateLimitResult = checkRateLimit(clientIp, 60, 60_000);
+  const rateLimitHeaders = getRateLimitHeaders(rateLimitResult, 60);
+
+  if (!rateLimitResult.allowed) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Rate limit exceeded. Please try again later.",
+      },
+      {
+        status: 429,
+        headers: rateLimitHeaders,
+      }
+    );
+  }
+
   const searchParams = request.nextUrl.searchParams;
   const type = searchParams.get("type") || "all";
   const word = searchParams.get("word") || undefined;
+  const pagination = parsePagination(searchParams);
 
   const validTypes = ["filipino", "regional", "all"];
   if (!validTypes.includes(type)) {
@@ -107,7 +166,10 @@ export async function GET(request: NextRequest) {
         success: false,
         error: "Invalid type parameter. Use: filipino, regional, or all",
       },
-      { status: 400 }
+      {
+        status: 400,
+        headers: rateLimitHeaders,
+      }
     );
   }
 
@@ -128,11 +190,25 @@ export async function GET(request: NextRequest) {
     source = "json";
   }
 
-  return NextResponse.json({
+  const { paginated, total, totalPages } = paginateData(data, pagination);
+
+  const response: PaginatedResponse = {
     success: true,
     type,
-    count: data.length,
+    count: paginated.length,
     source,
-    data,
+    pagination: {
+      page: pagination.page,
+      limit: pagination.limit,
+      total,
+      totalPages,
+      hasNext: pagination.page < totalPages,
+      hasPrev: pagination.page > 1,
+    },
+    data: paginated,
+  };
+
+  return NextResponse.json(response, {
+    headers: rateLimitHeaders,
   });
 }

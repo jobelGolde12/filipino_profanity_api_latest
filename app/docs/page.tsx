@@ -25,6 +25,7 @@ interface DocSection {
 const sections: DocSection[] = [
   { id: "quick-start", label: "Quick Start", icon: <Code2 className="w-4 h-4" /> },
   { id: "api-reference", label: "API Reference", icon: <BookOpen className="w-4 h-4" /> },
+  { id: "rate-limiting", label: "Rate Limiting", icon: <Terminal className="w-4 h-4" /> },
   { id: "setup", label: "Setup Guide", icon: <Terminal className="w-4 h-4" /> },
   { id: "database", label: "Database", icon: <Database className="w-4 h-4" /> },
   { id: "features", label: "Features", icon: <Layers className="w-4 h-4" /> },
@@ -149,10 +150,18 @@ function QuickStart({ origin }: { origin: string }) {
                 <Param>word</Param>
                 <span className="text-[var(--text-tertiary)]">Search for a specific word (optional)</span>
               </div>
+              <div className="flex gap-4">
+                <Param>page</Param>
+                <span className="text-[var(--text-tertiary)]">Page number (default: 1)</span>
+              </div>
+              <div className="flex gap-4">
+                <Param>limit</Param>
+                <span className="text-[var(--text-tertiary)]">Items per page (default: 50, max: 200)</span>
+              </div>
             </div>
           </div>
           <SyntaxCode language="JavaScript">
-            <K>const</K> <V>response</V> <O>=</O> <K>await</K> <F>fetch</F>(<S>{`'${origin}/api/profanity?type=all'`}</S>);
+            <K>const</K> <V>response</V> <O>=</O> <K>await</K> <F>fetch</F>(<S>{`'${origin}/api/profanity?type=all&page=1&limit=50'`}</S>);
             {"\n"}<K>const</K> <V>data</V> <O>=</O> <K>await</K> <V>response</V>.<F>json</F>();
           </SyntaxCode>
         </div>
@@ -178,6 +187,31 @@ function QuickStart({ origin }: { origin: string }) {
           </SyntaxCode>
         </div>
         <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-6">
+          <div className="flex items-center gap-3 mb-3">
+            <Badge variant="info">POST</Badge>
+            <code className="text-sm font-mono text-[var(--text-primary)]">/api/mask</code>
+          </div>
+          <p className="text-sm text-[var(--text-secondary)] mb-4">Mask profanity words in text with asterisks or custom characters.</p>
+          <div className="mb-4">
+            <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-2">Request Body</h4>
+            <div className="text-sm text-[var(--text-tertiary)]">
+              <InlineCode>{"{ \"text\": \"your text here\", \"maskChar\": \"*\", \"partial\": true }"}</InlineCode>
+            </div>
+          </div>
+          <SyntaxCode language="JavaScript">
+            <K>const</K> <V>response</V> <O>=</O> <K>await</K> <F>fetch</F>(<S>{`'${origin}/api/mask'`}</S>, {"{"}{"\n"}
+            {"  "}<V>method</V>: <S>&apos;POST&apos;</S>,{"\n"}
+            {"  "}<V>headers</V>: {"{ "}<V>Content-Type</V>: <S>&apos;application/json&apos;</S>{" }"},{"\n"}
+            {"  "}<V>body</V>: <V>JSON</V>.<F>stringify</F>({"{"}{"\n"}
+            {"    "}<V>text</V>: <S>&apos;You are a gago&apos;</S>,{"\n"}
+            {"    "}<V>maskChar</V>: <S>&apos;*&apos;</S>,{"\n"}
+            {"    "}<V>partial</V>: <KY>true</KY>{"\n"}
+            {"  }"}),{"\n"}
+            {"}"});
+            {"\n"}<K>const</K> <V>data</V> <O>=</O> <K>await</K> <V>response</V>.<F>json</F>();
+          </SyntaxCode>
+        </div>
+        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-6">
           <h3 className="text-sm font-medium text-[var(--text-primary)] mb-4">Python</h3>
           <SyntaxCode language="Python">
             <K>import</K> <V>requests</V>
@@ -197,9 +231,45 @@ function ApiReference({ origin }: { origin: string }) {
         API Reference
       </h2>
       <div className="space-y-10">
+        {/* Health Check */}
+        <div>
+          <div className="flex items-center gap-3 mb-4">
+            <h3 className="text-lg font-medium text-[var(--text-primary)]">GET /api/health</h3>
+            <Badge variant="success">Health</Badge>
+          </div>
+          <p className="text-sm text-[var(--text-secondary)] mb-4">Check API health status and database connectivity.</p>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Example Request</h4>
+          <CodeBlock language="bash">{`curl ${origin}/api/health`}</CodeBlock>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3 mt-6">Response (200 OK)</h4>
+          <CodeBlock language="json">
+{`{
+  "status": "ok",
+  "timestamp": "2025-01-19T12:00:00.000Z",
+  "uptime": 3600.5,
+  "database": {
+    "connected": true,
+    "wordCount": 310
+  },
+  "version": "1.0.0",
+  "responseTime": "12ms"
+}`}
+          </CodeBlock>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3 mt-6">Response (503 Degraded)</h4>
+          <CodeBlock language="json">
+{`{
+  "status": "degraded",
+  "database": {
+    "connected": false,
+    "wordCount": 0
+  }
+}`}
+          </CodeBlock>
+        </div>
+
+        {/* Profanity List */}
         <div>
           <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">GET /api/profanity</h3>
-          <p className="text-sm text-[var(--text-secondary)] mb-4">Fetch profanity words with optional filtering.</p>
+          <p className="text-sm text-[var(--text-secondary)] mb-4">Fetch profanity words with optional filtering and pagination.</p>
           <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Query Parameters</h4>
           <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden mb-6">
             <table className="w-full">
@@ -224,19 +294,31 @@ function ApiReference({ origin }: { origin: string }) {
                   <TableCell>No</TableCell>
                   <TableCell>Search for a specific word</TableCell>
                 </tr>
+                <tr>
+                  <TableCell><InlineCode>page</InlineCode></TableCell>
+                  <TableCell>integer</TableCell>
+                  <TableCell>No</TableCell>
+                  <TableCell>Page number (default: 1)</TableCell>
+                </tr>
+                <tr>
+                  <TableCell><InlineCode>limit</InlineCode></TableCell>
+                  <TableCell>integer</TableCell>
+                  <TableCell>No</TableCell>
+                  <TableCell>Items per page (default: 50, max: 200)</TableCell>
+                </tr>
               </tbody>
             </table>
           </div>
           <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Example Requests</h4>
           <CodeBlock language="bash">
-{`# Fetch all profanity words
+{`# Fetch all profanity words (first page)
 curl ${origin}/api/profanity
+
+# Fetch with pagination
+curl "${origin}/api/profanity?page=1&limit=25"
 
 # Fetch only Filipino profanity
 curl ${origin}/api/profanity?type=filipino
-
-# Fetch only regional profanity
-curl ${origin}/api/profanity?type=regional
 
 # Search for a specific word
 curl "${origin}/api/profanity?word=gago"`}
@@ -246,25 +328,29 @@ curl "${origin}/api/profanity?word=gago"`}
 {`{
   "success": true,
   "type": "all",
-  "count": 310,
+  "count": 50,
   "source": "database",
+  "pagination": {
+    "page": 1,
+    "limit": 50,
+    "total": 310,
+    "totalPages": 7,
+    "hasNext": true,
+    "hasPrev": false
+  },
   "data": [
     {
       "word": "abnormal",
       "language": "filipino",
       "region": null,
       "severity": "medium"
-    },
-    {
-      "word": "agbaliw",
-      "language": "regional",
-      "region": "visayan",
-      "severity": "medium"
     }
   ]
 }`}
           </CodeBlock>
         </div>
+
+        {/* Check Text */}
         <div>
           <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">POST /api/check</h3>
           <p className="text-sm text-[var(--text-secondary)] mb-4">Check if a text contains profanity.</p>
@@ -297,6 +383,170 @@ curl "${origin}/api/profanity?word=gago"`}
 }`}
           </CodeBlock>
         </div>
+
+        {/* Batch Check */}
+        <div>
+          <div className="flex items-center gap-3 mb-4">
+            <h3 className="text-lg font-medium text-[var(--text-primary)]">POST /api/check/batch</h3>
+            <Badge variant="accent">New</Badge>
+          </div>
+          <p className="text-sm text-[var(--text-secondary)] mb-4">Check multiple texts for profanity in a single request.</p>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Request Body</h4>
+          <CodeBlock language="json">
+{`{
+  "texts": [
+    "First text to check",
+    "Second text to check",
+    "Third text to check"
+  ]
+}`}
+          </CodeBlock>
+          <div className="mt-4 p-4 rounded-[var(--radius-lg)] bg-[var(--info-muted)] border border-[var(--info)]/10">
+            <p className="text-sm text-[var(--info)]">Maximum 10 texts per request. Each text must not exceed 5,000 characters.</p>
+          </div>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3 mt-6">Example Request</h4>
+          <CodeBlock language="bash">
+{`curl -X POST ${origin}/api/check/batch \\
+  -H "Content-Type: application/json" \\
+  -d '{"texts": ["Hello world", "You are gago"]}'`}
+          </CodeBlock>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3 mt-6">Response</h4>
+          <CodeBlock language="json">
+{`{
+  "success": true,
+  "totalTexts": 2,
+  "textsWithProfanity": 1,
+  "results": [
+    {
+      "text": "Hello world",
+      "hasProfanity": false,
+      "count": 0,
+      "data": []
+    },
+    {
+      "text": "You are gago",
+      "hasProfanity": true,
+      "count": 1,
+      "data": [
+        {
+          "word": "gago",
+          "language": "filipino",
+          "region": null,
+          "severity": "medium"
+        }
+      ]
+    }
+  ]
+}`}
+          </CodeBlock>
+        </div>
+
+        {/* Mask Text */}
+        <div>
+          <div className="flex items-center gap-3 mb-4">
+            <h3 className="text-lg font-medium text-[var(--text-primary)]">POST /api/mask</h3>
+            <Badge variant="accent">New</Badge>
+          </div>
+          <p className="text-sm text-[var(--text-secondary)] mb-4">Mask profanity words in text with asterisks or custom characters.</p>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Request Body</h4>
+          <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden mb-6">
+            <table className="w-full">
+              <thead>
+                <tr>
+                  <TableHeader>Parameter</TableHeader>
+                  <TableHeader>Type</TableHeader>
+                  <TableHeader>Default</TableHeader>
+                  <TableHeader>Description</TableHeader>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <TableCell><InlineCode>text</InlineCode></TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>required</TableCell>
+                  <TableCell>Text to mask (max 10,000 characters)</TableCell>
+                </tr>
+                <tr>
+                  <TableCell><InlineCode>maskChar</InlineCode></TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>*</TableCell>
+                  <TableCell>Single character to use for masking</TableCell>
+                </tr>
+                <tr>
+                  <TableCell><InlineCode>partial</InlineCode></TableCell>
+                  <TableCell>boolean</TableCell>
+                  <TableCell>true</TableCell>
+                  <TableCell>Keep first letter visible (e.g., g***)</TableCell>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Example Request</h4>
+          <CodeBlock language="bash">
+{`curl -X POST ${origin}/api/mask \\
+  -H "Content-Type: application/json" \\
+  -d '{"text": "You are a gago", "maskChar": "*", "partial": true}'`}
+          </CodeBlock>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3 mt-6">Response</h4>
+          <CodeBlock language="json">
+{`{
+  "success": true,
+  "original": "You are a gago",
+  "masked": "You are a g***",
+  "matchCount": 1,
+  "matches": ["gago"],
+  "details": [
+    {
+      "word": "gago",
+      "start": 10,
+      "end": 14,
+      "original": "gago",
+      "masked": "g***"
+    }
+  ]
+}`}
+          </CodeBlock>
+        </div>
+
+        {/* Statistics */}
+        <div>
+          <div className="flex items-center gap-3 mb-4">
+            <h3 className="text-lg font-medium text-[var(--text-primary)]">GET /api/stats</h3>
+            <Badge variant="accent">New</Badge>
+          </div>
+          <p className="text-sm text-[var(--text-secondary)] mb-4">Get statistics about the profanity word database.</p>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Example Request</h4>
+          <CodeBlock language="bash">{`curl ${origin}/api/stats`}</CodeBlock>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3 mt-6">Response</h4>
+          <CodeBlock language="json">
+{`{
+  "success": true,
+  "total": 310,
+  "byLanguage": {
+    "filipino": {
+      "count": 110,
+      "percentage": 35
+    },
+    "regional": {
+      "count": 200,
+      "percentage": 65
+    }
+  },
+  "bySeverity": {
+    "low": 0,
+    "medium": 310,
+    "high": 0
+  },
+  "byRegion": {
+    "none": 110,
+    "visayan": 200
+  },
+  "source": "database"
+}`}
+          </CodeBlock>
+        </div>
+
+        {/* Error Responses */}
         <div>
           <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">Error Responses</h3>
           <CodeBlock language="json">
@@ -306,6 +556,8 @@ curl "${origin}/api/profanity?word=gago"`}
 }`}
           </CodeBlock>
         </div>
+
+        {/* Code Examples */}
         <div>
           <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">Code Examples</h3>
           <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">JavaScript (Fetch)</h4>
@@ -323,18 +575,6 @@ curl "${origin}/api/profanity?word=gago"`}
             {"  }"}{"\n"}{"}"}
             {"\n\n"}<F>getData</F>();
           </SyntaxCode>
-          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3 mt-6">Axios</h4>
-          <SyntaxCode language="JavaScript">
-            <K>import</K> <V>axios</V> <K>from</K> <S>&apos;axios&apos;</S>;
-            {"\n\n"}<K>async function</K> <F>getData</F>() {"{"}{"\n"}
-            {"  "}<K>try</K> {"{"}{"\n"}
-            {"    "}<K>const</K> <V>response</V> <O>=</O> <K>await</K> <V>axios</V>.<F>get</F>(<S>{`"${origin}/api/profanity?type=all"`}</S>);{"\n"}
-            {"    "}<V>console</V>.<F>log</F>(<V>response</V>.<V>data</V>);{"\n"}
-            {"  }"} <K>catch</K> (<V>error</V>) {"{"}{"\n"}
-            {"    "}<V>console</V>.<F>error</F>(<S>&quot;Error fetching data:&quot;</S>, <V>error</V>);{"\n"}
-            {"  }"}{"\n"}{"}"}
-            {"\n\n"}<F>getData</F>();
-          </SyntaxCode>
           <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3 mt-6">Python</h4>
           <SyntaxCode language="Python">
             <K>import</K> <V>requests</V>
@@ -346,6 +586,116 @@ curl "${origin}/api/profanity?word=gago"`}
             <K>except</K> <V>requests</V>.<V>exceptions</V>.<V>RequestException</V> <K>as</K> <V>e</V>:{"\n"}
             {"    "}<F>print</F>(<S>&quot;Error fetching data:&quot;</S>, <V>e</V>)
           </SyntaxCode>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function RateLimitingSection({ origin }: { origin: string }) {
+  return (
+    <section id="rate-limiting" className="mb-20 scroll-mt-24">
+      <h2 className="text-2xl font-semibold text-[var(--text-primary)] tracking-tight mb-6" style={{ fontFamily: "var(--font-display)" }}>
+        Rate Limiting
+      </h2>
+      <div className="space-y-6">
+        <p className="text-[var(--text-secondary)]">
+          All API endpoints are rate-limited to prevent abuse. Rate limits are applied per IP address.
+        </p>
+        <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden">
+          <table className="w-full">
+            <thead>
+              <tr>
+                <TableHeader>Endpoint</TableHeader>
+                <TableHeader>Limit</TableHeader>
+                <TableHeader>Window</TableHeader>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <TableCell><InlineCode>GET /api/profanity</InlineCode></TableCell>
+                <TableCell>60 requests</TableCell>
+                <TableCell>1 minute</TableCell>
+              </tr>
+              <tr>
+                <TableCell><InlineCode>GET /api/stats</InlineCode></TableCell>
+                <TableCell>60 requests</TableCell>
+                <TableCell>1 minute</TableCell>
+              </tr>
+              <tr>
+                <TableCell><InlineCode>GET /api/health</InlineCode></TableCell>
+                <TableCell>No limit</TableCell>
+                <TableCell>N/A</TableCell>
+              </tr>
+              <tr>
+                <TableCell><InlineCode>POST /api/check</InlineCode></TableCell>
+                <TableCell>30 requests</TableCell>
+                <TableCell>1 minute</TableCell>
+              </tr>
+              <tr>
+                <TableCell><InlineCode>POST /api/mask</InlineCode></TableCell>
+                <TableCell>30 requests</TableCell>
+                <TableCell>1 minute</TableCell>
+              </tr>
+              <tr>
+                <TableCell><InlineCode>POST /api/check/batch</InlineCode></TableCell>
+                <TableCell>20 requests</TableCell>
+                <TableCell>1 minute</TableCell>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">Response Headers</h3>
+          <p className="text-sm text-[var(--text-secondary)] mb-4">
+            Every rate-limited response includes these headers:
+          </p>
+          <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden">
+            <table className="w-full">
+              <thead>
+                <tr>
+                  <TableHeader>Header</TableHeader>
+                  <TableHeader>Description</TableHeader>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <TableCell><InlineCode>X-RateLimit-Limit</InlineCode></TableCell>
+                  <TableCell>Maximum requests allowed per window</TableCell>
+                </tr>
+                <tr>
+                  <TableCell><InlineCode>X-RateLimit-Remaining</InlineCode></TableCell>
+                  <TableCell>Requests remaining in current window</TableCell>
+                </tr>
+                <tr>
+                  <TableCell><InlineCode>X-RateLimit-Reset</InlineCode></TableCell>
+                  <TableCell>Unix timestamp when the window resets</TableCell>
+                </tr>
+                <tr>
+                  <TableCell><InlineCode>Retry-After</InlineCode></TableCell>
+                  <TableCell>Seconds until you can retry (only on 429)</TableCell>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="p-4 rounded-[var(--radius-lg)] bg-[var(--warning-muted)] border border-[var(--warning)]/10">
+          <h4 className="text-sm font-medium text-[var(--warning)] mb-1">Rate Limit Exceeded</h4>
+          <p className="text-sm text-[var(--text-secondary)]">
+            When you exceed the rate limit, you&apos;ll receive a 429 status code with a <InlineCode>Retry-After</InlineCode> header indicating how many seconds to wait.
+          </p>
+        </div>
+        <div>
+          <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">Example</h3>
+          <CodeBlock language="bash">
+{`# Check rate limit headers
+curl -I ${origin}/api/profanity
+
+# Response headers:
+# X-RateLimit-Limit: 60
+# X-RateLimit-Remaining: 59
+# X-RateLimit-Reset: 1705658460`}
+          </CodeBlock>
         </div>
       </div>
     </section>
@@ -529,8 +879,12 @@ function FeaturesSection() {
   const features = [
     { title: "Profanity Fetching", desc: "Filter by language type (Filipino, Regional, All) and search for specific words.", badge: "GET", variant: "accent" as const },
     { title: "Profanity Detection", desc: "Real-time text analysis that identifies profanity matches with metadata.", badge: "POST", variant: "info" as const },
-    { title: "Dashboard Stats", desc: "Total word count, language distribution, and visual severity chart.", badge: null, variant: "success" as const },
-    { title: "API Tester", desc: "Interactive API testing panel with type selection and word search.", badge: null, variant: "warning" as const },
+    { title: "Text Masking", desc: "Mask profanity words with asterisks or custom characters. Partial masking keeps first letter visible.", badge: "POST", variant: "accent" as const },
+    { title: "Batch Checking", desc: "Check multiple texts for profanity in a single request (up to 10 texts).", badge: "POST", variant: "info" as const },
+    { title: "Health Check", desc: "Monitor API health status and database connectivity.", badge: "GET", variant: "success" as const },
+    { title: "Statistics", desc: "Get word counts by language, severity, and region.", badge: "GET", variant: "success" as const },
+    { title: "Rate Limiting", desc: "Built-in rate limiting with clear headers and retry guidance.", badge: null, variant: "warning" as const },
+    { title: "Pagination", desc: "Paginated responses for large datasets with metadata.", badge: null, variant: "warning" as const },
   ];
   return (
     <section id="features" className="mb-20 scroll-mt-24">
@@ -548,30 +902,6 @@ function FeaturesSection() {
                   <h4 className="text-sm font-medium text-[var(--text-primary)]">{f.title}</h4>
                 </div>
                 <p className="text-sm text-[var(--text-secondary)]">{f.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div>
-          <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">JSON Viewer</h3>
-          <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
-            <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />VS Code-style syntax highlighting</li>
-            <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />Copy to clipboard functionality</li>
-            <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />Collapsible/expandable sections</li>
-            <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />Color-coded output: keys (green), strings (blue), numbers (orange), null (yellow)</li>
-          </ul>
-        </div>
-        <div>
-          <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">Design System</h3>
-          <div className="grid gap-4 sm:grid-cols-3">
-            {[
-              { title: "Responsive", desc: "Mobile-first with breakpoints for tablet and desktop" },
-              { title: "Accessible", desc: "Focus rings, ARIA labels, reduced motion support" },
-              { title: "Themed", desc: "CSS custom properties for easy color customization" },
-            ].map((d) => (
-              <div key={d.title} className="p-4 rounded-[var(--radius-lg)] bg-[var(--bg-alt)] border border-[var(--border-subtle)]">
-                <h4 className="text-sm font-medium text-[var(--text-primary)] mb-1">{d.title}</h4>
-                <p className="text-xs text-[var(--text-muted)]">{d.desc}</p>
               </div>
             ))}
           </div>
@@ -676,6 +1006,7 @@ export default function DocsPage() {
             </div>
             <QuickStart origin={origin} />
             <ApiReference origin={origin} />
+            <RateLimitingSection origin={origin} />
             <SetupGuide />
             <DatabaseSection />
             <FeaturesSection />

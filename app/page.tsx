@@ -76,7 +76,7 @@ export default function Home() {
         <Hero />
         <FeatureGrid />
         <DashboardStats stats={stats} />
-        <DetectBanner />
+        {/* <DetectBanner /> */}
         <ApiTester baseUrl={baseUrl} />
 
         <section className="py-20 sm:py-28">
