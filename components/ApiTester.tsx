@@ -330,16 +330,8 @@ export function ApiTester({ baseUrl }: ApiTesterProps) {
               >
                 {endpoint.badge}
               </span>
-              <span className="text-sm text-[var(--text-muted)] font-mono truncate">
-                {endpoint.path}
-                {Object.entries(params).filter(([, v]) => v).length > 0 && (
-                  <span className="text-[var(--text-tertiary)]">
-                    ?{Object.entries(params)
-                      .filter(([, v]) => v)
-                      .map(([k, v]) => `${k}=${v}`)
-                      .join("&")}
-                  </span>
-                )}
+              <span className="text-sm text-[var(--text-primary)] font-mono truncate">
+                {currentUrl}
               </span>
             </div>
             <button
