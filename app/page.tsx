@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { FeatureGrid } from "@/components/FeatureGrid";
 import { DashboardStats } from "@/components/DashboardStats";
+import { DetectBanner } from "@/components/DetectBanner";
 import { ApiTester } from "@/components/ApiTester";
 import { GithubRepoCard } from "@/components/GithubRepoCard";
 import { BugReportForm } from "@/components/BugReportForm";
@@ -68,13 +69,14 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--bg-base)]">
+    <div className="min-h-screen bg-[var(--bg-base)] overflow-x-hidden">
       <Header />
 
       <main className="mx-auto max-w-[1200px] px-6 sm:px-8">
         <Hero />
         <FeatureGrid />
         <DashboardStats stats={stats} />
+        <DetectBanner />
         <ApiTester baseUrl={baseUrl} />
 
         <section className="py-20 sm:py-28">
