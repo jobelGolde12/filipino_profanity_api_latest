@@ -42,33 +42,43 @@ export default function Home() {
 
   const fetchStats = async () => {
     try {
-      const [profanityRes, statsRes] = await Promise.all([
+      const [profanityRes, statsRes, variantsRes] = await Promise.all([
         fetch("/api/profanity?type=all&limit=1000"),
         fetch("/api/stats"),
+        fetch("/api/variants?limit=200"),
       ]);
 
       const data = await profanityRes.json();
       const statsData = await statsRes.json();
+      const variantsData = await variantsRes.json();
 
       if (data.success) {
         const words: { language: string; severity: string }[] = data.data;
         const filipinoWords = words.filter((w) => w.language === "filipino");
         const regionalWords = words.filter((w) => w.language === "regional");
 
+        const totalVariants = statsData?.variants?.totalVariants ?? 0;
+
         const severities = ["low", "medium", "high"];
-        const chartData = severities.map((sev) => ({
-          label: sev.charAt(0).toUpperCase() + sev.slice(1),
-          values: [
-            filipinoWords.filter((w) => w.severity === sev).length,
-            regionalWords.filter((w) => w.severity === sev).length,
-          ],
-        }));
+        const chartData = severities.map((sev) => {
+          const filipinoCount = filipinoWords.filter((w) => w.severity === sev).length;
+          const regionalCount = regionalWords.filter((w) => w.severity === sev).length;
+          const severityTotal = filipinoCount + regionalCount;
+          const severityVariants = severityTotal > 0
+            ? Math.round((severityTotal / words.length) * totalVariants)
+            : 0;
+
+          return {
+            label: sev.charAt(0).toUpperCase() + sev.slice(1),
+            values: [filipinoCount, regionalCount, severityVariants],
+          };
+        });
 
         setStats({
-          total: data.pagination.total,
+          total: filipinoWords.length + regionalWords.length + totalVariants,
           filipino: filipinoWords.length,
           regional: regionalWords.length,
-          variants: statsData?.variants?.totalVariants ?? 0,
+          variants: totalVariants,
           chartData,
         });
       }

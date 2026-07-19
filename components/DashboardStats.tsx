@@ -32,8 +32,8 @@ const statConfig = [
   { key: "variants" as const, label: "Leetspeak Variants" },
 ];
 
-const lineColors = ["#6B7A3D", "#3B7A8A"];
-const lineLabels = ["Filipino", "Regional"];
+const lineColors = ["#6B7A3D", "#3B7A8A", "#D4A843"];
+const lineLabels = ["Filipino", "Regional", "Variants"];
 
 export function DashboardStats({ stats }: DashboardStatsProps) {
   return (
@@ -63,7 +63,7 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
       <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-8">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-sm font-medium text-[var(--text-muted)]">
-            Word Count by Severity
+            Words &amp; Variants by Severity
           </h3>
           <div className="flex items-center gap-4 text-xs text-[var(--text-muted)]">
             {lineLabels.map((label, i) => (
