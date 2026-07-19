@@ -19,6 +19,11 @@ interface RegionStats {
   [region: string]: number;
 }
 
+interface VariantStats {
+  totalWords: number;
+  totalVariants: number;
+}
+
 interface StatsResponse {
   success: boolean;
   total: number;
@@ -28,6 +33,7 @@ interface StatsResponse {
   };
   bySeverity: SeverityStats;
   byRegion: RegionStats;
+  variants: VariantStats;
   source: "database" | "json";
 }
 
@@ -81,7 +87,7 @@ function fetchFromJson(): WordRecord[] {
   return results;
 }
 
-function calculateStats(words: WordRecord[]): Omit<StatsResponse, "success" | "source"> {
+function calculateStats(words: WordRecord[]): Omit<StatsResponse, "success" | "source" | "variants"> {
   const total = words.length;
 
   const filipinoCount = words.filter((w) => w.language === "filipino").length;
@@ -118,6 +124,38 @@ function calculateStats(words: WordRecord[]): Omit<StatsResponse, "success" | "s
   };
 }
 
+async function fetchVariantStats(): Promise<VariantStats> {
+  try {
+    const result = await db.execute(
+      "SELECT COUNT(DISTINCT word) as totalWords, COUNT(*) as totalVariants FROM word_variants"
+    );
+    const row = result.rows[0];
+    return {
+      totalWords: Number(row?.totalWords ?? 0),
+      totalVariants: Number(row?.totalVariants ?? 0),
+    };
+  } catch {
+    try {
+      const variantsRaw = fs.readFileSync(
+        path.join(process.cwd(), "docs", "leetspeak", "filipino_variants.json"),
+        "utf-8"
+      );
+      const variantsFile: { data: { word: string; variants: string[] }[] } =
+        JSON.parse(variantsRaw);
+      let totalVariants = 0;
+      for (const entry of variantsFile.data) {
+        totalVariants += entry.variants.length;
+      }
+      return {
+        totalWords: variantsFile.data.length,
+        totalVariants,
+      };
+    } catch {
+      return { totalWords: 0, totalVariants: 0 };
+    }
+  }
+}
+
 export async function GET(request: Request) {
   const clientIp = getClientIdentifier(request);
   const rateLimitResult = checkRateLimit(clientIp, 60, 60_000);
@@ -146,10 +184,12 @@ export async function GET(request: Request) {
   }
 
   const stats = calculateStats(words);
+  const variantStats = await fetchVariantStats();
 
   const response: StatsResponse = {
     success: true,
     ...stats,
+    variants: variantStats,
     source,
   };
 

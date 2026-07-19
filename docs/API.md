@@ -18,6 +18,9 @@ All API endpoints (except `/api/health`) are rate-limited per IP address:
 | `POST /api/check` | 30 requests | 1 minute |
 | `POST /api/mask` | 30 requests | 1 minute |
 | `POST /api/check/batch` | 20 requests | 1 minute |
+| `GET /api/variants` | 60 requests | 1 minute |
+| `GET /api/variants/lookup` | 30 requests | 1 minute |
+| `POST /api/variants/lookup` | 30 requests | 1 minute |
 
 Rate limit headers are included in every response:
 - `X-RateLimit-Limit`: Maximum requests allowed
@@ -323,6 +326,136 @@ curl http://localhost:3000/api/stats
     "none": 110,
     "visayan": 200
   },
+  "source": "database"
+}
+```
+
+---
+
+---
+
+### GET /api/variants
+
+Fetch leetspeak variants for profanity words.
+
+**Query Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| word | string | No | Filter by exact word |
+| search | string | No | Search words by partial match |
+| page | integer | No | Page number (default: 1) |
+| limit | integer | No | Items per page (default: 50, max: 200) |
+
+**Example Request:**
+
+```bash
+# Fetch all words with variants
+curl http://localhost:3000/api/variants
+
+# Fetch variants for a specific word
+curl "http://localhost:3000/api/variants?word=gago"
+
+# Search for words matching a pattern
+curl "http://localhost:3000/api/variants?search=gag"
+```
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "count": 1,
+  "source": "database",
+  "pagination": {
+    "page": 1,
+    "limit": 50,
+    "total": 109,
+    "totalPages": 3,
+    "hasNext": true,
+    "hasPrev": false
+  },
+  "data": [
+    {
+      "word": "gago",
+      "variants": [
+        "6460",
+        "6490",
+        "g4g0",
+        "g4go",
+        "g@g0",
+        "g@go",
+        "gag0"
+      ]
+    }
+  ]
+}
+```
+
+---
+
+### GET /api/variants/lookup
+
+Check if text contains any known leetspeak variants.
+
+**Query Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| text | string | Yes | Text to check (max 10,000 chars) |
+
+**Example Request:**
+
+```bash
+curl "http://localhost:3000/api/variants/lookup?text=g4g0+ka+talaga"
+```
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "hasMatch": true,
+  "matchCount": 1,
+  "data": [
+    {
+      "variant": "g4g0",
+      "word": "gago",
+      "position": 0
+    }
+  ],
+  "source": "database"
+}
+```
+
+---
+
+### POST /api/variants/lookup
+
+Check if text contains any known leetspeak variants (POST method).
+
+**Request Body:**
+
+```json
+{
+  "text": "g4g0 ka talaga"
+}
+```
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "hasMatch": true,
+  "matchCount": 1,
+  "data": [
+    {
+      "variant": "g4g0",
+      "word": "gago",
+      "position": 0
+    }
+  ],
   "source": "database"
 }
 ```
