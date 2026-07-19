@@ -24,6 +24,7 @@ The Filipino Profanity API is a free, open-source REST API designed for develope
 ### Key Highlights
 
 - **310+ profanity words** — 110+ Filipino + 200+ Regional (Visayan)
+- **8,000+ leetspeak variants** — Detect obfuscated profanity like `g4g0`, `g@g0`, `6460`
 - **Real-time detection** — Check any text for profanity instantly
 - **Text masking** — Automatically censor profanity with `***` or custom characters
 - **Batch processing** — Check multiple texts in a single request
@@ -298,6 +299,95 @@ curl https://filipino-profanity-api-latest.vercel.app/api/stats
     "none": "110+",
     "visayan": "200+"
   },
+  "variants": {
+    "totalWords": 109,
+    "totalVariants": 8196
+  },
+  "source": "database"
+}
+```
+
+---
+
+### Leetspeak Variants
+
+Fetch leetspeak variants for profanity words. Detects intentionally obfuscated text.
+
+```bash
+# Fetch all words with variants
+curl https://filipino-profanity-api-latest.vercel.app/api/variants
+
+# Fetch variants for a specific word
+curl "https://filipino-profanity-api-latest.vercel.app/api/variants?word=gago"
+
+# Search for words matching a pattern
+curl "https://filipino-profanity-api-latest.vercel.app/api/variants?search=gag"
+```
+
+**Parameters:**
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `word` | string | - | Filter by exact word |
+| `search` | string | - | Search words by partial match |
+| `page` | integer | `1` | Page number |
+| `limit` | integer | `50` | Items per page (max: 200) |
+
+**Response:**
+```json
+{
+  "success": true,
+  "count": 1,
+  "source": "database",
+  "pagination": {
+    "page": 1,
+    "limit": 50,
+    "total": 109,
+    "totalPages": 3,
+    "hasNext": true,
+    "hasPrev": false
+  },
+  "data": [
+    {
+      "word": "gago",
+      "variants": [
+        "6460", "6490", "g4g0", "g4go",
+        "g@g0", "g@go", "gag0", "gaaago"
+      ]
+    }
+  ]
+}
+```
+
+---
+
+### Variant Lookup
+
+Check if text contains any known leetspeak variants.
+
+```bash
+# GET request
+curl "https://filipino-profanity-api-latest.vercel.app/api/variants/lookup?text=g4g0+ka+talaga"
+
+# POST request
+curl -X POST https://filipino-profanity-api-latest.vercel.app/api/variants/lookup \
+  -H "Content-Type: application/json" \
+  -d '{"text": "g4g0 ka talaga"}'
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "hasMatch": true,
+  "matchCount": 1,
+  "data": [
+    {
+      "variant": "g4g0",
+      "word": "gago",
+      "position": 0
+    }
+  ],
   "source": "database"
 }
 ```
@@ -321,6 +411,13 @@ const checkResponse = await fetch('https://filipino-profanity-api-latest.vercel.
   body: JSON.stringify({ text: 'Your text here' }),
 });
 const result = await checkResponse.json();
+
+// Check for leetspeak variants
+const variantResponse = await fetch(
+  'https://filipino-profanity-api-latest.vercel.app/api/variants/lookup?text=g4g0'
+);
+const variantResult = await variantResponse.json();
+console.log(variantResult.hasMatch); // true
 ```
 
 ### Python
@@ -339,6 +436,14 @@ response = requests.post(
     json={'text': 'Your text here'}
 )
 result = response.json()
+
+# Check for leetspeak variants
+response = requests.get(
+    'https://filipino-profanity-api-latest.vercel.app/api/variants/lookup',
+    params={'text': 'g4g0'}
+)
+variant_result = response.json()
+print(variant_result['hasMatch'])  # True
 ```
 
 ### cURL
@@ -356,6 +461,9 @@ curl -X POST https://filipino-profanity-api-latest.vercel.app/api/check \
 curl -X POST https://filipino-profanity-api-latest.vercel.app/api/mask \
   -H "Content-Type: application/json" \
   -d '{"text": "Your text here"}'
+
+# Check for leetspeak variants
+curl "https://filipino-profanity-api-latest.vercel.app/api/variants/lookup?text=g4g0"
 ```
 
 ---
@@ -369,6 +477,8 @@ All endpoints (except `/api/health`) are rate-limited per IP address:
 | `GET /api/profanity` | 60 requests | 1 minute |
 | `GET /api/stats` | 60 requests | 1 minute |
 | `GET /api/health` | No limit | - |
+| `GET /api/variants` | 60 requests | 1 minute |
+| `GET /api/variants/lookup` | 30 requests | 1 minute |
 | `POST /api/check` | 30 requests | 1 minute |
 | `POST /api/mask` | 30 requests | 1 minute |
 | `POST /api/check/batch` | 20 requests | 1 minute |
@@ -410,6 +520,7 @@ The API works out of the box with bundled JSON data. For production use with Tur
 5. Seed the database:
    ```bash
    npx tsx scripts/seed.ts
+   npx tsx scripts/seed-variants.ts
    ```
 
 ---
@@ -441,6 +552,10 @@ filipino_profanity_api/
 │   │   │   └── batch/route.ts   # Batch text checking
 │   │   ├── mask/route.ts        # Text masking
 │   │   ├── stats/route.ts       # Statistics endpoint
+│   │   ├── variants/
+│   │   │   ├── route.ts         # Leetspeak variants
+│   │   │   └── lookup/route.ts  # Variant text lookup
+│   │   ├── contribute/          # Word contribution
 │   │   └── reports/             # Bug reports
 │   ├── docs/page.tsx            # API documentation
 │   └── page.tsx                 # Landing page
@@ -451,8 +566,15 @@ filipino_profanity_api/
 ├── api/
 │   ├── pure_filipino.json       # Filipino profanity words
 │   └── regional.json            # Regional profanity words
+├── docs/
+│   ├── API.md                   # API documentation
+│   ├── DATABASE.md              # Database documentation
+│   ├── VARIANTS.md              # Variants documentation
+│   └── leetspeak/
+│       └── filipino_variants.json # Leetspeak variants data
 └── scripts/
-    └── seed.ts                  # Database seeding
+    ├── seed.ts                  # Database seeding
+    └── seed-variants.ts         # Variants seeding
 ```
 
 ---

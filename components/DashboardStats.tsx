@@ -17,6 +17,7 @@ interface Stats {
   total: number;
   filipino: number;
   regional: number;
+  variants: number;
   chartData: ChartDataPoint[];
 }
 
@@ -28,6 +29,7 @@ const statConfig = [
   { key: "total" as const, label: "Total Words" },
   { key: "filipino" as const, label: "Filipino" },
   { key: "regional" as const, label: "Regional" },
+  { key: "variants" as const, label: "Leetspeak Variants" },
 ];
 
 const lineColors = ["#6B7A3D", "#3B7A8A"];
@@ -41,7 +43,7 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
         description="Overview of the profanity word database."
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {statConfig.map((stat) => (
           <div
             key={stat.key}

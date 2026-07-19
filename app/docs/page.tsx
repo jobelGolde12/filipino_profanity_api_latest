@@ -533,6 +533,147 @@ curl "${origin}/api/profanity?word=gago"`}
           </CodeBlock>
         </div>
 
+        {/* Leetspeak Variants */}
+        <div>
+          <div className="flex items-center gap-3 mb-4">
+            <h3 className="text-lg font-medium text-[var(--text-primary)]">GET /api/variants</h3>
+            <Badge variant="accent">New</Badge>
+          </div>
+          <p className="text-sm text-[var(--text-secondary)] mb-4">Fetch leetspeak variants for profanity words. Detects intentionally obfuscated text like <InlineCode>g4g0</InlineCode> for <InlineCode>gago</InlineCode>.</p>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Query Parameters</h4>
+          <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden mb-6">
+            <table className="w-full">
+              <thead>
+                <tr>
+                  <TableHeader>Parameter</TableHeader>
+                  <TableHeader>Type</TableHeader>
+                  <TableHeader>Required</TableHeader>
+                  <TableHeader>Description</TableHeader>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <TableCell><InlineCode>word</InlineCode></TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>No</TableCell>
+                  <TableCell>Filter by exact word (e.g., <InlineCode>gago</InlineCode>)</TableCell>
+                </tr>
+                <tr>
+                  <TableCell><InlineCode>search</InlineCode></TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>No</TableCell>
+                  <TableCell>Search words by partial match</TableCell>
+                </tr>
+                <tr>
+                  <TableCell><InlineCode>page</InlineCode></TableCell>
+                  <TableCell>integer</TableCell>
+                  <TableCell>No</TableCell>
+                  <TableCell>Page number (default: 1)</TableCell>
+                </tr>
+                <tr>
+                  <TableCell><InlineCode>limit</InlineCode></TableCell>
+                  <TableCell>integer</TableCell>
+                  <TableCell>No</TableCell>
+                  <TableCell>Items per page (default: 50, max: 200)</TableCell>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Example Request</h4>
+          <CodeBlock language="bash">
+{`# Fetch all words with variants
+curl ${origin}/api/variants
+
+# Fetch variants for a specific word
+curl "${origin}/api/variants?word=gago"
+
+# Search for words matching a pattern
+curl "${origin}/api/variants?search=gag"`}
+          </CodeBlock>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3 mt-6">Response</h4>
+          <CodeBlock language="json">
+{`{
+  "success": true,
+  "count": 1,
+  "source": "database",
+  "pagination": {
+    "page": 1,
+    "limit": 50,
+    "total": 109,
+    "totalPages": 3,
+    "hasNext": true,
+    "hasPrev": false
+  },
+  "data": [
+    {
+      "word": "gago",
+      "variants": [
+        "6460", "6490", "g4g0", "g4go",
+        "g@g0", "g@go", "gag0", "gaaago"
+      ]
+    }
+  ]
+}`}
+          </CodeBlock>
+        </div>
+
+        {/* Variant Lookup */}
+        <div>
+          <div className="flex items-center gap-3 mb-4">
+            <h3 className="text-lg font-medium text-[var(--text-primary)]">GET /api/variants/lookup</h3>
+            <Badge variant="accent">New</Badge>
+          </div>
+          <p className="text-sm text-[var(--text-secondary)] mb-4">Check if text contains any known leetspeak variants. Useful for detecting obfuscated profanity.</p>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Query Parameters</h4>
+          <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden mb-6">
+            <table className="w-full">
+              <thead>
+                <tr>
+                  <TableHeader>Parameter</TableHeader>
+                  <TableHeader>Type</TableHeader>
+                  <TableHeader>Required</TableHeader>
+                  <TableHeader>Description</TableHeader>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <TableCell><InlineCode>text</InlineCode></TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>Yes</TableCell>
+                  <TableCell>Text to check (max 10,000 characters)</TableCell>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Example Request</h4>
+          <CodeBlock language="bash">
+{`curl "${origin}/api/variants/lookup?text=g4g0+ka+talaga"`}
+          </CodeBlock>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3 mt-6">Response</h4>
+          <CodeBlock language="json">
+{`{
+  "success": true,
+  "hasMatch": true,
+  "matchCount": 1,
+  "data": [
+    {
+      "variant": "g4g0",
+      "word": "gago",
+      "position": 0
+    }
+  ],
+  "source": "database"
+}`}
+          </CodeBlock>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3 mt-6">POST Method</h4>
+          <p className="text-sm text-[var(--text-secondary)] mb-4">You can also use POST with a JSON body:</p>
+          <CodeBlock language="bash">
+{`curl -X POST ${origin}/api/variants/lookup \\
+  -H "Content-Type: application/json" \\
+  -d '{"text": "g4g0 ka talaga"}'`}
+          </CodeBlock>
+        </div>
+
         {/* Statistics */}
         <div>
           <div className="flex items-center gap-3 mb-4">
@@ -740,6 +881,16 @@ function RateLimitingSection({ origin }: { origin: string }) {
                 <TableCell>1 minute</TableCell>
               </tr>
               <tr>
+                <TableCell><InlineCode>GET /api/variants</InlineCode></TableCell>
+                <TableCell>60 requests</TableCell>
+                <TableCell>1 minute</TableCell>
+              </tr>
+              <tr>
+                <TableCell><InlineCode>GET /api/variants/lookup</InlineCode></TableCell>
+                <TableCell>30 requests</TableCell>
+                <TableCell>1 minute</TableCell>
+              </tr>
+              <tr>
                 <TableCell><InlineCode>POST /api/contribute</InlineCode></TableCell>
                 <TableCell>10 requests</TableCell>
                 <TableCell>1 minute</TableCell>
@@ -907,6 +1058,13 @@ function DatabaseSection() {
           </SyntaxCode>
         </div>
         <div>
+          <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">Variants Table</h3>
+          <p className="text-sm text-[var(--text-secondary)] mb-4">Stores leetspeak variants for each profanity word.</p>
+          <SyntaxCode language="sql">
+            <K>CREATE TABLE</K> <V>word_variants</V> (<K>id</K> <K>INTEGER PRIMARY KEY AUTOINCREMENT</K>, <K>profanity_id</K> <K>INTEGER NOT NULL</K>, <K>word</K> <K>TEXT NOT NULL</K>, <K>variant</K> <K>TEXT NOT NULL</K>, <K>created_at</K> <K>DATETIME DEFAULT CURRENT_TIMESTAMP</K>, <K>FOREIGN KEY</K> (<K>profanity_id</K>) <K>REFERENCES</K> <V>profanity</V>(<K>id</K>));
+          </SyntaxCode>
+        </div>
+        <div>
           <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">Fields</h3>
           <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden">
             <table className="w-full">
@@ -942,9 +1100,10 @@ function DatabaseSection() {
           <ul className="space-y-2 text-sm text-[var(--text-secondary)] mb-4">
             <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" /><InlineCode>api/pure_filipino.json</InlineCode> &mdash; Filipino profanity words</li>
             <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" /><InlineCode>api/regional.json</InlineCode> &mdash; Regional dialect profanity words</li>
+            <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" /><InlineCode>docs/leetspeak/filipino_variants.json</InlineCode> &mdash; Leetspeak variants</li>
           </ul>
-          <CodeBlock language="bash">npx tsx scripts/seed.ts</CodeBlock>
-          <p className="text-sm text-[var(--text-secondary)] mt-3">The script creates the table, checks for existing data, and inserts all words.</p>
+          <CodeBlock language="bash">{"# Seed profanity words\nnpx tsx scripts/seed.ts\n\n# Seed leetspeak variants\nnpx tsx scripts/seed-variants.ts"}</CodeBlock>
+          <p className="text-sm text-[var(--text-secondary)] mt-3">The scripts create tables, check for existing data, and insert all words and variants.</p>
         </div>
         <div>
           <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">Migration Guide</h3>
@@ -982,10 +1141,12 @@ function FeaturesSection() {
     { title: "Profanity Fetching", desc: "Filter by language type (Filipino, Regional, All) and search for specific words.", badge: "GET", variant: "accent" as const },
     { title: "Profanity Detection", desc: "Real-time text analysis that identifies profanity matches with metadata.", badge: "POST", variant: "info" as const },
     { title: "Text Masking", desc: "Mask profanity words with asterisks or custom characters. Partial masking keeps first letter visible.", badge: "POST", variant: "accent" as const },
+    { title: "Leetspeak Variants", desc: "8,000+ leetspeak variants to detect obfuscated profanity like g4g0, g@g0, 6460.", badge: "GET", variant: "info" as const },
+    { title: "Variant Lookup", desc: "Check if text contains any known leetspeak variants for bypass detection.", badge: "GET", variant: "accent" as const },
     { title: "Batch Checking", desc: "Check multiple texts for profanity in a single request (up to 10 texts).", badge: "POST", variant: "info" as const },
     { title: "Word Contribution", desc: "Submit new profanity words for review. Community-driven word database expansion.", badge: "POST", variant: "accent" as const },
     { title: "Health Check", desc: "Monitor API health status and database connectivity.", badge: "GET", variant: "success" as const },
-    { title: "Statistics", desc: "Get word counts by language, severity, and region.", badge: "GET", variant: "success" as const },
+    { title: "Statistics", desc: "Get word counts by language, severity, and region with variant totals.", badge: "GET", variant: "success" as const },
     { title: "Rate Limiting", desc: "Built-in rate limiting with clear headers and retry guidance.", badge: null, variant: "warning" as const },
     { title: "Pagination", desc: "Paginated responses for large datasets with metadata.", badge: null, variant: "warning" as const },
   ];

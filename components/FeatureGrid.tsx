@@ -1,4 +1,4 @@
-import { Code, Database, Zap, Shield, Globe } from "lucide-react";
+import { Code, Database, Zap, Shield, Globe, Binary } from "lucide-react";
 import { Marquee } from "./ui/Marquee";
 
 const features = [
@@ -16,6 +16,11 @@ const features = [
     icon: Zap,
     title: "Real-time Detection",
     description: "Check any text for profanity with instant response.",
+  },
+  {
+    icon: Binary,
+    title: "Leetspeak Variants",
+    description: "8,000+ leetspeak variants to detect obfuscated profanity.",
   },
   {
     icon: Shield,

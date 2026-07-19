@@ -21,6 +21,7 @@ interface Stats {
   total: number;
   filipino: number;
   regional: number;
+  variants: number;
   chartData: ChartDataPoint[];
 }
 
@@ -29,6 +30,7 @@ export default function Home() {
     total: 0,
     filipino: 0,
     regional: 0,
+    variants: 0,
     chartData: [],
   });
   const [baseUrl, setBaseUrl] = useState("");
@@ -40,8 +42,13 @@ export default function Home() {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch("/api/profanity?type=all&limit=1000");
-      const data = await response.json();
+      const [profanityRes, statsRes] = await Promise.all([
+        fetch("/api/profanity?type=all&limit=1000"),
+        fetch("/api/stats"),
+      ]);
+
+      const data = await profanityRes.json();
+      const statsData = await statsRes.json();
 
       if (data.success) {
         const words: { language: string; severity: string }[] = data.data;
@@ -61,6 +68,7 @@ export default function Home() {
           total: data.pagination.total,
           filipino: filipinoWords.length,
           regional: regionalWords.length,
+          variants: statsData?.variants?.totalVariants ?? 0,
           chartData,
         });
       }
