@@ -9,6 +9,7 @@ interface ProfanityWord {
   language: string;
   region: string | null;
   severity: string;
+  variants: string[];
 }
 
 interface PureFilipinoItem {
@@ -19,6 +20,11 @@ interface PureFilipinoItem {
 interface RegionalItem {
   id: number;
   word: string;
+}
+
+interface VariantRow {
+  word: string;
+  variant: string;
 }
 
 interface PaginationParams {
@@ -46,6 +52,46 @@ function parsePagination(searchParams: URLSearchParams): PaginationParams {
   const page = Math.max(1, parseInt(searchParams.get("page") ?? "1", 10));
   const limit = Math.min(200, Math.max(1, parseInt(searchParams.get("limit") ?? "50", 10)));
   return { page, limit };
+}
+
+async function fetchVariantsFromDatabase(): Promise<Map<string, string[]>> {
+  const variantMap = new Map<string, string[]>();
+  try {
+    const result = await db.execute("SELECT word, variant FROM word_variants ORDER BY word, variant");
+    for (const row of result.rows) {
+      const word = (row.word as string).toLowerCase();
+      if (!variantMap.has(word)) {
+        variantMap.set(word, []);
+      }
+      variantMap.get(word)!.push(row.variant as string);
+    }
+  } catch {
+    // fallback to json
+  }
+  return variantMap;
+}
+
+function fetchVariantsFromJson(): Map<string, string[]> {
+  const variantMap = new Map<string, string[]>();
+  try {
+    const variantsRaw = fs.readFileSync(
+      path.join(process.cwd(), "docs", "leetspeak", "filipino_variants.json"),
+      "utf-8"
+    );
+    const variantsFile: { data: { word: string; variants: string[] }[] } = JSON.parse(variantsRaw);
+    for (const entry of variantsFile.data) {
+      variantMap.set(entry.word.toLowerCase(), entry.variants);
+    }
+  } catch {
+    // ignore
+  }
+  return variantMap;
+}
+
+async function getVariantMap(): Promise<Map<string, string[]>> {
+  const dbMap = await fetchVariantsFromDatabase();
+  if (dbMap.size > 0) return dbMap;
+  return fetchVariantsFromJson();
 }
 
 async function fetchFromDatabase(type: string, word?: string): Promise<ProfanityWord[] | null> {
@@ -104,6 +150,7 @@ function fetchFromJson(type: string, searchWord?: string): ProfanityWord[] {
         language: "filipino",
         region: null,
         severity: "medium",
+        variants: [] as string[],
       }));
     results.push(...filipinoWords);
   }
@@ -116,6 +163,7 @@ function fetchFromJson(type: string, searchWord?: string): ProfanityWord[] {
         language: "regional",
         region: "visayan",
         severity: "medium",
+        variants: [] as string[],
       }));
     results.push(...regionalWords);
   }
@@ -188,6 +236,12 @@ export async function GET(request: NextRequest) {
   } catch {
     data = fetchFromJson(type, word);
     source = "json";
+  }
+
+  const variantMap = await getVariantMap();
+
+  for (const entry of data) {
+    entry.variants = variantMap.get(entry.word.toLowerCase()) || [];
   }
 
   const { paginated, total, totalPages } = paginateData(data, pagination);

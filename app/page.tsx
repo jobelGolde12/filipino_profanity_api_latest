@@ -42,18 +42,16 @@ export default function Home() {
 
   const fetchStats = async () => {
     try {
-      const [profanityRes, statsRes, variantsRes] = await Promise.all([
+      const [profanityRes, statsRes] = await Promise.all([
         fetch("/api/profanity?type=all&limit=1000"),
         fetch("/api/stats"),
-        fetch("/api/variants?limit=200"),
       ]);
 
       const data = await profanityRes.json();
       const statsData = await statsRes.json();
-      const variantsData = await variantsRes.json();
 
       if (data.success) {
-        const words: { language: string; severity: string }[] = data.data;
+        const words: { language: string; severity: string; variants: string[] }[] = data.data;
         const filipinoWords = words.filter((w) => w.language === "filipino");
         const regionalWords = words.filter((w) => w.language === "regional");
 
