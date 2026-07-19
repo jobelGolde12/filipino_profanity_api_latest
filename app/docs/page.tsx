@@ -212,6 +212,31 @@ function QuickStart({ origin }: { origin: string }) {
           </SyntaxCode>
         </div>
         <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-6">
+          <div className="flex items-center gap-3 mb-3">
+            <Badge variant="info">POST</Badge>
+            <code className="text-sm font-mono text-[var(--text-primary)]">/api/contribute</code>
+          </div>
+          <p className="text-sm text-[var(--text-secondary)] mb-4">Submit a new profanity word for review.</p>
+          <div className="mb-4">
+            <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-2">Request Body</h4>
+            <div className="text-sm text-[var(--text-tertiary)]">
+              <InlineCode>{"{ \"word\": \"new-word\", \"language\": \"filipino\" }"}</InlineCode>
+            </div>
+          </div>
+          <SyntaxCode language="JavaScript">
+            <K>const</K> <V>response</V> <O>=</O> <K>await</K> <F>fetch</F>(<S>{`'${origin}/api/contribute'`}</S>, {"{"}{"\n"}
+            {"  "}<V>method</V>: <S>&apos;POST&apos;</S>,{"\n"}
+            {"  "}<V>headers</V>: {"{ "}<V>Content-Type</V>: <S>&apos;application/json&apos;</S>{" }"},{"\n"}
+            {"  "}<V>body</V>: <V>JSON</V>.<F>stringify</F>({"{"}{"\n"}
+            {"    "}<V>word</V>: <S>&apos;new-word&apos;</S>,{"\n"}
+            {"    "}<V>language</V>: <S>&apos;filipino&apos;</S>,{"\n"}
+            {"    "}<V>email</V>: <S>&apos;user@example.com&apos;</S> <C>{"// optional"}</C>{"\n"}
+            {"  }"}),{"\n"}
+            {"}"});
+            {"\n"}<K>const</K> <V>data</V> <O>=</O> <K>await</K> <V>response</V>.<F>json</F>();
+          </SyntaxCode>
+        </div>
+        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] p-6">
           <h3 className="text-sm font-medium text-[var(--text-primary)] mb-4">Python</h3>
           <SyntaxCode language="Python">
             <K>import</K> <V>requests</V>
@@ -546,6 +571,78 @@ curl "${origin}/api/profanity?word=gago"`}
           </CodeBlock>
         </div>
 
+        {/* Contribute Word */}
+        <div>
+          <div className="flex items-center gap-3 mb-4">
+            <h3 className="text-lg font-medium text-[var(--text-primary)]">POST /api/contribute</h3>
+            <Badge variant="accent">New</Badge>
+          </div>
+          <p className="text-sm text-[var(--text-secondary)] mb-4">Submit a new profanity word for review. Submitted words are reviewed by admins before being added to the database.</p>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Request Body</h4>
+          <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden mb-6">
+            <table className="w-full">
+              <thead>
+                <tr>
+                  <TableHeader>Parameter</TableHeader>
+                  <TableHeader>Type</TableHeader>
+                  <TableHeader>Required</TableHeader>
+                  <TableHeader>Description</TableHeader>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <TableCell><InlineCode>word</InlineCode></TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>Yes</TableCell>
+                  <TableCell>The profanity word to submit (min 2 characters)</TableCell>
+                </tr>
+                <tr>
+                  <TableCell><InlineCode>language</InlineCode></TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>Yes</TableCell>
+                  <TableCell>Language category: <InlineCode>filipino</InlineCode> or <InlineCode>regional</InlineCode></TableCell>
+                </tr>
+                <tr>
+                  <TableCell><InlineCode>region</InlineCode></TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>If regional</TableCell>
+                  <TableCell>Regional dialect (e.g., Visayan, Ilokano, Bicolano)</TableCell>
+                </tr>
+                <tr>
+                  <TableCell><InlineCode>email</InlineCode></TableCell>
+                  <TableCell>string</TableCell>
+                  <TableCell>No</TableCell>
+                  <TableCell>Email to notify when word is added</TableCell>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Example Request</h4>
+          <CodeBlock language="bash">
+{`curl -X POST ${origin}/api/contribute \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "word": "new-word",
+    "language": "filipino",
+    "email": "user@example.com"
+  }'`}
+          </CodeBlock>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3 mt-6">Response (201 Created)</h4>
+          <CodeBlock language="json">
+{`{
+  "success": true,
+  "message": "Word submitted for review"
+}`}
+          </CodeBlock>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3 mt-6">Error Response (400 Bad Request)</h4>
+          <CodeBlock language="json">
+{`{
+  "success": false,
+  "error": "Word and language are required"
+}`}
+          </CodeBlock>
+        </div>
+
         {/* Error Responses */}
         <div>
           <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">Error Responses</h3>
@@ -640,6 +737,11 @@ function RateLimitingSection({ origin }: { origin: string }) {
               <tr>
                 <TableCell><InlineCode>POST /api/check/batch</InlineCode></TableCell>
                 <TableCell>20 requests</TableCell>
+                <TableCell>1 minute</TableCell>
+              </tr>
+              <tr>
+                <TableCell><InlineCode>POST /api/contribute</InlineCode></TableCell>
+                <TableCell>10 requests</TableCell>
                 <TableCell>1 minute</TableCell>
               </tr>
             </tbody>
@@ -881,6 +983,7 @@ function FeaturesSection() {
     { title: "Profanity Detection", desc: "Real-time text analysis that identifies profanity matches with metadata.", badge: "POST", variant: "info" as const },
     { title: "Text Masking", desc: "Mask profanity words with asterisks or custom characters. Partial masking keeps first letter visible.", badge: "POST", variant: "accent" as const },
     { title: "Batch Checking", desc: "Check multiple texts for profanity in a single request (up to 10 texts).", badge: "POST", variant: "info" as const },
+    { title: "Word Contribution", desc: "Submit new profanity words for review. Community-driven word database expansion.", badge: "POST", variant: "accent" as const },
     { title: "Health Check", desc: "Monitor API health status and database connectivity.", badge: "GET", variant: "success" as const },
     { title: "Statistics", desc: "Get word counts by language, severity, and region.", badge: "GET", variant: "success" as const },
     { title: "Rate Limiting", desc: "Built-in rate limiting with clear headers and retry guidance.", badge: null, variant: "warning" as const },
