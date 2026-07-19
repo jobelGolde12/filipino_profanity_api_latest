@@ -970,8 +970,8 @@ export default function DocsPage() {
       <Header />
       <div className="mx-auto max-w-[1200px] px-6 sm:px-8">
         <div className="flex gap-12 py-10">
-          <aside className="hidden lg:block w-56 shrink-0">
-            <div className="sticky top-24">
+          <aside className="hidden lg:block fixed left-0 top-0 h-screen w-56 pt-24 pb-8 pl-6 sm:pl-8 bg-[var(--bg-base)] z-40 overflow-y-auto">
+            <div>
               <a href="/" className="inline-flex items-center gap-1.5 text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors mb-6">
                 <ArrowLeft className="w-3.5 h-3.5" />
                 Back to home
@@ -995,7 +995,7 @@ export default function DocsPage() {
               </nav>
             </div>
           </aside>
-          <main className="flex-1 min-w-0 max-w-3xl">
+          <main className="flex-1 min-w-0 max-w-3xl lg:ml-56">
             <div className="mb-12">
               <h1 className="text-4xl sm:text-5xl font-semibold text-[var(--text-primary)] tracking-tight" style={{ fontFamily: "var(--font-display)" }}>
                 Documentation
