@@ -22,7 +22,7 @@ const marqueeItems = [
   { icon: Globe, label: "Regional" },
   { icon: Server, label: "Edge Ready" },
   { icon: Cloud, label: "Completely Free" },
-  { icon: BarChart3, label: "310 Words" },
+  { icon: BarChart3, label: "310+ Words" },
   { icon: Blocks, label: "TypeScript" },
   { icon: Terminal, label: "cURL Ready" },
 ];

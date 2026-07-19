@@ -248,7 +248,7 @@ function ApiReference({ origin }: { origin: string }) {
   "uptime": 3600.5,
   "database": {
     "connected": true,
-    "wordCount": 310
+    "wordCount": "310+"
   },
   "version": "1.0.0",
   "responseTime": "12ms"
@@ -521,25 +521,25 @@ curl "${origin}/api/profanity?word=gago"`}
           <CodeBlock language="json">
 {`{
   "success": true,
-  "total": 310,
+  "total": "310+",
   "byLanguage": {
     "filipino": {
-      "count": 110,
+      "count": "110+",
       "percentage": 35
     },
     "regional": {
-      "count": 200,
+      "count": "200+",
       "percentage": 65
     }
   },
   "bySeverity": {
     "low": 0,
-    "medium": 310,
+    "medium": "310+",
     "high": 0
   },
   "byRegion": {
-    "none": 110,
-    "visayan": 200
+    "none": "110+",
+    "visayan": "200+"
   },
   "source": "database"
 }`}

@@ -18,7 +18,7 @@ export function Hero() {
         </h1>
 
         <p className="text-lg text-[var(--text-secondary)] max-w-lg mx-auto mb-10 leading-relaxed">
-          310 words across Filipino and regional dialects.
+          310+ words across Filipino and regional dialects.
           Real-time detection via a free REST API.
         </p>
 

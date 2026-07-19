@@ -52,7 +52,7 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
               className="text-4xl sm:text-5xl font-semibold text-[var(--text-primary)] tracking-tight"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              {stats[stat.key].toLocaleString()}
+              {stats[stat.key].toLocaleString()}<span className="text-2xl text-[var(--text-muted)] font-normal">+</span>
             </p>
           </div>
         ))}

@@ -39,7 +39,7 @@ export default function Home() {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch("/api/profanity?type=all");
+      const response = await fetch("/api/profanity?type=all&limit=1000");
       const data = await response.json();
 
       if (data.success) {
@@ -57,7 +57,7 @@ export default function Home() {
         }));
 
         setStats({
-          total: data.count,
+          total: data.pagination.total,
           filipino: filipinoWords.length,
           regional: regionalWords.length,
           chartData,

@@ -4,7 +4,7 @@
 
 # Filipino Profanity API
 
-**310 words across Filipino and regional dialects. Real-time detection via a free REST API.**
+**310+ words across Filipino and regional dialects. Real-time detection via a free REST API.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-6B7A3D.svg)](https://opensource.org/licenses/MIT)
 [![Next.js](https://img.shields.io/badge/Next.js-16+-black)](https://nextjs.org/)
@@ -23,7 +23,7 @@ The Filipino Profanity API is a free, open-source REST API designed for develope
 
 ### Key Highlights
 
-- **310 profanity words** — 110 Filipino + 200 Regional (Visayan)
+- **310+ profanity words** — 110+ Filipino + 200+ Regional (Visayan)
 - **Real-time detection** — Check any text for profanity instantly
 - **Text masking** — Automatically censor profanity with `***` or custom characters
 - **Batch processing** — Check multiple texts in a single request
@@ -85,7 +85,7 @@ curl https://filipino-profanity-api-latest.vercel.app/api/health
   "uptime": 3600.5,
   "database": {
     "connected": true,
-    "wordCount": 310
+    "wordCount": "310+"
   },
   "version": "1.0.0",
   "responseTime": "12ms"
@@ -284,19 +284,19 @@ curl https://filipino-profanity-api-latest.vercel.app/api/stats
 ```json
 {
   "success": true,
-  "total": 310,
+  "total": "310+",
   "byLanguage": {
-    "filipino": { "count": 110, "percentage": 35 },
-    "regional": { "count": 200, "percentage": 65 }
+    "filipino": { "count": "110+", "percentage": 35 },
+    "regional": { "count": "200+", "percentage": 65 }
   },
   "bySeverity": {
     "low": 0,
-    "medium": 310,
+    "medium": "310+",
     "high": 0
   },
   "byRegion": {
-    "none": 110,
-    "visayan": 200
+    "none": "110+",
+    "visayan": "200+"
   },
   "source": "database"
 }
