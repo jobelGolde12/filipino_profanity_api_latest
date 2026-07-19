@@ -1,17 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   LogIn,
   LogOut,
   RefreshCw,
   Clock,
-  CheckCircle,
-  AlertCircle,
   Eye,
   X,
   User,
   Globe,
+  CheckCircle,
+  XCircle,
+  Trash2,
+  AlertCircle,
 } from "lucide-react";
 
 interface Report {
@@ -24,12 +26,31 @@ interface Report {
   created_at: string;
 }
 
-const statusConfig: Record<string, { label: string; color: string; bg: string }> = {
+interface WordSubmission {
+  id: number;
+  word: string;
+  language: string;
+  region: string | null;
+  email: string | null;
+  browser: string | null;
+  status: string;
+  created_at: string;
+}
+
+const reportStatusConfig: Record<string, { label: string; color: string; bg: string }> = {
   pending: { label: "Pending", color: "var(--warning)", bg: "var(--warning-muted)" },
   reviewed: { label: "Reviewed", color: "var(--info)", bg: "var(--info-muted)" },
   resolved: { label: "Resolved", color: "var(--success)", bg: "var(--success-muted)" },
   dismissed: { label: "Dismissed", color: "var(--text-muted)", bg: "var(--bg-alt)" },
 };
+
+const submissionStatusConfig: Record<string, { label: string; color: string; bg: string }> = {
+  pending: { label: "Pending", color: "var(--warning)", bg: "var(--warning-muted)" },
+  approved: { label: "Approved", color: "var(--success)", bg: "var(--success-muted)" },
+  denied: { label: "Denied", color: "var(--error)", bg: "var(--error-muted)" },
+};
+
+type ActiveTab = "reports" | "submissions";
 
 export default function AdminPage() {
   const [auth, setAuth] = useState<string | null>(null);
@@ -37,27 +58,39 @@ export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState<string | null>(null);
   const [reports, setReports] = useState<Report[]>([]);
+  const [submissions, setSubmissions] = useState<WordSubmission[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedReport, setSelectedReport] = useState<Report | null>(null);
+  const [selectedSubmission, setSelectedSubmission] = useState<WordSubmission | null>(null);
+  const [activeTab, setActiveTab] = useState<ActiveTab>("reports");
 
   useEffect(() => {
     const saved = localStorage.getItem("admin-auth");
     if (saved) {
       setAuth(saved);
-      fetchReports(saved);
+      fetchAllData(saved);
     }
   }, []);
 
-  const fetchReports = async (authToken: string) => {
+  const fetchAllData = async (authToken: string) => {
     setLoading(true);
     try {
-      const response = await fetch("/api/reports/admin", {
-        headers: { Authorization: `Basic ${authToken}` },
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setReports(data.data || []);
-      } else {
+      const [reportsRes, submissionsRes] = await Promise.all([
+        fetch("/api/reports/admin", { headers: { Authorization: `Basic ${authToken}` } }),
+        fetch("/api/contribute", { headers: { Authorization: `Basic ${authToken}` } }),
+      ]);
+
+      if (reportsRes.ok) {
+        const reportsData = await reportsRes.json();
+        setReports(reportsData.data || []);
+      }
+
+      if (submissionsRes.ok) {
+        const submissionsData = await submissionsRes.json();
+        setSubmissions(submissionsData.data || []);
+      }
+
+      if (!reportsRes.ok && !submissionsRes.ok) {
         setAuth(null);
         localStorage.removeItem("admin-auth");
       }
@@ -81,7 +114,7 @@ export default function AdminPage() {
       if (response.ok) {
         setAuth(token);
         localStorage.setItem("admin-auth", token);
-        fetchReports(token);
+        fetchAllData(token);
       } else {
         setLoginError("Invalid credentials");
       }
@@ -93,10 +126,11 @@ export default function AdminPage() {
   const handleLogout = () => {
     setAuth(null);
     setReports([]);
+    setSubmissions([]);
     localStorage.removeItem("admin-auth");
   };
 
-  const updateStatus = async (id: number, status: string) => {
+  const updateReportStatus = async (id: number, status: string) => {
     if (!auth) return;
     try {
       await fetch("/api/reports/admin", {
@@ -116,6 +150,40 @@ export default function AdminPage() {
     } catch {}
   };
 
+  const handleSubmissionAction = async (id: number, status: "approved" | "denied") => {
+    if (!auth) return;
+    try {
+      const response = await fetch(`/api/contribute/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Basic ${auth}`,
+        },
+        body: JSON.stringify({ status }),
+      });
+
+      if (response.ok) {
+        setSubmissions((prev) => prev.filter((s) => s.id !== id));
+        setSelectedSubmission(null);
+      }
+    } catch {}
+  };
+
+  const handleDeleteSubmission = async (id: number) => {
+    if (!auth) return;
+    try {
+      const response = await fetch(`/api/contribute/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Basic ${auth}` },
+      });
+
+      if (response.ok) {
+        setSubmissions((prev) => prev.filter((s) => s.id !== id));
+        setSelectedSubmission(null);
+      }
+    } catch {}
+  };
+
   if (!auth) {
     return (
       <div className="min-h-screen bg-[var(--bg-base)] flex items-center justify-center px-6">
@@ -131,7 +199,7 @@ export default function AdminPage() {
               Admin Access
             </h1>
             <p className="mt-2 text-sm text-[var(--text-muted)]">
-              Filipino Profanity API — Reports Dashboard
+              Filipino Profanity API — Admin Dashboard
             </p>
           </div>
 
@@ -188,23 +256,23 @@ export default function AdminPage() {
     );
   }
 
-  const pending = reports.filter((r) => r.status === "pending").length;
-  const resolved = reports.filter((r) => r.status === "resolved").length;
+  const pendingReports = reports.filter((r) => r.status === "pending").length;
+  const resolvedReports = reports.filter((r) => r.status === "resolved").length;
+  const pendingSubmissions = submissions.filter((s) => s.status === "pending").length;
 
   return (
     <div className="min-h-screen bg-[var(--bg-base)]">
-      {/* Top bar */}
       <header className="border-b border-[var(--border-subtle)] bg-[var(--bg-surface)]">
         <div className="mx-auto max-w-[1200px] px-6 sm:px-8 flex items-center justify-between h-16">
           <div className="flex items-center gap-3">
             <span className="w-2 h-2 rounded-full bg-[var(--accent)]" />
             <span className="text-sm font-medium text-[var(--text-primary)]">
-              Reports Dashboard
+              Admin Dashboard
             </span>
           </div>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => fetchReports(auth)}
+              onClick={() => fetchAllData(auth)}
               disabled={loading}
               className="p-2 text-[var(--text-muted)] hover:text-[var(--text-secondary)] rounded-[var(--radius-lg)] transition-colors"
               title="Refresh"
@@ -229,13 +297,13 @@ export default function AdminPage() {
       </header>
 
       <main className="mx-auto max-w-[1200px] px-6 sm:px-8 py-10">
-        {/* Stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-10">
           {[
-            { label: "Total", value: reports.length, color: "var(--text-primary)" },
-            { label: "Pending", value: pending, color: "var(--warning)" },
-            { label: "Resolved", value: resolved, color: "var(--success)" },
-            { label: "Others", value: reports.length - pending - resolved, color: "var(--text-muted)" },
+            { label: "Total Reports", value: reports.length, color: "var(--text-primary)" },
+            { label: "Pending Reports", value: pendingReports, color: "var(--warning)" },
+            { label: "Resolved Reports", value: resolvedReports, color: "var(--success)" },
+            { label: "Total Submissions", value: submissions.length, color: "var(--text-primary)" },
+            { label: "Pending Submissions", value: pendingSubmissions, color: "var(--warning)" },
           ].map((stat) => (
             <div
               key={stat.label}
@@ -249,66 +317,163 @@ export default function AdminPage() {
           ))}
         </div>
 
-        {/* Reports list */}
-        <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] overflow-hidden">
-          <div className="px-6 py-4 border-b border-[var(--border-subtle)]">
-            <h2 className="text-sm font-medium text-[var(--text-primary)]">
-              All Reports ({reports.length})
-            </h2>
-          </div>
+        <div className="flex gap-1 p-1 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-pill)] mb-6 w-fit">
+          {([["reports", "Reports", reports.length], ["submissions", "Submissions", submissions.length]] as const).map(([key, label, count]) => (
+            <button
+              key={key}
+              onClick={() => setActiveTab(key)}
+              className={`px-4 py-2 text-sm font-medium rounded-full transition-all ${
+                activeTab === key
+                  ? "bg-[var(--accent)] text-white"
+                  : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
+              }`}
+            >
+              {label} ({count})
+            </button>
+          ))}
+        </div>
 
-          {loading && reports.length === 0 ? (
-            <div className="flex items-center justify-center py-16">
-              <div className="w-6 h-6 border-2 border-[var(--border-default)] border-t-[var(--accent)] rounded-full animate-spin" />
+        {activeTab === "reports" ? (
+          <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] overflow-hidden">
+            <div className="px-6 py-4 border-b border-[var(--border-subtle)]">
+              <h2 className="text-sm font-medium text-[var(--text-primary)]">
+                All Reports ({reports.length})
+              </h2>
             </div>
-          ) : reports.length === 0 ? (
-            <div className="text-center py-16">
-              <p className="text-sm text-[var(--text-muted)]">No reports yet</p>
-            </div>
-          ) : (
-            <div className="divide-y divide-[var(--border-subtle)]">
-              {reports.map((report) => {
-                const cfg = statusConfig[report.status] || statusConfig.pending;
-                return (
-                  <div
-                    key={report.id}
-                    className="px-6 py-4 hover:bg-[var(--bg-alt)] transition-colors cursor-pointer"
-                    onClick={() => setSelectedReport(report)}
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className="text-sm font-medium text-[var(--text-primary)] truncate">
-                            {report.title}
-                          </h3>
-                          <span
-                            className="text-[10px] font-medium px-2 py-0.5 rounded-full shrink-0"
-                            style={{ backgroundColor: cfg.bg, color: cfg.color }}
-                          >
-                            {cfg.label}
-                          </span>
+
+            {loading && reports.length === 0 ? (
+              <div className="flex items-center justify-center py-16">
+                <div className="w-6 h-6 border-2 border-[var(--border-default)] border-t-[var(--accent)] rounded-full animate-spin" />
+              </div>
+            ) : reports.length === 0 ? (
+              <div className="text-center py-16">
+                <p className="text-sm text-[var(--text-muted)]">No reports yet</p>
+              </div>
+            ) : (
+              <div className="divide-y divide-[var(--border-subtle)]">
+                {reports.map((report) => {
+                  const cfg = reportStatusConfig[report.status] || reportStatusConfig.pending;
+                  return (
+                    <div
+                      key={report.id}
+                      className="px-6 py-4 hover:bg-[var(--bg-alt)] transition-colors cursor-pointer"
+                      onClick={() => setSelectedReport(report)}
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <h3 className="text-sm font-medium text-[var(--text-primary)] truncate">
+                              {report.title}
+                            </h3>
+                            <span
+                              className="text-[10px] font-medium px-2 py-0.5 rounded-full shrink-0"
+                              style={{ backgroundColor: cfg.bg, color: cfg.color }}
+                            >
+                              {cfg.label}
+                            </span>
+                          </div>
+                          <p className="text-xs text-[var(--text-muted)] truncate">
+                            {report.description}
+                          </p>
                         </div>
-                        <p className="text-xs text-[var(--text-muted)] truncate">
-                          {report.description}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-3 shrink-0 text-xs text-[var(--text-muted)]">
-                        <span className="flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
-                          {new Date(report.created_at).toLocaleDateString()}
-                        </span>
-                        <Eye className="w-3.5 h-3.5" />
+                        <div className="flex items-center gap-3 shrink-0 text-xs text-[var(--text-muted)]">
+                          <span className="flex items-center gap-1">
+                            <Clock className="w-3 h-3" />
+                            {new Date(report.created_at).toLocaleDateString()}
+                          </span>
+                          <Eye className="w-3.5 h-3.5" />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] overflow-hidden">
+            <div className="px-6 py-4 border-b border-[var(--border-subtle)]">
+              <h2 className="text-sm font-medium text-[var(--text-primary)]">
+                Word Submissions ({submissions.length})
+              </h2>
             </div>
-          )}
-        </div>
+
+            {loading && submissions.length === 0 ? (
+              <div className="flex items-center justify-center py-16">
+                <div className="w-6 h-6 border-2 border-[var(--border-default)] border-t-[var(--accent)] rounded-full animate-spin" />
+              </div>
+            ) : submissions.length === 0 ? (
+              <div className="text-center py-16">
+                <p className="text-sm text-[var(--text-muted)]">No submissions yet</p>
+              </div>
+            ) : (
+              <div className="divide-y divide-[var(--border-subtle)]">
+                {submissions.map((submission) => {
+                  const cfg = submissionStatusConfig[submission.status] || submissionStatusConfig.pending;
+                  return (
+                    <div
+                      key={submission.id}
+                      className="px-6 py-4 hover:bg-[var(--bg-alt)] transition-colors cursor-pointer"
+                      onClick={() => setSelectedSubmission(submission)}
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <h3 className="text-sm font-medium text-[var(--text-primary)]">
+                              {submission.word}
+                            </h3>
+                            <span
+                              className="text-[10px] font-medium px-2 py-0.5 rounded-full shrink-0"
+                              style={{ backgroundColor: cfg.bg, color: cfg.color }}
+                            >
+                              {cfg.label}
+                            </span>
+                          </div>
+                          <p className="text-xs text-[var(--text-muted)]">
+                            {submission.language}
+                            {submission.region ? ` · ${submission.region}` : ""}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          {submission.status === "pending" && (
+                            <>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleSubmissionAction(submission.id, "approved");
+                                }}
+                                className="p-1.5 text-[var(--success)] hover:bg-[var(--success-muted)] rounded-[var(--radius-lg)] transition-colors"
+                                title="Approve"
+                              >
+                                <CheckCircle className="w-4 h-4" />
+                              </button>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleSubmissionAction(submission.id, "denied");
+                                }}
+                                className="p-1.5 text-[var(--error)] hover:bg-[var(--error-muted)] rounded-[var(--radius-lg)] transition-colors"
+                                title="Deny"
+                              >
+                                <XCircle className="w-4 h-4" />
+                              </button>
+                            </>
+                          )}
+                          <span className="flex items-center gap-1 text-xs text-[var(--text-muted)]">
+                            <Clock className="w-3 h-3" />
+                            {new Date(submission.created_at).toLocaleDateString()}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
       </main>
 
-      {/* Detail modal */}
       {selectedReport && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--bg-overlay)] p-6"
@@ -365,10 +530,10 @@ export default function AdminPage() {
               <div>
                 <p className="text-xs text-[var(--text-muted)] mb-2">Update Status</p>
                 <div className="flex flex-wrap gap-2">
-                  {Object.entries(statusConfig).map(([key, cfg]) => (
+                  {Object.entries(reportStatusConfig).map(([key, cfg]) => (
                     <button
                       key={key}
-                      onClick={() => updateStatus(selectedReport.id, key)}
+                      onClick={() => updateReportStatus(selectedReport.id, key)}
                       className={`px-3 py-1.5 text-xs font-medium rounded-full border transition-all ${
                         selectedReport.status === key
                           ? "border-current"
@@ -382,6 +547,96 @@ export default function AdminPage() {
                       {cfg.label}
                     </button>
                   ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {selectedSubmission && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--bg-overlay)] p-6"
+          onClick={() => setSelectedSubmission(null)}
+        >
+          <div
+            className="w-full max-w-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-[var(--radius-xl)] overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--border-subtle)]">
+              <h3 className="text-sm font-medium text-[var(--text-primary)]">Submission Details</h3>
+              <button
+                onClick={() => setSelectedSubmission(null)}
+                className="p-1 text-[var(--text-muted)] hover:text-[var(--text-secondary)] rounded transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="px-6 py-5 space-y-4">
+              <div>
+                <p className="text-xs text-[var(--text-muted)] mb-1">Word</p>
+                <p className="text-sm font-medium text-[var(--text-primary)]">{selectedSubmission.word}</p>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-xs text-[var(--text-muted)] mb-1">Language</p>
+                  <p className="text-sm text-[var(--text-secondary)] capitalize">{selectedSubmission.language}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-[var(--text-muted)] mb-1">Region</p>
+                  <p className="text-sm text-[var(--text-secondary)]">{selectedSubmission.region || "N/A"}</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-xs text-[var(--text-muted)] mb-1 flex items-center gap-1">
+                    <User className="w-3 h-3" /> Email
+                  </p>
+                  <p className="text-sm text-[var(--text-secondary)]">{selectedSubmission.email || "Anonymous"}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-[var(--text-muted)] mb-1 flex items-center gap-1">
+                    <Clock className="w-3 h-3" /> Submitted
+                  </p>
+                  <p className="text-sm text-[var(--text-secondary)]">
+                    {new Date(selectedSubmission.created_at).toLocaleString()}
+                  </p>
+                </div>
+              </div>
+              {selectedSubmission.browser && (
+                <div>
+                  <p className="text-xs text-[var(--text-muted)] mb-1 flex items-center gap-1">
+                    <Globe className="w-3 h-3" /> Browser
+                  </p>
+                  <p className="text-xs text-[var(--text-secondary)] font-mono break-all">
+                    {selectedSubmission.browser}
+                  </p>
+                </div>
+              )}
+              <div>
+                <p className="text-xs text-[var(--text-muted)] mb-2">Actions</p>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    onClick={() => handleSubmissionAction(selectedSubmission.id, "approved")}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full border border-[var(--success)] text-[var(--success)] bg-[var(--success-muted)] hover:opacity-80 transition-opacity"
+                  >
+                    <CheckCircle className="w-3 h-3" />
+                    Approve & Add
+                  </button>
+                  <button
+                    onClick={() => handleSubmissionAction(selectedSubmission.id, "denied")}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full border border-[var(--error)] text-[var(--error)] bg-[var(--error-muted)] hover:opacity-80 transition-opacity"
+                  >
+                    <XCircle className="w-3 h-3" />
+                    Deny
+                  </button>
+                  <button
+                    onClick={() => handleDeleteSubmission(selectedSubmission.id)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--error)] hover:border-[var(--error)] transition-colors"
+                  >
+                    <Trash2 className="w-3 h-3" />
+                    Delete
+                  </button>
                 </div>
               </div>
             </div>

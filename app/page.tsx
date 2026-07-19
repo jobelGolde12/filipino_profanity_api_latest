@@ -9,6 +9,7 @@ import { DetectBanner } from "@/components/DetectBanner";
 import { ApiTester } from "@/components/ApiTester";
 import { GithubRepoCard } from "@/components/GithubRepoCard";
 import { BugReportForm } from "@/components/BugReportForm";
+import { AddProfanityWordForm } from "@/components/AddProfanityWordForm";
 import { Footer } from "@/components/Footer";
 
 interface ChartDataPoint {
@@ -87,7 +88,10 @@ export default function Home() {
           />
         </section>
 
-        <BugReportForm />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          <AddProfanityWordForm />
+          <BugReportForm />
+        </div>
       </main>
 
       <Footer />
