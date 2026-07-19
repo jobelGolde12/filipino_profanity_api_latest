@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import { Cormorant, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+
+const progo = localFont({
+  variable: "--font-progo",
+  src: "../public/fonts/PROGO-Bold.otf",
+  display: "swap",
+});
 
 const cormorant = Cormorant({
   variable: "--font-cormorant",
@@ -33,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${cormorant.variable} ${geistSans.variable} ${geistMono.variable}`}
+        className={`${progo.variable} ${cormorant.variable} ${geistSans.variable} ${geistMono.variable}`}
       >
         {children}
       </body>

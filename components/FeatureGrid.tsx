@@ -1,4 +1,5 @@
 import { Code, Database, Zap, Shield, Globe } from "lucide-react";
+import { Marquee } from "./ui/Marquee";
 
 const features = [
   {
@@ -57,6 +58,8 @@ export function FeatureGrid() {
           );
         })}
       </div>
+
+      <Marquee />
     </section>
   );
 }
