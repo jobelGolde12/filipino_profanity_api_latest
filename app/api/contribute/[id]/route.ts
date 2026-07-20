@@ -68,8 +68,8 @@ export async function PATCH(
     }
 
     await db.execute({
-      sql: "DELETE FROM word_submissions WHERE id = ?",
-      args: [submissionId],
+      sql: "UPDATE word_submissions SET status = ? WHERE id = ?",
+      args: [status, submissionId],
     });
 
     return NextResponse.json({
