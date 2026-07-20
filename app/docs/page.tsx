@@ -14,6 +14,7 @@ import {
   Layers,
   ChevronRight,
   ArrowLeft,
+  AlertCircle,
 } from "lucide-react";
 
 interface DocSection {
