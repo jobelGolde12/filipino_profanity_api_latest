@@ -1,6 +1,12 @@
 import { Badge } from "./ui/Badge";
 
-export function Hero() {
+interface HeroProps {
+  totalWords?: number;
+}
+
+export function Hero({ totalWords = 0 }: HeroProps) {
+  const formattedTotal = totalWords.toLocaleString();
+
   return (
     <section className="pt-14 pb-20 sm:pt-16 sm:pb-28">
       <div className="text-center">
@@ -18,7 +24,7 @@ export function Hero() {
         </h1>
 
         <p className="text-lg text-[var(--text-secondary)] max-w-lg mx-auto mb-10 leading-relaxed">
-          310+ words across Filipino and regional dialects.
+          {formattedTotal}+ words across Filipino and regional dialects.
           Real-time detection via a free REST API.
         </p>
 

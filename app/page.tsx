@@ -90,7 +90,7 @@ export default function Home() {
       <Header />
 
       <main className="mx-auto max-w-[1200px] px-6 sm:px-8">
-        <Hero />
+        <Hero totalWords={stats.total} />
         <FeatureGrid />
         <DashboardStats stats={stats} />
         {/* <DetectBanner /> */}
