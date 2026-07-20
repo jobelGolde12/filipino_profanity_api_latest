@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { FeatureGrid } from "@/components/FeatureGrid";
+import { EndpointsSection } from "@/components/EndpointsSection";
+
 import { DashboardStats } from "@/components/DashboardStats";
 import { DetectBanner } from "@/components/DetectBanner";
 import { ApiTester } from "@/components/ApiTester";
@@ -92,7 +94,9 @@ export default function Home() {
       <main className="mx-auto max-w-[1200px] px-6 sm:px-8">
         <Hero totalWords={stats.total} />
         <FeatureGrid />
+        <EndpointsSection />
         <DashboardStats stats={stats} />
+
         {/* <DetectBanner /> */}
         <ApiTester baseUrl={baseUrl} />
 
