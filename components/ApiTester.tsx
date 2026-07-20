@@ -51,13 +51,23 @@ const endpoints: EndpointConfig[] = [
     ],
   },
   {
+    id: "profanity-base",
+    label: "Base Words (No Variants)",
+    path: "/api/profanity/base",
+    badge: "GET",
+    badgeColor: "var(--accent)",
+    params: [
+      { name: "type", type: "select", placeholder: "", required: false },
+    ],
+  },
+  {
     id: "check-text",
     label: "Check Text",
     path: "/api/check",
     badge: "GET",
     badgeColor: "var(--info)",
     params: [
-      { name: "text", type: "textarea", placeholder: "Enter text to check for profanity...", required: true },
+      { name: "text", type: "textarea", placeholder: "Paste sentence and check if it contains profanity words...", required: true },
     ],
   },
 ];

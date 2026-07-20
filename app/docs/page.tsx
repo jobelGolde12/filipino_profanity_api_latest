@@ -377,6 +377,98 @@ curl "${origin}/api/profanity?word=gago"`}
           </CodeBlock>
         </div>
 
+        {/* Base Profanity Words */}
+        <div>
+          <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">GET /api/profanity/base</h3>
+          <p className="text-sm text-[var(--text-secondary)] mb-4">Fetch base profanity words without leetspeak variants. Useful when you only need the core word list.</p>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Query Parameters</h4>
+          <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0 mb-6">
+            <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden min-w-[500px]">
+              <table className="w-full">
+                <thead>
+                  <tr>
+                    <TableHeader>Parameter</TableHeader>
+                    <TableHeader>Type</TableHeader>
+                    <TableHeader>Required</TableHeader>
+                    <TableHeader>Description</TableHeader>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <TableCell><InlineCode>type</InlineCode></TableCell>
+                    <TableCell>string</TableCell>
+                    <TableCell>No</TableCell>
+                    <TableCell>Filter by language: <InlineCode>filipino</InlineCode>, <InlineCode>regional</InlineCode>, <InlineCode>all</InlineCode></TableCell>
+                  </tr>
+                  <tr>
+                    <TableCell><InlineCode>word</InlineCode></TableCell>
+                    <TableCell>string</TableCell>
+                    <TableCell>No</TableCell>
+                    <TableCell>Search for a specific word</TableCell>
+                  </tr>
+                  <tr>
+                    <TableCell><InlineCode>page</InlineCode></TableCell>
+                    <TableCell>integer</TableCell>
+                    <TableCell>No</TableCell>
+                    <TableCell>Page number (default: 1)</TableCell>
+                  </tr>
+                  <tr>
+                    <TableCell><InlineCode>limit</InlineCode></TableCell>
+                    <TableCell>integer</TableCell>
+                    <TableCell>No</TableCell>
+                    <TableCell>Items per page (default: 50, max: 200)</TableCell>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Example Requests</h4>
+          <CodeBlock language="bash">
+{`# Fetch all base words (no variants)
+curl ${origin}/api/profanity/base
+
+# Fetch only Filipino base words
+curl ${origin}/api/profanity/base?type=filipino
+
+# Fetch only Regional base words
+curl ${origin}/api/profanity/base?type=regional
+
+# Search for a specific word
+curl "${origin}/api/profanity/base?word=gago"
+
+# Paginate results
+curl "${origin}/api/profanity/base?page=1&limit=25"`}
+          </CodeBlock>
+          <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3 mt-6">Response</h4>
+          <CodeBlock language="json">
+{`{
+  "success": true,
+  "type": "all",
+  "count": 50,
+  "source": "database",
+  "pagination": {
+    "page": 1,
+    "limit": 50,
+    "total": 310,
+    "totalPages": 7,
+    "hasNext": true,
+    "hasPrev": false
+  },
+  "data": [
+    {
+      "word": "gago",
+      "language": "filipino",
+      "region": null,
+      "severity": "medium"
+    }
+  ]
+}`}
+          </CodeBlock>
+          <div className="mt-4 p-4 rounded-[var(--radius-lg)] bg-[var(--info-muted)] border border-[var(--info)]/10">
+            <p className="text-sm text-[var(--info)]">Unlike <InlineCode>/api/profanity</InlineCode>, this endpoint does not include the <InlineCode>variants</InlineCode> field. Use this when you only need the base word list without leetspeak obfuscations.</p>
+          </div>
+        </div>
+
         {/* Check Text */}
         <div>
           <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">POST /api/check</h3>

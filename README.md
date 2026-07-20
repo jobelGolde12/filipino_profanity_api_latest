@@ -150,6 +150,63 @@ curl "https://filipino-profanity-api-latest.vercel.app/api/profanity?page=1&limi
 
 ---
 
+### Fetch Base Words (No Variants)
+
+Retrieve profanity words without leetspeak variants — useful when you only need the base word list.
+
+```bash
+# Fetch all base words
+curl https://filipino-profanity-api-latest.vercel.app/api/profanity/base
+
+# Filter by language
+curl "https://filipino-profanity-api-latest.vercel.app/api/profanity/base?type=filipino"
+
+# Search for a specific word
+curl "https://filipino-profanity-api-latest.vercel.app/api/profanity/base?word=gago"
+
+# Paginate results
+curl "https://filipino-profanity-api-latest.vercel.app/api/profanity/base?page=1&limit=25"
+```
+
+**Parameters:**
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `type` | string | `all` | Filter: `filipino`, `regional`, or `all` |
+| `word` | string | - | Search for a specific word |
+| `page` | integer | `1` | Page number |
+| `limit` | integer | `50` | Items per page (max: 200) |
+
+**Response:**
+```json
+{
+  "success": true,
+  "type": "all",
+  "count": 50,
+  "source": "database",
+  "pagination": {
+    "page": 1,
+    "limit": 50,
+    "total": 310,
+    "totalPages": 7,
+    "hasNext": true,
+    "hasPrev": false
+  },
+  "data": [
+    {
+      "word": "gago",
+      "language": "filipino",
+      "region": null,
+      "severity": "medium"
+    }
+  ]
+}
+```
+
+> **Note:** Unlike `/api/profanity`, this endpoint does not include the `variants` field. Use this when you only need the base word list without leetspeak obfuscations.
+
+---
+
 ### Check Text for Profanity
 
 Analyze text and detect profanity words.
@@ -475,6 +532,7 @@ All endpoints (except `/api/health`) are rate-limited per IP address:
 | Endpoint | Limit | Window |
 |----------|-------|--------|
 | `GET /api/profanity` | 60 requests | 1 minute |
+| `GET /api/profanity/base` | 60 requests | 1 minute |
 | `GET /api/stats` | 60 requests | 1 minute |
 | `GET /api/health` | No limit | - |
 | `GET /api/variants` | 60 requests | 1 minute |
@@ -546,7 +604,9 @@ filipino_profanity_api/
 ├── app/
 │   ├── api/
 │   │   ├── health/route.ts      # Health check endpoint
-│   │   ├── profanity/route.ts   # Fetch profanity words
+│   │   ├── profanity/
+│   │   │   ├── route.ts         # Fetch profanity words (with variants)
+│   │   │   └── base/route.ts    # Fetch base words (no variants)
 │   │   ├── check/
 │   │   │   ├── route.ts         # Check single text
 │   │   │   └── batch/route.ts   # Batch text checking
