@@ -296,43 +296,45 @@ function ApiReference({ origin }: { origin: string }) {
           <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">GET /api/profanity</h3>
           <p className="text-sm text-[var(--text-secondary)] mb-4">Fetch profanity words with optional filtering and pagination.</p>
           <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Query Parameters</h4>
-          <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden mb-6">
-            <table className="w-full">
-              <thead>
-                <tr>
-                  <TableHeader>Parameter</TableHeader>
-                  <TableHeader>Type</TableHeader>
-                  <TableHeader>Required</TableHeader>
-                  <TableHeader>Description</TableHeader>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <TableCell><InlineCode>type</InlineCode></TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell>No</TableCell>
-                  <TableCell>Filter by language: <InlineCode>filipino</InlineCode>, <InlineCode>regional</InlineCode>, <InlineCode>all</InlineCode></TableCell>
-                </tr>
-                <tr>
-                  <TableCell><InlineCode>word</InlineCode></TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell>No</TableCell>
-                  <TableCell>Search for a specific word</TableCell>
-                </tr>
-                <tr>
-                  <TableCell><InlineCode>page</InlineCode></TableCell>
-                  <TableCell>integer</TableCell>
-                  <TableCell>No</TableCell>
-                  <TableCell>Page number (default: 1)</TableCell>
-                </tr>
-                <tr>
-                  <TableCell><InlineCode>limit</InlineCode></TableCell>
-                  <TableCell>integer</TableCell>
-                  <TableCell>No</TableCell>
-                  <TableCell>Items per page (default: 50, max: 200)</TableCell>
-                </tr>
-              </tbody>
-            </table>
+          <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0 mb-6">
+            <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden min-w-[500px]">
+              <table className="w-full">
+                <thead>
+                  <tr>
+                    <TableHeader>Parameter</TableHeader>
+                    <TableHeader>Type</TableHeader>
+                    <TableHeader>Required</TableHeader>
+                    <TableHeader>Description</TableHeader>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <TableCell><InlineCode>type</InlineCode></TableCell>
+                    <TableCell>string</TableCell>
+                    <TableCell>No</TableCell>
+                    <TableCell>Filter by language: <InlineCode>filipino</InlineCode>, <InlineCode>regional</InlineCode>, <InlineCode>all</InlineCode></TableCell>
+                  </tr>
+                  <tr>
+                    <TableCell><InlineCode>word</InlineCode></TableCell>
+                    <TableCell>string</TableCell>
+                    <TableCell>No</TableCell>
+                    <TableCell>Search for a specific word</TableCell>
+                  </tr>
+                  <tr>
+                    <TableCell><InlineCode>page</InlineCode></TableCell>
+                    <TableCell>integer</TableCell>
+                    <TableCell>No</TableCell>
+                    <TableCell>Page number (default: 1)</TableCell>
+                  </tr>
+                  <tr>
+                    <TableCell><InlineCode>limit</InlineCode></TableCell>
+                    <TableCell>integer</TableCell>
+                    <TableCell>No</TableCell>
+                    <TableCell>Items per page (default: 50, max: 200)</TableCell>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
           <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Example Requests</h4>
           <CodeBlock language="bash">
@@ -474,37 +476,39 @@ curl "${origin}/api/profanity?word=gago"`}
           </div>
           <p className="text-sm text-[var(--text-secondary)] mb-4">Mask profanity words in text with asterisks or custom characters.</p>
           <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Request Body</h4>
-          <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden mb-6">
-            <table className="w-full">
-              <thead>
-                <tr>
-                  <TableHeader>Parameter</TableHeader>
-                  <TableHeader>Type</TableHeader>
-                  <TableHeader>Default</TableHeader>
-                  <TableHeader>Description</TableHeader>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <TableCell><InlineCode>text</InlineCode></TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell>required</TableCell>
-                  <TableCell>Text to mask (max 10,000 characters)</TableCell>
-                </tr>
-                <tr>
-                  <TableCell><InlineCode>maskChar</InlineCode></TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell>*</TableCell>
-                  <TableCell>Single character to use for masking</TableCell>
-                </tr>
-                <tr>
-                  <TableCell><InlineCode>partial</InlineCode></TableCell>
-                  <TableCell>boolean</TableCell>
-                  <TableCell>true</TableCell>
-                  <TableCell>Keep first letter visible (e.g., g***)</TableCell>
-                </tr>
-              </tbody>
-            </table>
+          <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0 mb-6">
+            <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden min-w-[500px]">
+              <table className="w-full">
+                <thead>
+                  <tr>
+                    <TableHeader>Parameter</TableHeader>
+                    <TableHeader>Type</TableHeader>
+                    <TableHeader>Default</TableHeader>
+                    <TableHeader>Description</TableHeader>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <TableCell><InlineCode>text</InlineCode></TableCell>
+                    <TableCell>string</TableCell>
+                    <TableCell>required</TableCell>
+                    <TableCell>Text to mask (max 10,000 characters)</TableCell>
+                  </tr>
+                  <tr>
+                    <TableCell><InlineCode>maskChar</InlineCode></TableCell>
+                    <TableCell>string</TableCell>
+                    <TableCell>*</TableCell>
+                    <TableCell>Single character to use for masking</TableCell>
+                  </tr>
+                  <tr>
+                    <TableCell><InlineCode>partial</InlineCode></TableCell>
+                    <TableCell>boolean</TableCell>
+                    <TableCell>true</TableCell>
+                    <TableCell>Keep first letter visible (e.g., g***)</TableCell>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
           <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Example Request</h4>
           <CodeBlock language="bash">
@@ -541,43 +545,45 @@ curl "${origin}/api/profanity?word=gago"`}
           </div>
           <p className="text-sm text-[var(--text-secondary)] mb-4">Fetch leetspeak variants for profanity words. Detects intentionally obfuscated text like <InlineCode>g4g0</InlineCode> for <InlineCode>gago</InlineCode>.</p>
           <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Query Parameters</h4>
-          <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden mb-6">
-            <table className="w-full">
-              <thead>
-                <tr>
-                  <TableHeader>Parameter</TableHeader>
-                  <TableHeader>Type</TableHeader>
-                  <TableHeader>Required</TableHeader>
-                  <TableHeader>Description</TableHeader>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <TableCell><InlineCode>word</InlineCode></TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell>No</TableCell>
-                  <TableCell>Filter by exact word (e.g., <InlineCode>gago</InlineCode>)</TableCell>
-                </tr>
-                <tr>
-                  <TableCell><InlineCode>search</InlineCode></TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell>No</TableCell>
-                  <TableCell>Search words by partial match</TableCell>
-                </tr>
-                <tr>
-                  <TableCell><InlineCode>page</InlineCode></TableCell>
-                  <TableCell>integer</TableCell>
-                  <TableCell>No</TableCell>
-                  <TableCell>Page number (default: 1)</TableCell>
-                </tr>
-                <tr>
-                  <TableCell><InlineCode>limit</InlineCode></TableCell>
-                  <TableCell>integer</TableCell>
-                  <TableCell>No</TableCell>
-                  <TableCell>Items per page (default: 50, max: 200)</TableCell>
-                </tr>
-              </tbody>
-            </table>
+          <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0 mb-6">
+            <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden min-w-[500px]">
+              <table className="w-full">
+                <thead>
+                  <tr>
+                    <TableHeader>Parameter</TableHeader>
+                    <TableHeader>Type</TableHeader>
+                    <TableHeader>Required</TableHeader>
+                    <TableHeader>Description</TableHeader>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <TableCell><InlineCode>word</InlineCode></TableCell>
+                    <TableCell>string</TableCell>
+                    <TableCell>No</TableCell>
+                    <TableCell>Filter by exact word (e.g., <InlineCode>gago</InlineCode>)</TableCell>
+                  </tr>
+                  <tr>
+                    <TableCell><InlineCode>search</InlineCode></TableCell>
+                    <TableCell>string</TableCell>
+                    <TableCell>No</TableCell>
+                    <TableCell>Search words by partial match</TableCell>
+                  </tr>
+                  <tr>
+                    <TableCell><InlineCode>page</InlineCode></TableCell>
+                    <TableCell>integer</TableCell>
+                    <TableCell>No</TableCell>
+                    <TableCell>Page number (default: 1)</TableCell>
+                  </tr>
+                  <tr>
+                    <TableCell><InlineCode>limit</InlineCode></TableCell>
+                    <TableCell>integer</TableCell>
+                    <TableCell>No</TableCell>
+                    <TableCell>Items per page (default: 50, max: 200)</TableCell>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
           <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Example Request</h4>
           <CodeBlock language="bash">
@@ -625,25 +631,27 @@ curl "${origin}/api/variants?search=gag"`}
           </div>
           <p className="text-sm text-[var(--text-secondary)] mb-4">Check if text contains any known leetspeak variants. Useful for detecting obfuscated profanity.</p>
           <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Query Parameters</h4>
-          <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden mb-6">
-            <table className="w-full">
-              <thead>
-                <tr>
-                  <TableHeader>Parameter</TableHeader>
-                  <TableHeader>Type</TableHeader>
-                  <TableHeader>Required</TableHeader>
-                  <TableHeader>Description</TableHeader>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <TableCell><InlineCode>text</InlineCode></TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell>Yes</TableCell>
-                  <TableCell>Text to check (max 10,000 characters)</TableCell>
-                </tr>
-              </tbody>
-            </table>
+          <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0 mb-6">
+            <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden min-w-[500px]">
+              <table className="w-full">
+                <thead>
+                  <tr>
+                    <TableHeader>Parameter</TableHeader>
+                    <TableHeader>Type</TableHeader>
+                    <TableHeader>Required</TableHeader>
+                    <TableHeader>Description</TableHeader>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <TableCell><InlineCode>text</InlineCode></TableCell>
+                    <TableCell>string</TableCell>
+                    <TableCell>Yes</TableCell>
+                    <TableCell>Text to check (max 10,000 characters)</TableCell>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
           <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Example Request</h4>
           <CodeBlock language="bash">
@@ -720,43 +728,45 @@ curl "${origin}/api/variants?search=gag"`}
           </div>
           <p className="text-sm text-[var(--text-secondary)] mb-4">Submit a new profanity word for review. Submitted words are reviewed by admins before being added to the database.</p>
           <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Request Body</h4>
-          <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden mb-6">
-            <table className="w-full">
-              <thead>
-                <tr>
-                  <TableHeader>Parameter</TableHeader>
-                  <TableHeader>Type</TableHeader>
-                  <TableHeader>Required</TableHeader>
-                  <TableHeader>Description</TableHeader>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <TableCell><InlineCode>word</InlineCode></TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell>Yes</TableCell>
-                  <TableCell>The profanity word to submit (min 2 characters)</TableCell>
-                </tr>
-                <tr>
-                  <TableCell><InlineCode>language</InlineCode></TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell>Yes</TableCell>
-                  <TableCell>Language category: <InlineCode>filipino</InlineCode> or <InlineCode>regional</InlineCode></TableCell>
-                </tr>
-                <tr>
-                  <TableCell><InlineCode>region</InlineCode></TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell>If regional</TableCell>
-                  <TableCell>Regional dialect (e.g., Visayan, Ilokano, Bicolano)</TableCell>
-                </tr>
-                <tr>
-                  <TableCell><InlineCode>email</InlineCode></TableCell>
-                  <TableCell>string</TableCell>
-                  <TableCell>No</TableCell>
-                  <TableCell>Email to notify when word is added</TableCell>
-                </tr>
-              </tbody>
-            </table>
+          <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0 mb-6">
+            <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden min-w-[500px]">
+              <table className="w-full">
+                <thead>
+                  <tr>
+                    <TableHeader>Parameter</TableHeader>
+                    <TableHeader>Type</TableHeader>
+                    <TableHeader>Required</TableHeader>
+                    <TableHeader>Description</TableHeader>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <TableCell><InlineCode>word</InlineCode></TableCell>
+                    <TableCell>string</TableCell>
+                    <TableCell>Yes</TableCell>
+                    <TableCell>The profanity word to submit (min 2 characters)</TableCell>
+                  </tr>
+                  <tr>
+                    <TableCell><InlineCode>language</InlineCode></TableCell>
+                    <TableCell>string</TableCell>
+                    <TableCell>Yes</TableCell>
+                    <TableCell>Language category: <InlineCode>filipino</InlineCode> or <InlineCode>regional</InlineCode></TableCell>
+                  </tr>
+                  <tr>
+                    <TableCell><InlineCode>region</InlineCode></TableCell>
+                    <TableCell>string</TableCell>
+                    <TableCell>If regional</TableCell>
+                    <TableCell>Regional dialect (e.g., Visayan, Ilokano, Bicolano)</TableCell>
+                  </tr>
+                  <tr>
+                    <TableCell><InlineCode>email</InlineCode></TableCell>
+                    <TableCell>string</TableCell>
+                    <TableCell>No</TableCell>
+                    <TableCell>Email to notify when word is added</TableCell>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
           <h4 className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">Example Request</h4>
           <CodeBlock language="bash">
@@ -840,96 +850,100 @@ function RateLimitingSection({ origin }: { origin: string }) {
         <p className="text-[var(--text-secondary)]">
           All API endpoints are rate-limited to prevent abuse. Rate limits are applied per IP address.
         </p>
-        <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden">
-          <table className="w-full">
-            <thead>
-              <tr>
-                <TableHeader>Endpoint</TableHeader>
-                <TableHeader>Limit</TableHeader>
-                <TableHeader>Window</TableHeader>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <TableCell><InlineCode>GET /api/profanity</InlineCode></TableCell>
-                <TableCell>60 requests</TableCell>
-                <TableCell>1 minute</TableCell>
-              </tr>
-              <tr>
-                <TableCell><InlineCode>GET /api/stats</InlineCode></TableCell>
-                <TableCell>60 requests</TableCell>
-                <TableCell>1 minute</TableCell>
-              </tr>
-              <tr>
-                <TableCell><InlineCode>GET /api/health</InlineCode></TableCell>
-                <TableCell>No limit</TableCell>
-                <TableCell>N/A</TableCell>
-              </tr>
-              <tr>
-                <TableCell><InlineCode>POST /api/check</InlineCode></TableCell>
-                <TableCell>30 requests</TableCell>
-                <TableCell>1 minute</TableCell>
-              </tr>
-              <tr>
-                <TableCell><InlineCode>POST /api/mask</InlineCode></TableCell>
-                <TableCell>30 requests</TableCell>
-                <TableCell>1 minute</TableCell>
-              </tr>
-              <tr>
-                <TableCell><InlineCode>POST /api/check/batch</InlineCode></TableCell>
-                <TableCell>20 requests</TableCell>
-                <TableCell>1 minute</TableCell>
-              </tr>
-              <tr>
-                <TableCell><InlineCode>GET /api/variants</InlineCode></TableCell>
-                <TableCell>60 requests</TableCell>
-                <TableCell>1 minute</TableCell>
-              </tr>
-              <tr>
-                <TableCell><InlineCode>GET /api/variants/lookup</InlineCode></TableCell>
-                <TableCell>30 requests</TableCell>
-                <TableCell>1 minute</TableCell>
-              </tr>
-              <tr>
-                <TableCell><InlineCode>POST /api/contribute</InlineCode></TableCell>
-                <TableCell>10 requests</TableCell>
-                <TableCell>1 minute</TableCell>
-              </tr>
-            </tbody>
-          </table>
+        <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0">
+          <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden min-w-[500px]">
+            <table className="w-full">
+              <thead>
+                <tr>
+                  <TableHeader>Endpoint</TableHeader>
+                  <TableHeader>Limit</TableHeader>
+                  <TableHeader>Window</TableHeader>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <TableCell><InlineCode>GET /api/profanity</InlineCode></TableCell>
+                  <TableCell>60 requests</TableCell>
+                  <TableCell>1 minute</TableCell>
+                </tr>
+                <tr>
+                  <TableCell><InlineCode>GET /api/stats</InlineCode></TableCell>
+                  <TableCell>60 requests</TableCell>
+                  <TableCell>1 minute</TableCell>
+                </tr>
+                <tr>
+                  <TableCell><InlineCode>GET /api/health</InlineCode></TableCell>
+                  <TableCell>No limit</TableCell>
+                  <TableCell>N/A</TableCell>
+                </tr>
+                <tr>
+                  <TableCell><InlineCode>POST /api/check</InlineCode></TableCell>
+                  <TableCell>30 requests</TableCell>
+                  <TableCell>1 minute</TableCell>
+                </tr>
+                <tr>
+                  <TableCell><InlineCode>POST /api/mask</InlineCode></TableCell>
+                  <TableCell>30 requests</TableCell>
+                  <TableCell>1 minute</TableCell>
+                </tr>
+                <tr>
+                  <TableCell><InlineCode>POST /api/check/batch</InlineCode></TableCell>
+                  <TableCell>20 requests</TableCell>
+                  <TableCell>1 minute</TableCell>
+                </tr>
+                <tr>
+                  <TableCell><InlineCode>GET /api/variants</InlineCode></TableCell>
+                  <TableCell>60 requests</TableCell>
+                  <TableCell>1 minute</TableCell>
+                </tr>
+                <tr>
+                  <TableCell><InlineCode>GET /api/variants/lookup</InlineCode></TableCell>
+                  <TableCell>30 requests</TableCell>
+                  <TableCell>1 minute</TableCell>
+                </tr>
+                <tr>
+                  <TableCell><InlineCode>POST /api/contribute</InlineCode></TableCell>
+                  <TableCell>10 requests</TableCell>
+                  <TableCell>1 minute</TableCell>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <div>
           <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">Response Headers</h3>
           <p className="text-sm text-[var(--text-secondary)] mb-4">
             Every rate-limited response includes these headers:
           </p>
-          <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden">
-            <table className="w-full">
-              <thead>
-                <tr>
-                  <TableHeader>Header</TableHeader>
-                  <TableHeader>Description</TableHeader>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <TableCell><InlineCode>X-RateLimit-Limit</InlineCode></TableCell>
-                  <TableCell>Maximum requests allowed per window</TableCell>
-                </tr>
-                <tr>
-                  <TableCell><InlineCode>X-RateLimit-Remaining</InlineCode></TableCell>
-                  <TableCell>Requests remaining in current window</TableCell>
-                </tr>
-                <tr>
-                  <TableCell><InlineCode>X-RateLimit-Reset</InlineCode></TableCell>
-                  <TableCell>Unix timestamp when the window resets</TableCell>
-                </tr>
-                <tr>
-                  <TableCell><InlineCode>Retry-After</InlineCode></TableCell>
-                  <TableCell>Seconds until you can retry (only on 429)</TableCell>
-                </tr>
-              </tbody>
-            </table>
+          <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0">
+            <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden min-w-[500px]">
+              <table className="w-full">
+                <thead>
+                  <tr>
+                    <TableHeader>Header</TableHeader>
+                    <TableHeader>Description</TableHeader>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <TableCell><InlineCode>X-RateLimit-Limit</InlineCode></TableCell>
+                    <TableCell>Maximum requests allowed per window</TableCell>
+                  </tr>
+                  <tr>
+                    <TableCell><InlineCode>X-RateLimit-Remaining</InlineCode></TableCell>
+                    <TableCell>Requests remaining in current window</TableCell>
+                  </tr>
+                  <tr>
+                    <TableCell><InlineCode>X-RateLimit-Reset</InlineCode></TableCell>
+                    <TableCell>Unix timestamp when the window resets</TableCell>
+                  </tr>
+                  <tr>
+                    <TableCell><InlineCode>Retry-After</InlineCode></TableCell>
+                    <TableCell>Seconds until you can retry (only on 429)</TableCell>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
         <div className="p-4 rounded-[var(--radius-lg)] bg-[var(--warning-muted)] border border-[var(--warning)]/10">
@@ -1066,32 +1080,34 @@ function DatabaseSection() {
         </div>
         <div>
           <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">Fields</h3>
-          <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden">
-            <table className="w-full">
-              <thead>
-                <tr>
-                  <TableHeader>Field</TableHeader>
-                  <TableHeader>Type</TableHeader>
-                  <TableHeader>Description</TableHeader>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  ["id", "INTEGER", "Primary key, auto-incrementing"],
-                  ["word", "TEXT", "The profanity word (required)"],
-                  ["language", "TEXT", "Language category: filipino or regional"],
-                  ["region", "TEXT", "Regional dialect (e.g., visayan)"],
-                  ["severity", "TEXT", "Severity level: low, medium, high"],
-                  ["created_at", "DATETIME", "Timestamp when word was added"],
-                ].map(([field, type, desc]) => (
-                  <tr key={field}>
-                    <TableCell><InlineCode>{field}</InlineCode></TableCell>
-                    <TableCell>{type}</TableCell>
-                    <TableCell>{desc}</TableCell>
+          <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0">
+            <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden min-w-[500px]">
+              <table className="w-full">
+                <thead>
+                  <tr>
+                    <TableHeader>Field</TableHeader>
+                    <TableHeader>Type</TableHeader>
+                    <TableHeader>Description</TableHeader>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {[
+                    ["id", "INTEGER", "Primary key, auto-incrementing"],
+                    ["word", "TEXT", "The profanity word (required)"],
+                    ["language", "TEXT", "Language category: filipino or regional"],
+                    ["region", "TEXT", "Regional dialect (e.g., visayan)"],
+                    ["severity", "TEXT", "Severity level: low, medium, high"],
+                    ["created_at", "DATETIME", "Timestamp when word was added"],
+                  ].map(([field, type, desc]) => (
+                    <tr key={field}>
+                      <TableCell><InlineCode>{field}</InlineCode></TableCell>
+                      <TableCell>{type}</TableCell>
+                      <TableCell>{desc}</TableCell>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
         <div>
@@ -1172,30 +1188,32 @@ function FeaturesSection() {
         </div>
         <div>
           <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">Technology Stack</h3>
-          <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden">
-            <table className="w-full">
-              <thead>
-                <tr>
-                  <TableHeader>Component</TableHeader>
-                  <TableHeader>Technology</TableHeader>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  ["Framework", "Next.js 16+"],
-                  ["Styling", "Tailwind CSS v4"],
-                  ["Icons", "Lucide React"],
-                  ["Database", "Turso (libSQL)"],
-                  ["API", "Next.js Route Handlers"],
-                  ["Language", "TypeScript"],
-                ].map(([comp, tech]) => (
-                  <tr key={comp}>
-                    <TableCell>{comp}</TableCell>
-                    <TableCell><InlineCode>{tech}</InlineCode></TableCell>
+          <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0">
+            <div className="border border-[var(--border-subtle)] rounded-[var(--radius-lg)] overflow-hidden min-w-[500px]">
+              <table className="w-full">
+                <thead>
+                  <tr>
+                    <TableHeader>Component</TableHeader>
+                    <TableHeader>Technology</TableHeader>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {[
+                    ["Framework", "Next.js 16+"],
+                    ["Styling", "Tailwind CSS v4"],
+                    ["Icons", "Lucide React"],
+                    ["Database", "Turso (libSQL)"],
+                    ["API", "Next.js Route Handlers"],
+                    ["Language", "TypeScript"],
+                  ].map(([comp, tech]) => (
+                    <tr key={comp}>
+                      <TableCell>{comp}</TableCell>
+                      <TableCell><InlineCode>{tech}</InlineCode></TableCell>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

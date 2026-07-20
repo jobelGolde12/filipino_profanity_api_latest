@@ -415,9 +415,9 @@ export function ApiTester({ baseUrl }: ApiTesterProps) {
               ) : (
                 <Send className="w-4 h-4" />
               )}
-              {loading ? "Sending..." : "Send Request"}
+              <span className="hidden sm:inline">{loading ? "Sending..." : "Send Request"}</span>
             </button>
-            <span className="text-xs text-[var(--text-muted)]">
+            <span className="hidden sm:inline text-xs text-[var(--text-muted)]">
               <kbd className="px-1.5 py-0.5 bg-[var(--bg-alt)] border border-[var(--border-subtle)] rounded text-[10px] font-mono">
                 Ctrl
               </kbd>
